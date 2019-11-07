@@ -1,0 +1,6 @@
+telemetriAPI
+*.exe
+*.conf
+logDeleteIt/*
+*.db
+
