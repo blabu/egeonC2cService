@@ -34,26 +34,16 @@ func init() {
 	sigTerm = make(chan os.Signal)
 }
 
-type connectorTypeEnum uint8
-
-const (
-	requestResponceConnector connectorTypeEnum = iota
-	newReadWriteConnector
-	newBidirectConnector
-)
-
 func getMaxConnectionValue() uint32 {
 	maxConnectStr, err := cf.GetConfigValue("MaxConnectionFromIP")
 	if err != nil {
 		return 0
-	} else {
-		v, err := (strconv.ParseInt(maxConnectStr, 10, 16))
-		if err == nil {
-			return uint32(v)
-		} else {
-			return 0
-		}
 	}
+	v, err := (strconv.ParseInt(maxConnectStr, 10, 16))
+	if err == nil {
+		return uint32(v)
+	}
+	return 0
 }
 
 func initLogger() {
@@ -91,7 +81,7 @@ func getSessionTimeout() time.Duration {
 	return timeout
 }
 
-func startTcpMainServer() net.Listener {
+func startTCPMainServer() net.Listener {
 	port, err := cf.GetConfigValue("ServerTcpPort")
 	if err != nil {
 		log.Fatal("Undefined ServerTcpPort parameter")
@@ -99,7 +89,7 @@ func startTcpMainServer() net.Listener {
 	}
 	listen, err := net.Listen("tcp", port)
 	if err != nil {
-		log.Fatalf("Can not run listener at port %s\n %v\n", port, err)
+		log.Fatalf("Can not run listener at port %s %v", port, err)
 		return nil
 	}
 	log.Infof("Start listening at port %s", port)
@@ -131,7 +121,7 @@ func main() {
 	timeout := getSessionTimeout()
 	defer c2cData.InitC2cDB().Close()
 	st := stat.CreateStatistics()
-	listen := startTcpMainServer()
+	listen := startTCPMainServer()
 	isStoped := atomic.NewBool(false)
 	go func() {
 		<-sigTerm
@@ -146,7 +136,7 @@ func main() {
 	for !isStoped.Load() {
 		Con, err := listen.Accept() // Ждущая функция (Висим ждем соединения)
 		if err != nil {
-			log.Infof("Can not accept connection, %v\n", err)
+			log.Infof("Can not accept connection, %v", err)
 			continue
 		}
 		count := stat.AddIPAddres(strings.Split(Con.RemoteAddr().String(), ":")[0])

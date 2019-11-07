@@ -12,6 +12,7 @@ import (
 	"io"
 	"net"
 	"strings"
+	"sync"
 	"time"
 )
 
@@ -25,15 +26,14 @@ import (
 // NewDecorator - создает новый клиент обертку для поиска клиентов по сети из серверов
 func NewDecorator(p parser.Parser, s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) client.ClientInterface {
 	client := c2cService.NewC2cDevice(s, sessionID, maxCONNECTION)
-	srvListString := configuration.GetConfigValueOrDefault("PeerSrv", "")
-	srvList := strings.Split(srvListString, ";")
+	srvListString := configuration.GetConfigValueOrDefault("PeerList", "")
+	srvList := strings.Split(srvListString, ",")
 	service := C2cDecorate{
 		p:              p,
 		serverLists:    srvList,
 		client:         client,
 		serverReadChan: make(chan dto.Message, maxCONNECTION),
-		//kill:           make(chan bool, 1),
-		conn: nil,
+		conn:           nil,
 	}
 	return &service
 }
@@ -44,6 +44,7 @@ type C2cDecorate struct {
 	serverLists    []string
 	client         client.ClientInterface
 	serverReadChan chan dto.Message
+	conMtx         sync.Mutex
 	conn           *net.Conn
 }
 
@@ -92,15 +93,18 @@ func (s *C2cDecorate) writeToRemoteServerHandler(msg *dto.Message, conn net.Conn
 
 // Write - Передаем данные полученные из сети бизнес логике
 func (s *C2cDecorate) Write(msg *dto.Message) error {
-	defer func() { log.Trace("Client delegate write finish") }()
+	s.conMtx.Lock()
 	if s.conn != nil {
 		if er := s.writeToRemoteServerHandler(msg, *s.conn); er != nil {
 			(*s.conn).Close()
 			s.conn = nil
+			s.conMtx.Unlock()
 		} else {
+			s.conMtx.Unlock()
 			return nil
 		}
 	}
+	s.conMtx.Unlock()
 	err := s.client.Write(msg)
 	if err == nil {
 		return nil
@@ -111,13 +115,15 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 			log.Trace("Try connect to ", addr)
 			conn, e := net.Dial("tcp", addr)
 			if e != nil {
-				log.Trace("Connection fail")
+				log.Trace("Connecction fail")
 				continue
 			}
 			if e := s.writeToRemoteServerHandler(msg, conn); e == nil {
 				go readFromConnection(s.p, conn, func(m dto.Message, err error) {
 					if err == nil {
+						s.conMtx.Lock()
 						s.conn = &conn
+						s.conMtx.Unlock()
 						s.serverReadChan <- m // Отправляем ответ
 					} else {
 						if s.conn != nil {
@@ -139,7 +145,7 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 func (s *C2cDecorate) clientRead(clientReadChan chan<- dto.Message, kill <-chan bool, dt time.Duration) {
 	delegateFinish := make(chan bool, 1)
 	defer func() {
-		log.Trace("Client deleget readhandler finish")
+		log.Trace("Client delegat readhandler finish")
 		close(clientReadChan)
 	}()
 	for {
@@ -196,6 +202,8 @@ func (s *C2cDecorate) Read(dt time.Duration, handler func(msg dto.Message, err e
 
 // Close - информирует бизнес логику про разрыв соединения
 func (s *C2cDecorate) Close() {
+	s.conMtx.Lock()
+	defer s.conMtx.Unlock()
 	if s.conn != nil {
 		(*s.conn).Close()
 	}
