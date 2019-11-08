@@ -48,36 +48,47 @@ type C2cDecorate struct {
 	conn           *net.Conn
 }
 
-func readFromConnection(p parser.Parser, conn net.Conn, handler func(dto.Message, error)) {
-	readBuffer := make([]byte, 0, 2048)
-	for { // Пытаемся прочитать полный ответ разпарсить его и подготовить ответ
-		tempRead := make([]byte, 256)
-		conn.SetReadDeadline(time.Now().Add(10 * time.Second))
-		n, er := conn.Read(tempRead)
-		if er != nil { // Удаленный сервер разорвал соединение
-			log.Trace(er.Error())
-			handler(dto.Message{}, er)
-			return
-		}
-		tempRead = tempRead[:n]
-		readBuffer = append(readBuffer, tempRead...)
-		isFull, err := p.IsFullReceiveMsg(readBuffer)
-		if err != nil { // Сообщение не корректное
-			log.Trace(er.Error())
-			handler(dto.Message{}, err)
-			continue
-		}
-		if isFull {
-			m, er := p.ParseMessage(readBuffer)
-			if er != nil {
+func readFromConnection(p parser.Parser, reader io.Reader, handler func(dto.Message, error)) error {
+	readBuffer := make([]byte, 1, 2048)
+	if c, ok := reader.(net.Conn); ok {
+		c.SetReadDeadline(time.Now().Add(10 * time.Second))
+	}
+	if _, er := reader.Read(readBuffer); er != nil {
+		return er
+	}
+	go func(readBuffer []byte) {
+		for { // Пытаемся прочитать полный ответ разпарсить его и подготовить ответ
+			tempRead := make([]byte, 256)
+			if c, ok := reader.(net.Conn); ok {
+				c.SetReadDeadline(time.Now().Add(10 * time.Second))
+			}
+			n, er := reader.Read(tempRead)
+			if er != nil { // Удаленный сервер разорвал соединение
 				log.Trace(er.Error())
 				handler(dto.Message{}, er)
+				return
+			}
+			tempRead = tempRead[:n]
+			readBuffer = append(readBuffer, tempRead...)
+			isFull, err := p.IsFullReceiveMsg(readBuffer)
+			if err != nil { // Сообщение не корректное
+				log.Trace(er.Error())
+				handler(dto.Message{}, err)
 				continue
 			}
-			handler(m, nil)
-			readBuffer = readBuffer[:0]
+			if isFull {
+				m, er := p.ParseMessage(readBuffer)
+				if er != nil {
+					log.Trace(er.Error())
+					handler(dto.Message{}, er)
+					continue
+				}
+				handler(m, nil)
+				readBuffer = readBuffer[:0]
+			}
 		}
-	}
+	}(readBuffer)
+	return nil
 }
 
 func (s *C2cDecorate) writeToRemoteServerHandler(msg *dto.Message, conn net.Conn) error {
@@ -118,24 +129,31 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 				log.Trace("Connecction fail")
 				continue
 			}
-			if e := s.writeToRemoteServerHandler(msg, conn); e == nil {
-				go readFromConnection(s.p, conn, func(m dto.Message, err error) {
-					if err == nil {
-						s.conMtx.Lock()
-						s.conn = &conn
-						s.conMtx.Unlock()
-						s.serverReadChan <- m // Отправляем ответ
-					} else {
-						if s.conn != nil {
-							close(s.serverReadChan)
-						}
-						conn.Close()
-						log.Error(err.Error())
-					}
-				})
-				return nil
+			if e := s.writeToRemoteServerHandler(msg, conn); e != nil {
+				conn.Close()
+				continue
 			}
-			conn.Close()
+			s.conMtx.Lock()
+			s.conn = &conn
+			s.conMtx.Unlock()
+			if er := readFromConnection(s.p, conn, func(m dto.Message, err error) {
+				if err != nil {
+					s.conMtx.Lock()
+					(*s.conn).Close()
+					s.conn = nil
+					s.conMtx.Unlock()
+					close(s.serverReadChan)
+					return
+				}
+				s.serverReadChan <- m
+			}); er != nil {
+				s.conMtx.Lock()
+				(*s.conn).Close()
+				s.conn = nil
+				s.conMtx.Unlock()
+				continue
+			}
+			return nil
 		}
 		return errors.New("Not find server")
 	}
