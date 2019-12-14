@@ -98,7 +98,6 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 		if er := s.writeToRemoteServerHandler(msg, *s.conn); er != nil {
 			(*s.conn).Close()
 			s.conn = nil
-			s.conMtx.Unlock()
 		} else {
 			s.conMtx.Unlock()
 			return nil
