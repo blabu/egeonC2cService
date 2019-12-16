@@ -3,6 +3,7 @@ package main
 import (
 	cf "blabu/c2cService/configuration"
 	"blabu/c2cService/data/c2cData"
+	http "blabu/c2cService/httpGateway"
 	"blabu/c2cService/server"
 	"blabu/c2cService/stat"
 	"net"
@@ -133,6 +134,7 @@ func main() {
 		log.Info("Start UDP server on ", portStr)
 		go startUDPServer(portStr, timeout, &st)
 	}
+	go http.RunGateway(cf.GetConfigValueOrDefault("GateWayAddr", "localhost:8080"), *confPath)
 	for !isStoped.Load() {
 		Con, err := listen.Accept() // Ждущая функция (Висим ждем соединения)
 		if err != nil {
