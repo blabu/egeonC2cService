@@ -8,11 +8,12 @@ import (
 	log "blabu/c2cService/logWrapper"
 )
 
-const sVERSION = "v2.0.1"
+// S_VERSION - Версия сервера
+const S_VERSION = "v2.0.1"
 
 // Statistics - базовые метрики работы сервера
 type Statistics struct {
-	maxTimeForOneConnection time.Duration
+	maxTimeForOneConnection time.Duration `json `
 	maxResponceTime         int64
 	templStat               *template.Template
 	timeUp                  time.Time
@@ -58,4 +59,8 @@ func CreateStatistics() Statistics {
 	return Statistics{
 		timeUp: time.Now(),
 	}
+}
+
+func (s *Statistics) GetJsonStat() []byte {
+
 }

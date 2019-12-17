@@ -97,7 +97,12 @@ func keyAnalysis(key, value string) {
 		}
 		go cmd.Run()
 	default:
-		configStore[key] = value
+		if val, ok := configStore[key]; ok { // Если такой параметр уже есть
+			val += value
+			configStore[key] = val
+		} else {
+			configStore[key] = value
+		}
 	}
 }
 

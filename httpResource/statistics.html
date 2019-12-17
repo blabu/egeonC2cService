@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Statistics</title>
+        <style type="text/css">
+            #statistic {
+                margin: 5px;
+                padding: 15px;
+                background-color: grey;
+                color: black;
+                position: absolute;
+                top: 5em;
+                left: 5em;
+            }
+        </style>
+    </head>
+    <body>
+    <div id="statistic">
+        <h1>Main statistics of server version  {{ .ServerVersion }}</h1>
+        <p>Max connection for all time: {{ .AllConnection }} </p>
+        <p>Max concurrent connection for all time: {{ .MaxCuncurentConnection }}
+        <p>Now connected: {{ .NowConnected }}</p>
+        <p>Work since: {{ .TimeUp }} </p>
+        <p>Working time: {{ .WorkingTime }} </p>
+        <p>Max time one connection: {{ .MaxTimeForOneConnection }}</p>
+        <p>Max responce time: {{ .MaxResponceTime }}</p>
+    </div>
+</body>
