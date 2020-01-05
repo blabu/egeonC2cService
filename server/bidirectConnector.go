@@ -157,13 +157,13 @@ func (c *BidirectConnection) ManageSession(Connect net.Conn, st *stat.Statistics
 		log.Info("Finish connector")
 	}(time.Now()) // Фиксируем конец сесии во времени
 
-	readNewtworkStoped := make(chan bool) // Канал для остановки логики работ с соединением
-	go c.readHandler(&Connect, kill, readNewtworkStoped)
+	readNetworkStoped := make(chan bool) // Канал для остановки логики работ с соединением
+	go c.readHandler(&Connect, kill, readNetworkStoped)
 	select {
 	case <-c.Tm.C:
 		log.Info("Timeout close connector")
 		return
-	case <-readNewtworkStoped:
+	case <-readNetworkStoped:
 		log.Info("Close connector finish network read operation")
 		return
 	}

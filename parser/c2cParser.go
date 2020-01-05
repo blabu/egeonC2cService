@@ -7,7 +7,6 @@ import (
 	"encoding/binary"
 	"fmt"
 	"strconv"
-	"strings"
 )
 
 /*
@@ -29,11 +28,12 @@ ss...ss - размер передаваемых данных (число в ше
 */
 // maxPackageSzie - максимальный размер одного пакета в байтах
 const maxPackageSzie = 8 * 1048576 /*(8 * 1Mb)*/
-const beginHeader string = "$V"
-const endHeader string = "###"
-const delimStr string = ";"
-const minHeader string = beginHeader + delimStr + delimStr + delimStr + delimStr + delimStr + endHeader
 const headerParamSize = 6
+
+var endHeader = []byte("###")
+var beginHeader = []byte("$V")
+var delim = []byte(";")
+var minHeaderLen = len(beginHeader) + headerParamSize*len(delim) + len(endHeader)
 
 type header struct {
 	headerSize  int
@@ -76,27 +76,26 @@ func (c2c *C2cParser) FormMessage(msg dto.Message) ([]byte, error) {
 // return size of header and error if not find header or parsing error
 func (c2c *C2cParser) parseHeader(data []byte) (int, header, error) {
 	var resHeader header
-	if data == nil || len(data) < len(minHeader) {
+	if data == nil || len(data) < minHeaderLen {
 		return 0, resHeader, fmt.Errorf("Input is empty, nothing to be parsed")
 	}
 	index := bytes.IndexByte(data, '$')
 	if index < 0 {
 		return 0, resHeader, fmt.Errorf("Undefined start symb of package")
 	}
-	start := string(data[index : index+2])
-	if !strings.EqualFold(start, beginHeader) {
-		return index, resHeader, fmt.Errorf("Package must be started from %s but %s", beginHeader, start)
+	if !bytes.EqualFold(data[index:index+2], beginHeader) {
+		return index, resHeader, fmt.Errorf("Package must be started from %s", beginHeader)
 	}
 	resHeader.headerSize = bytes.Index(data, []byte(endHeader)) // Поиск конца заголовка
 	if resHeader.headerSize < index || resHeader.headerSize >= len(data) {
 		return index, resHeader, fmt.Errorf("Undefined end header %s", endHeader)
 	}
-	parsed := strings.Split(string(data[index+2:resHeader.headerSize]), delimStr)
+	parsed := bytes.Split(data[index+2:resHeader.headerSize], delim)
 	if len(parsed) < headerParamSize {
 		return index, resHeader, fmt.Errorf("Incorrect header")
 	}
 	var err error
-	if c2c.protocolVer, err = strconv.ParseUint(parsed[0], 16, 64); err != nil { //Версия протокола
+	if c2c.protocolVer, err = strconv.ParseUint(string(parsed[0]), 16, 64); err != nil { //Версия протокола
 		log.Tracef("Can not parse number in %s error %s", parsed[0], err.Error())
 		return index, resHeader, fmt.Errorf("Icorrect protocol version, it must be a number")
 	}
@@ -104,19 +103,19 @@ func (c2c *C2cParser) parseHeader(data []byte) (int, header, error) {
 	case 0: // Для сервер-сервер соединения
 		fallthrough
 	case 1: // Для клиент-сервер соединения
-		resHeader.from = parsed[1]                                                   // от кого
-		resHeader.to = parsed[2]                                                     //кому
-		if resHeader.mType, err = strconv.ParseUint(parsed[3], 16, 64); err != nil { //тип сообщения (команда)
+		resHeader.from = string(parsed[1])                                                   // от кого
+		resHeader.to = string(parsed[2])                                                     //кому
+		if resHeader.mType, err = strconv.ParseUint(string(parsed[3]), 16, 64); err != nil { //тип сообщения (команда)
 			return index, resHeader, fmt.Errorf("Icorrect message type, it must be a number")
 		}
-		if resHeader.jumpCnt, err = strconv.ParseUint(parsed[4], 16, 64); err != nil {
+		if resHeader.jumpCnt, err = strconv.ParseUint(string(parsed[4]), 16, 64); err != nil {
 			return index, resHeader, fmt.Errorf("Incorrect message jump type")
 		}
 		if resHeader.jumpCnt == 0 {
 			return index, resHeader, fmt.Errorf("Jump count is zero")
 		}
 		var s uint64
-		if s, err = strconv.ParseUint(parsed[5], 16, 64); err != nil { //размер сообщения
+		if s, err = strconv.ParseUint(string(parsed[5]), 16, 64); err != nil { //размер сообщения
 			return index, resHeader, fmt.Errorf("Icorrect message size, it must be a number")
 		}
 		if s > maxPackageSzie {
@@ -181,6 +180,7 @@ func (c2c *C2cParser) IsFullReceiveMsg(data []byte) (bool, error) {
 	return false, nil
 }
 
+// GetParserType - needed for parser interface
 func (c2c *C2cParser) GetParserType() uint64 {
 	return C2cParserType
 }

@@ -9,6 +9,7 @@ import (
 	"net"
 	"os"
 	"os/signal"
+	"runtime"
 	"strconv"
 	"strings"
 	"syscall"
@@ -134,11 +135,16 @@ func main() {
 		log.Info("Start UDP server on ", portStr)
 		go startUDPServer(portStr, timeout, &st)
 	}
-	go http.RunGateway(cf.GetConfigValueOrDefault("GateWayAddr", "localhost:8080"), *confPath)
+	go http.RunGateway(cf.GetConfigValueOrDefault("GateWayAddr", "localhost:8080"), *confPath, &st)
 	for !isStoped.Load() {
 		Con, err := listen.Accept() // Ждущая функция (Висим ждем соединения)
 		if err != nil {
-			log.Infof("Can not accept connection, %v", err)
+			if nerr, ok := err.(net.Error); ok && nerr.Temporary() { //check type of error is network error
+				log.Warningf("Temporary Accept() failure - %s", err)
+			} else {
+				log.Infof("Can not accept connection, %v", err)
+			}
+			runtime.Gosched()
 			continue
 		}
 		count := stat.AddIPAddres(strings.Split(Con.RemoteAddr().String(), ":")[0])
