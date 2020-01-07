@@ -61,10 +61,10 @@ func NewC2cDevice(s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) clien
 // Write - если сессия открыта выполняет передачу данных
 // если сессия закрыта ищет в сообщении возможные функций выполненяет их и формирует ответ
 func (c *C2cDevice) Write(msg *dto.Message) error {
-	if msg == nil {
+	if msg == nil || msg.Content == nil {
 		return fmt.Errorf("Message is nil in session %d", c.sessionID)
 	}
-	if len(msg.Content) < 4 { // От кого, кому, данные (может быть пустым), и счетчик прыжков (счетчик прыжков нужен для перезапроса на этом уровне не используется)
+	if len(msg.Content) < 3 { // От кого, кому, данные (может быть пустым)
 		return fmt.Errorf("Not enough arguments in message in session %d", c.sessionID)
 	}
 	switch msg.Command {
@@ -106,14 +106,16 @@ func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err err
 		select {
 		case m, ok := <-c.readChan:
 			if !ok {
+				t.Stop()
 				log.Tracef("Read channel is closed for device %d %s for session %d", c.device.ID, c.device.Name, c.sessionID)
 				handler(dto.Message{}, io.EOF)
 				return
 			}
 			handler(m, nil)
 		case <-t.C:
-			err := fmt.Errorf("Read timeout in session %d", c.sessionID)
+			err := fmt.Errorf("Read timeout in session %d Read is continue", c.sessionID)
 			handler(dto.Message{}, err)
+			t.Reset(dt)
 		}
 	}
 }

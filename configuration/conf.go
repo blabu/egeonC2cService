@@ -12,6 +12,7 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+	"sync"
 
 	log "blabu/c2cService/logWrapper"
 )
@@ -23,10 +24,16 @@ const (
 )
 
 //key-value store for config parameters
-var configStore map[string]string
+type cnf struct {
+	filename    string
+	configStore map[string]string
+	confMtx     sync.RWMutex
+}
+
+var c cnf
 
 func init() {
-	configStore = make(map[string]string, 128)
+	c.configStore = make(map[string]string, 128)
 }
 
 //ReadConfigFile - Read configuration file and fill key-value store.
@@ -36,6 +43,7 @@ func ReadConfigFile(filename string) error {
 	if err != nil {
 		return err
 	}
+	c.filename = filename
 	defer file.Close()
 	n, err := readFile(file, &buff)
 	log.Tracef("Conf file readed size %d", n)
@@ -49,7 +57,9 @@ func ReadConfigFile(filename string) error {
 //GetConfigValue - return value for key string from internal storage
 func GetConfigValue(key string) (string, error) {
 	log.Trace("Request for configuration value by key: ", key)
-	v, ok := configStore[key]
+	c.confMtx.RLock()
+	defer c.confMtx.RUnlock()
+	v, ok := c.configStore[key]
 	if !ok {
 		log.Info("Not find data for key ", key)
 		return "", fmt.Errorf("Not find data for key %s", key)
@@ -65,10 +75,32 @@ func GetConfigValueOrDefault(key string, defaultVal string) string {
 	return defaultVal
 }
 
+//AddConfigValue - append some value to key. If key does not exist it will be create
+func AddConfigValue(key, value string) error {
+	c.confMtx.Lock()
+	defer c.confMtx.Unlock()
+	if val, ok := c.configStore[key]; ok {
+		val += value
+		c.configStore[key] = val
+	} else {
+		c.configStore[key] = value
+	}
+	//TODO Maybe need save to file this config param
+	file, err := os.OpenFile(c.filename, os.O_APPEND, 0666)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	file.WriteString(key + " = " + value + "//append from code\n")
+	return nil
+}
+
 // ShowAllConfigStore - показать key-value store
 func ShowAllConfigStore(w io.Writer) {
 	i := 0
-	for k, v := range configStore {
+	c.confMtx.RLock()
+	defer c.confMtx.RUnlock()
+	for k, v := range c.configStore {
 		i++
 		str := fmt.Sprintf("%d.Key:%v, Value:%v \n", i, k, v)
 		w.Write([]byte(str))
@@ -97,12 +129,14 @@ func keyAnalysis(key, value string) {
 		}
 		go cmd.Run()
 	default:
-		if val, ok := configStore[key]; ok { // Если такой параметр уже есть
+		c.confMtx.Lock()
+		if val, ok := c.configStore[key]; ok { // Если такой параметр уже есть
 			val += value
-			configStore[key] = val
+			c.configStore[key] = val
 		} else {
-			configStore[key] = value
+			c.configStore[key] = value
 		}
+		c.confMtx.Unlock()
 	}
 }
 

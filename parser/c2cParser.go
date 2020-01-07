@@ -55,12 +55,12 @@ type C2cParser struct {
 
 //FormMessage - from - Content[0], to - Content[1], data - Content[2]
 func (c2c *C2cParser) FormMessage(msg dto.Message) ([]byte, error) {
-	if len(msg.Content) < 4 {
+	if len(msg.Content) < 3 {
 		return nil, fmt.Errorf("Error. Incorrect input message")
 	}
 	res := make([]byte, 0, 128+len(msg.Content[0].Data))
-	res = append(res, []byte(beginHeader)...)
-	res = append(res, []byte(strconv.FormatUint(c2c.head.protocolVer, 16))...)
+	res = append(res, beginHeader...)
+	res = append(res, []byte(strconv.FormatUint(uint64(msg.Proto), 16))...)
 	res = append(res, ';')
 	res = append(res, msg.Content[0].Data...)
 	res = append(res, ';')
@@ -68,7 +68,7 @@ func (c2c *C2cParser) FormMessage(msg dto.Message) ([]byte, error) {
 	res = append(res, ';')
 	res = append(res, []byte(strconv.FormatUint(uint64(msg.Command), 16))...)
 	res = append(res, ';')
-	res = append(res, []byte(strconv.FormatUint(binary.LittleEndian.Uint64(msg.Content[3].Data), 16))...)
+	res = append(res, []byte(strconv.FormatUint(uint64(msg.Jmp), 16))...)
 	res = append(res, ';')
 	res = append(res, []byte(strconv.FormatUint(uint64(len(msg.Content[2].Data)), 16))...)
 	res = append(res, []byte(endHeader)...)
@@ -169,8 +169,7 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 func (c2c *C2cParser) IsFullReceiveMsg(data []byte) (bool, error) {
 	var err error
 	var i int
-	//TODO check it later
-	if (c2c.head.headerSize+c2c.head.contentSize > 0) && (len(data) > c2c.head.headerSize+c2c.head.contentSize) {
+	if (c2c.head.headerSize+c2c.head.contentSize > 1) && (len(data) > c2c.head.headerSize+c2c.head.contentSize) {
 		return true, nil
 	}
 	if i, err = c2c.parseHeader(data); err != nil {

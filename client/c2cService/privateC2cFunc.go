@@ -11,6 +11,11 @@ import (
 	"time"
 )
 
+/*
+Приватные функции для клиент-клиент взаимодействия
+Предполагается что параметры всех функций проверены на nil и размер
+*/
+
 const answerInitByNameOk string = "INIT OK"
 const answerConnectByNameOk string = "CONNECT OK"
 
@@ -102,11 +107,6 @@ func (c *C2cDevice) initByID(arg []dto.Content) error {
 	if err != nil {
 		return fmt.Errorf("Can not find corect ID in session %d", c.sessionID)
 	}
-	if len(arg) < 3 {
-		err := fmt.Errorf("Not enough arguments for initialize in session %d", c.sessionID)
-		log.Error(err.Error())
-		return err
-	}
 	credentials := strings.Split(string(arg[2].Data), ";") // Разделим соль от подписи
 	if len(credentials) < 2 {
 		err := fmt.Errorf("Undefined signature for initialize in session %d", c.sessionID)
@@ -140,7 +140,7 @@ func (c *C2cDevice) initByID(arg []dto.Content) error {
 				Command: initByIDCOMMAND,
 				Content: []dto.Content{
 					dto.Content{Data: []byte("0")}, // FROM SERVER
-					arg[0],                         // TO sended client
+					arg[0], // TO sended client
 					dto.Content{Data: []byte(answerInitByIDOk)},
 				},
 			}
@@ -159,11 +159,6 @@ func (c *C2cDevice) initByID(arg []dto.Content) error {
 // For init by name you need send name (Content[0]), (salt ; signature)-(Content[2]) signature - base64(SHA256(name + salt + base64(SHA256(name+password))))
 func (c *C2cDevice) initByName(arg []dto.Content) error {
 	name := string(arg[0].Data)
-	if len(arg) < 3 {
-		err := fmt.Errorf("Not enough arguments for initialize in session %d", c.sessionID)
-		log.Error(err.Error())
-		return err
-	}
 	credentials := strings.Split(string(arg[2].Data), ";") // Разделим соль от подписи
 	if len(credentials) < 2 {
 		err := fmt.Errorf("Undefined signature for initialize in session %d", c.sessionID)
@@ -222,11 +217,6 @@ func (c *C2cDevice) initByName(arg []dto.Content) error {
 
 // For registration new device you need send an unique name, and base64(sha256(name+password))
 func (c *C2cDevice) registerNewDevice(arg []dto.Content) error {
-	if len(arg) < 3 {
-		err := fmt.Errorf("Not enough arguments you need SHA256(name+password) in session %d", c.sessionID)
-		log.Error(err.Error())
-		return err
-	}
 	if c.device.ID != 0 {
 		err := fmt.Errorf("Client already exist error in session %d", c.sessionID)
 		log.Error(err.Error())
@@ -257,11 +247,6 @@ func (c *C2cDevice) registerNewDevice(arg []dto.Content) error {
 }
 
 func (c *C2cDevice) generateNewDevice(arg []dto.Content) error {
-	if len(arg) < 3 {
-		err := fmt.Errorf("Not enough arguments you need SHA256(name+password) in session %d", c.sessionID)
-		log.Warning(err.Error())
-		return err
-	}
 	if len(arg[0].Data) != 0 {
 		err := fmt.Errorf("From name must be empty for register new device in session %d", c.sessionID)
 		log.Warning(err.Error())
@@ -341,7 +326,7 @@ func (c *C2cDevice) destroyConnection(msg *dto.Message) error {
 		}
 	}
 	toID := c.findID(string(msg.Content[1].Data))
-	if toID == 0 {
+	if toID == 0 { // disconnect from all connected devices
 		log.Tracef("Close all connection for client %s: %d in session %d", c.device.Name, c.device.ID, c.sessionID)
 		c.listenerMtx.Lock()
 		for id, ch := range c.listenerList {
@@ -353,8 +338,8 @@ func (c *C2cDevice) destroyConnection(msg *dto.Message) error {
 			}
 		}
 		c.listenerMtx.Unlock()
-		connection.DelClientFromCashe(c.device.ID) // Удаляем в подписанных устройствах себя
-		connection.AddClientToCache(c.device.ID, c)
+		connection.DelClientFromCashe(c.device.ID)  // Удаляем в подписанных устройствах себя
+		connection.AddClientToCache(c.device.ID, c) // Заново добавляем себя в кеш
 		return nil
 	}
 	c.listenerMtx.Lock()

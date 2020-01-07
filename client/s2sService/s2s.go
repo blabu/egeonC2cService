@@ -50,16 +50,16 @@ type C2cDecorate struct {
 }
 
 func readFromConnection(p parser.Parser, reader io.Reader, handler func(dto.Message, error)) error {
-	readBuffer := make([]byte, 1, 2048)
+	readBuffer := make([]byte, 1, 2048) // Размер буфера выставляем равным 1 байту для попытки успешного чтения хотябы одного байта
 	if c, ok := reader.(net.Conn); ok {
 		c.SetReadDeadline(time.Now().Add(10 * time.Second))
 	}
-	if _, er := reader.Read(readBuffer); er != nil {
+	if _, er := reader.Read(readBuffer); er != nil { // Пытаемся прочитать хотябы один байт
 		return er
 	}
-	go func(readBuffer []byte) {
+	go func(readBuffer []byte) { // Если успешно прочли хотябы один байт, читаем остальное
+		tempRead := make([]byte, 256)
 		for { // Пытаемся прочитать полный ответ разпарсить его и подготовить ответ
-			tempRead := make([]byte, 256)
 			if c, ok := reader.(net.Conn); ok {
 				c.SetReadDeadline(time.Now().Add(10 * time.Second))
 			}
@@ -69,8 +69,7 @@ func readFromConnection(p parser.Parser, reader io.Reader, handler func(dto.Mess
 				handler(dto.Message{}, er)
 				return
 			}
-			tempRead = tempRead[:n]
-			readBuffer = append(readBuffer, tempRead...)
+			readBuffer = append(readBuffer, tempRead[:n]...)
 			isFull, err := p.IsFullReceiveMsg(readBuffer)
 			if err != nil { // Сообщение не корректное
 				log.Trace(er.Error())
@@ -214,6 +213,7 @@ func (s *C2cDecorate) Read(dt time.Duration, handler func(msg dto.Message, err e
 			handler(m, nil)
 		case <-timer.C:
 			handler(dto.Message{}, errors.New("Timeout"))
+			timer.Reset(dt)
 		}
 	}
 }
