@@ -72,17 +72,17 @@ func (c *C2cDevice) Write(msg *dto.Message) error {
 	case pingCOMMAND:
 		return c.ping(msg)
 	case connectByIDCOMMAND: // Content[0] - from ID, Content[1] - to ID
-		return c.connectByID(msg.Content)
+		return c.connectByID(msg)
 	case connectByNameCOMMAND: // Content[0] - from name, Content[1] - to name
-		return c.connectByName(msg.Content)
+		return c.connectByName(msg)
 	case initByIDCOMMAND: // Content[0] - from ID, Content[1] - to (server always "0")
-		return c.initByID(msg.Content)
+		return c.initByID(msg)
 	case initByNameCOMMAND: // Content[0] - from name, Content[1] - to (server always "0")
-		return c.initByName(msg.Content)
+		return c.initByName(msg)
 	case registerCOMMAND:
-		return c.registerNewDevice(msg.Content) // Content[0] - from name, Content[1] - to (server always "0") , Content[2] - BASE64(SHA256(name+password))
+		return c.registerNewDevice(msg) // Content[0] - from name, Content[1] - to (server always "0") , Content[2] - BASE64(SHA256(name+password))
 	case generateCOMMAND:
-		return c.generateNewDevice(msg.Content) // Content[0] - is empty, Content[1] - to (server always "0"), Content[2] - BASE64 string password hash
+		return c.generateNewDevice(msg) // Content[0] - is empty, Content[1] - to (server always "0"), Content[2] - BASE64 string password hash
 	case dataCOMMAND:
 		return c.sendNewMessage(msg)
 	case destroyConCOMMAND: // Разорвать соединения без отключения от сервера
