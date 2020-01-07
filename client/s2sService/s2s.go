@@ -35,6 +35,7 @@ func NewDecorator(p parser.Parser, s c2cData.C2cDB, sessionID uint32, maxCONNECT
 		client:         client,
 		serverReadChan: make(chan dto.Message, maxCONNECTION),
 		conn:           nil,
+		timeout:        10 * time.Second,
 	}
 	return &service
 }
@@ -47,9 +48,10 @@ type C2cDecorate struct {
 	serverReadChan chan dto.Message
 	conMtx         sync.Mutex
 	conn           *net.Conn
+	timeout        time.Duration
 }
 
-func readFromConnection(p parser.Parser, reader io.Reader, handler func(dto.Message, error)) error {
+func (s *C2cDecorate) readFromConnection(reader io.Reader, handler func(dto.Message, error)) error {
 	readBuffer := make([]byte, 1, 2048) // Размер буфера выставляем равным 1 байту для попытки успешного чтения хотябы одного байта
 	if c, ok := reader.(net.Conn); ok {
 		c.SetReadDeadline(time.Now().Add(10 * time.Second))
@@ -61,7 +63,7 @@ func readFromConnection(p parser.Parser, reader io.Reader, handler func(dto.Mess
 		tempRead := make([]byte, 256)
 		for { // Пытаемся прочитать полный ответ разпарсить его и подготовить ответ
 			if c, ok := reader.(net.Conn); ok {
-				c.SetReadDeadline(time.Now().Add(10 * time.Second))
+				c.SetReadDeadline(time.Now().Add(s.timeout))
 			}
 			n, er := reader.Read(tempRead)
 			if er != nil { // Удаленный сервер разорвал соединение
@@ -70,14 +72,14 @@ func readFromConnection(p parser.Parser, reader io.Reader, handler func(dto.Mess
 				return
 			}
 			readBuffer = append(readBuffer, tempRead[:n]...)
-			isFull, err := p.IsFullReceiveMsg(readBuffer)
+			isFull, err := s.p.IsFullReceiveMsg(readBuffer)
 			if err != nil { // Сообщение не корректное
 				log.Trace(er.Error())
 				handler(dto.Message{}, err)
 				continue
 			}
 			if isFull {
-				m, er := p.ParseMessage(readBuffer)
+				m, er := s.p.ParseMessage(readBuffer)
 				if er != nil {
 					log.Trace(er.Error())
 					handler(dto.Message{}, er)
@@ -124,7 +126,7 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 	if s.conn == nil {
 		for _, addr := range s.serverLists {
 			log.Trace("Try connect to ", addr)
-			conn, e := net.Dial("tcp", addr)
+			conn, e := net.DialTimeout("tcp", addr, s.timeout)
 			if e != nil {
 				log.Trace("Connecction fail")
 				continue
@@ -136,7 +138,7 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 			s.conMtx.Lock()
 			s.conn = &conn
 			s.conMtx.Unlock()
-			if er := readFromConnection(s.p, conn, func(m dto.Message, err error) {
+			if er := s.readFromConnection(conn, func(m dto.Message, err error) {
 				if err != nil {
 					s.conMtx.Lock()
 					(*s.conn).Close()

@@ -80,7 +80,7 @@ func AddConfigValue(key, value string) error {
 	c.confMtx.Lock()
 	defer c.confMtx.Unlock()
 	if val, ok := c.configStore[key]; ok {
-		val += value
+		val += "," + value
 		c.configStore[key] = val
 	} else {
 		c.configStore[key] = value
@@ -91,7 +91,7 @@ func AddConfigValue(key, value string) error {
 		return err
 	}
 	defer file.Close()
-	file.WriteString(key + " = " + value + "//append from code\n")
+	file.WriteString(key + " = " + value + "//append from code\n\n")
 	return nil
 }
 
@@ -118,7 +118,7 @@ func keyAnalysis(key, value string) {
 			log.Info(err)
 		}
 	case runTask:
-		prepare := strings.Split(value, ";")
+		prepare := strings.Split(value, ",")
 		var cmd *exec.Cmd
 		if len(prepare) > 1 {
 			cmd = exec.Command(prepare[0], prepare[1:]...)
@@ -131,7 +131,7 @@ func keyAnalysis(key, value string) {
 	default:
 		c.confMtx.Lock()
 		if val, ok := c.configStore[key]; ok { // Если такой параметр уже есть
-			val += value
+			val += "," + value
 			c.configStore[key] = val
 		} else {
 			c.configStore[key] = value
@@ -162,7 +162,7 @@ func parseBuff(buff []byte) {
 	var isValue = false
 	var key bytes.Buffer
 	var value bytes.Buffer
-	for n := 0; n < len(buff)-1; n++ {
+	for n := 0; n < len(buff); n++ {
 		if buff[n] == ' ' || buff[n] == 0 || buff[n] == '\t' {
 			continue
 		}
@@ -170,6 +170,7 @@ func parseBuff(buff []byte) {
 			isValue = false
 			isComment = false
 			if key.Len() != 0 && value.Len() != 0 {
+				log.Infof("Key %s and value %s", key.String(), value.String())
 				keyAnalysis(key.String(), value.String())
 				key.Reset()
 				value.Reset()
@@ -179,9 +180,11 @@ func parseBuff(buff []byte) {
 		if isComment { // Если коментарий пропускаем
 			continue
 		}
-		if buff[n] == '/' && buff[n+1] == '/' { // Начало коментария
-			isComment = true
-			continue
+		if buff[n] == '/' {
+			if n < len(buff)-1 && buff[n+1] == '/' { // Начало коментария
+				isComment = true
+				continue
+			}
 		}
 		if buff[n] == '#' {
 			isComment = true

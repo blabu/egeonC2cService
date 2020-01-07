@@ -93,25 +93,25 @@ func SetFlags(flags int) {
 func Debug(v ...interface{}) {
 	log.mtx.RLock()
 	defer log.mtx.RUnlock()
-	// log.logWrapper.InfoDepth(1, v...)
+	log.logWrapper.InfoDepth(1, v...)
 }
 
 func Debugf(format string, v ...interface{}) {
 	log.mtx.RLock()
 	defer log.mtx.RUnlock()
-	// log.logWrapper.InfoDepth(1, fmt.Sprintf(format, v...))
+	log.logWrapper.InfoDepth(1, fmt.Sprintf(format, v...))
 }
 
 func Trace(v ...interface{}) {
 	log.mtx.RLock()
 	defer log.mtx.RUnlock()
-	// log.logWrapper.InfoDepth(1, v...)
+	log.logWrapper.InfoDepth(1, v...)
 }
 
 func Tracef(format string, v ...interface{}) {
 	log.mtx.RLock()
 	defer log.mtx.RUnlock()
-	// log.logWrapper.InfoDepth(1, fmt.Sprintf(format, v...))
+	log.logWrapper.InfoDepth(1, fmt.Sprintf(format, v...))
 }
 
 // Info uses the default logger and logs with the Info severity.
