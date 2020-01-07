@@ -9,7 +9,7 @@ import (
 )
 
 // S_VERSION - Версия сервера
-const S_VERSION = "v2.0.1"
+const S_VERSION = "v2.1.0"
 
 // Statistics - базовые метрики работы сервера
 type Statistics struct {

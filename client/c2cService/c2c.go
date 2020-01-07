@@ -58,8 +58,7 @@ func NewC2cDevice(s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) clien
 	return c
 }
 
-// Write - если сессия открыта выполняет передачу данных
-// если сессия закрыта ищет в сообщении возможные функций выполненяет их и формирует ответ
+// Write - обработка сообщений в соответствии с командами
 func (c *C2cDevice) Write(msg *dto.Message) error {
 	if msg == nil || msg.Content == nil {
 		return fmt.Errorf("Message is nil in session %d", c.sessionID)
@@ -71,7 +70,7 @@ func (c *C2cDevice) Write(msg *dto.Message) error {
 	case errorCOMMAND:
 		return c.errorHandler(msg)
 	case pingCOMMAND:
-		return c.ping(msg.Content)
+		return c.ping(msg)
 	case connectByIDCOMMAND: // Content[0] - from ID, Content[1] - to ID
 		return c.connectByID(msg.Content)
 	case connectByNameCOMMAND: // Content[0] - from name, Content[1] - to name

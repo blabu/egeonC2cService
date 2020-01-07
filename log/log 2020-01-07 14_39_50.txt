@@ -1,0 +1,19 @@
+INFO : 2020/01/07 14:39:50.352776 main.go:97: Start listening at port :5888
+INFO : 2020/01/07 14:39:50.352861 main.go:135: Start UDP server on :5889
+INFO : 2020/01/07 14:39:50.352923 host.go:81: Start http gateway on localhost:6060
+INFO : 2020/01/07 14:39:59.387765 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/07 14:39:59.387923 main.go:155: Create new connection
+INFO : 2020/01/07 14:39:59.388272 conf.go:64: Not find data for key ReceiveBufferSize
+ERROR: 2020/01/07 14:39:59.390864 privateC2cFunc.go:227: Client with name bla already exist
+ERROR: 2020/01/07 14:39:59.391845 bidirectConnector.go:134: Not find server
+INFO : 2020/01/07 14:39:59.391986 bidirectMainLogic.go:81: Close bidirectMainLogic and client logic in session 1
+ERROR: 2020/01/07 14:39:59.392104 c2cCashe.go:68: Client with id 0 not find in cache for delete it
+INFO : 2020/01/07 14:39:59.392184 c2c.go:127: Close client with id 0 in session 1
+INFO : 2020/01/07 14:39:59.392327 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/07 14:39:59.392432 stat.go:44: Close connection
+INFO : 2020/01/07 14:39:59.393041 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/07 14:40:28.409082 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/07 14:40:28.409553 main.go:155: Create new connection
+INFO : 2020/01/07 14:40:28.409647 conf.go:64: Not find data for key ReceiveBufferSize
+INFO : 2020/01/07 14:40:55.139368 main.go:131: Operation system kill server
+INFO : 2020/01/07 14:40:55.139821 main.go:145: Can not accept connection, accept tcp [::]:5888: use of closed network connection

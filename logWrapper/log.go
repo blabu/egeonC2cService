@@ -3,6 +3,7 @@ package logWrapper
 import (
 	"fmt"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -60,8 +61,8 @@ func (l *LogFileType) closeFile() {
 func (l *LogFileType) ChangeFile(addrPath string, dT time.Duration) {
 	defer l.closeFile()
 	for {
-		logFilePath := addrPath + "/log " + time.Now().Format("2006-01-02 15_04_05") + ".txt"
-		logFile, err := os.OpenFile(logFilePath, os.O_WRONLY|os.O_CREATE, 0666)
+		logFilePath := addrPath + "/log " + strings.Split(time.Now().Format("2006-01-02 15_04_05"), " ")[0] + ".txt"
+		logFile, err := os.OpenFile(logFilePath, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0666)
 		if err != nil {
 			if l.logWrapper == nil {
 				logger.Errorf("Error when try open a file for loging %s, %s", logFilePath, err.Error())

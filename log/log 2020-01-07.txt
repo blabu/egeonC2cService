@@ -1,0 +1,7 @@
+INFO : 2020/01/07 14:42:57.024809 main.go:97: Start listening at port :5888
+INFO : 2020/01/07 14:42:57.024875 main.go:135: Start UDP server on :5889
+INFO : 2020/01/07 14:42:57.024909 host.go:81: Start http gateway on localhost:6060
+INFO : 2020/01/07 14:43:01.465720 host.go:54: Try read and parse template file
+INFO : 2020/01/07 14:43:01.465781 conf.go:64: Not find data for key PathToWeb
+INFO : 2020/01/07 15:15:00.583320 main.go:131: Operation system kill server
+INFO : 2020/01/07 15:15:00.583741 main.go:145: Can not accept connection, accept tcp [::]:5888: use of closed network connection
