@@ -135,7 +135,7 @@ func main() {
 		log.Info("Start UDP server on ", portStr)
 		go startUDPServer(portStr, timeout, &st)
 	}
-	go http.RunGateway(cf.GetConfigValueOrDefault("GateWayAddr", "localhost:8080"), *confPath, &st)
+	go http.RunGateway(cf.GetConfigValueOrDefault("GatewayAddr", "localhost:8080"), *confPath, &st)
 	for !isStoped.Load() {
 		Con, err := listen.Accept() // Ждущая функция (Висим ждем соединения)
 		if err != nil {
