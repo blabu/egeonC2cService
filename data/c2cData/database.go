@@ -13,13 +13,15 @@ import (
 	"github.com/boltdb/bolt"
 )
 
+type ClientType = uint16
+
 //C2cDB - БАЗОВЫЙ интерфейс для клиент-клиент взаимодействия (Сделан для тестов)
 type C2cDB interface {
 	GetClientByName(name string) (*dto.ClientDescriptor, error)
 	GetClientByID(ID uint64) (*dto.ClientDescriptor, error)
 	DelClient(ID uint64, name string) error
-	GenerateRandomClient(hash string) (*dto.ClientDescriptor, error)
-	GenerateClient(name, hash string) (*dto.ClientDescriptor, error)
+	GenerateRandomClient(T ClientType, hash string) (*dto.ClientDescriptor, error)
+	GenerateClient(T ClientType, name, hash string) (*dto.ClientDescriptor, error)
 	SaveClient(cl *dto.ClientDescriptor) error
 }
 
@@ -33,7 +35,7 @@ const (
 	clientsByNameBucket = "clientsByName" // Клиенты с ключем по имени
 	clientsByIDBucket   = "clientsByID"   // Клиенты с ключем по ID
 	maxClientID         = "maxClientID"
-	// clientMessages      = "client%sMessages" // Шаблон для таблиц с сообщениями пользователей
+	// clientMessages      = "clientMessages" // Шаблон для таблиц с сообщениями пользователей
 )
 
 // GetBoltDbInstance - Вернет реализацию интерфейса C2cDB реализованную на базе boltDB
@@ -113,7 +115,7 @@ func (d *boltC2cDatabase) DelClient(ID uint64, name string) error {
 	return d.delClient(uint64ToBytes(ID), []byte(name))
 }
 
-func (d *boltC2cDatabase) getMaxID(T byte) uint64 {
+func (d *boltC2cDatabase) getMaxID(T ClientType) uint64 {
 	tx, err := d.clientStorage.Begin(true)
 	if err != nil {
 		log.Error(err.Error())
@@ -129,13 +131,19 @@ func (d *boltC2cDatabase) getMaxID(T byte) uint64 {
 		log.Error(err.Error())
 		return 0
 	}
-	maxID := uint64(T)<<56 | 1
-	if bID := buck.Get([]byte{T}); bID != nil {
-		maxID = bytesToUint64(bID)
-		log.Tracef("Max ID finded %d, %v", maxID, bID)
-		maxID++
+	maxID := uint64(T)<<(64-16) | 1
+	buf := make([]byte, 2)
+	binary.LittleEndian.PutUint16(buf, T)
+	if bID := buck.Get(buf); bID != nil {
+		mxID := bytesToUint64(bID)
+		if mxID > maxID {
+			log.Tracef("Max ID finded %d, %v", maxID, bID)
+			maxID = mxID+1
+		} else {
+			log.Errorf("Incorrect max ID %d, set default value %d", mxID, maxID)
+		}
 	}
-	err = buck.Put([]byte{T}, uint64ToBytes(maxID))
+	err = buck.Put(buf, uint64ToBytes(maxID))
 	if err != nil {
 		log.Error(err.Error())
 		return 0
@@ -145,11 +153,11 @@ func (d *boltC2cDatabase) getMaxID(T byte) uint64 {
 }
 
 // GenerateRandomClient - Генерируем нового клиента, имя которого будет совпадать с его идентификационным номером
-func (d *boltC2cDatabase) GenerateRandomClient(hash string) (*dto.ClientDescriptor, error) {
+func (d *boltC2cDatabase) GenerateRandomClient(T ClientType, hash string) (*dto.ClientDescriptor, error) {
 	if len(hash) < 2 {
 		return nil, fmt.Errorf("hash password is to small")
 	}
-	max := d.getMaxID(1)
+	max := d.getMaxID(T)
 	if max != 0 {
 		return &dto.ClientDescriptor{
 			ID:        max,
@@ -161,11 +169,11 @@ func (d *boltC2cDatabase) GenerateRandomClient(hash string) (*dto.ClientDescript
 }
 
 // GenerateClient - Генерируем нового клиента по его имени и паролю
-func (d *boltC2cDatabase) GenerateClient(name, hash string) (*dto.ClientDescriptor, error) {
+func (d *boltC2cDatabase) GenerateClient(T ClientType, name, hash string) (*dto.ClientDescriptor, error) {
 	if _, er := d.GetClientByName(name); er == nil {
 		return nil, fmt.Errorf("Client with name %s already exist", name)
 	}
-	max := d.getMaxID(1)
+	max := d.getMaxID(T)
 	log.Tracef("New ID is %d", max)
 	if max != 0 {
 		return &dto.ClientDescriptor{

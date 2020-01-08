@@ -9,8 +9,26 @@ func init() {
 	saltCache = make(map[string]int)
 }
 
-//CheckSalt Функция возвращает сколько раз использовалась одна и та же соль при авторизации
-func CheckSalt(salt string) int {
+// CheckSaltByUserName Функция возвращает сколько раз использовалась одна и та же соль
+// при авторизации конкретного пользователя
+func CheckSaltByUserName(name, salt string) int {
+	saltMtx.RLock()
+	cnt, ok := saltCache[salt]
+	saltMtx.RUnlock()
+	if !ok {
+		cnt = 1
+	} else {
+		cnt++
+	}
+	saltMtx.Lock()
+	saltCache[salt] = cnt
+	saltMtx.Unlock()
+	return cnt
+}
+
+// CheckSaltByID Функция возвращает сколько раз использовалась одна и та же соль
+// при авторизации конкретного пользователя
+func CheckSaltByID(ID uint64, salt string) int {
 	saltMtx.RLock()
 	cnt, ok := saltCache[salt]
 	saltMtx.RUnlock()

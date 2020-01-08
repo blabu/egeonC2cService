@@ -122,6 +122,11 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 	if err == nil {
 		return nil
 	}
+	if er, ok := err.(c2cService.C2cError); ok {
+		if er.ErrType > c2cService.DisableConnectionErrorLimit {
+			return er
+		}
+	}
 	log.Trace("Try find new connection")
 	if s.conn == nil {
 		for _, addr := range s.serverLists {
