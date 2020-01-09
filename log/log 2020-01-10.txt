@@ -1,0 +1,265 @@
+INFO : 2020/01/10 00:16:57.720254 conf.go:59: Request for configuration value by key: OldIPAddrTimeout
+INFO : 2020/01/10 00:16:57.720516 conf.go:59: Request for configuration value by key: ServerTcpPort
+INFO : 2020/01/10 00:16:57.720781 main.go:96: Start listening at port :5888
+INFO : 2020/01/10 00:16:57.721007 conf.go:59: Request for configuration value by key: ServerUdpPort
+INFO : 2020/01/10 00:16:57.721053 main.go:134: Start UDP server on :5889
+INFO : 2020/01/10 00:16:57.721316 conf.go:59: Request for configuration value by key: GatewayAddr
+INFO : 2020/01/10 00:16:57.721601 host.go:80: Start http gateway on localhost:6060
+INFO : 2020/01/10 00:17:37.861277 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/10 00:17:37.861402 main.go:156: Create new connection
+INFO : 2020/01/10 00:17:37.861982 conf.go:59: Request for configuration value by key: ReceiveBufferSize
+INFO : 2020/01/10 00:17:37.864418 bidirectConnector.go:102: Parser still not initialize
+INFO : 2020/01/10 00:17:37.864500 initParser.go:33: Create c2c parser
+INFO : 2020/01/10 00:17:37.864581 conf.go:59: Request for configuration value by key: clientType
+INFO : 2020/01/10 00:17:37.864646 conf.go:59: Request for configuration value by key: PeerList
+INFO : 2020/01/10 00:17:37.864901 bidirectMainLogic.go:47: Session 1 Try write to client logic
+INFO : 2020/01/10 00:17:37.865003 c2cParser.go:145: Message from bla to 0 type 6 jump 3 and content size 61
+INFO : 2020/01/10 00:17:37.865607 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:17:50.820029 bidirectConnector.go:92: Receive Full message $V1;bla;blabu;8;3;0###
+INFO : 2020/01/10 00:17:50.820281 bidirectMainLogic.go:47: Session 1 Try write to client logic
+INFO : 2020/01/10 00:17:50.820599 c2cParser.go:145: Message from bla to blabu type 8 jump 3 and content size 0
+WARN : 2020/01/10 00:17:50.821388 c2cCashe.go:101: Client 72057594037927938 not find in online cache
+WARN : 2020/01/10 00:17:50.821665 privateC2cFunc.go:97: Can not create connection to device 72057594037927938
+INFO : 2020/01/10 00:17:50.821847 s2s.go:129: Try find new connection
+INFO : 2020/01/10 00:17:50.821995 s2s.go:132: Try connect to 127.0.0.1:3555
+INFO : 2020/01/10 00:17:50.823035 s2s.go:135: Connecction fail
+INFO : 2020/01/10 00:17:50.823246 s2s.go:132: Try connect to 127.0.0.1:4555
+INFO : 2020/01/10 00:17:50.824219 s2s.go:135: Connecction fail
+INFO : 2020/01/10 00:17:50.824407 s2s.go:132: Try connect to 192.168.1.102:4555
+INFO : 2020/01/10 00:18:00.825364 s2s.go:135: Connecction fail
+ERROR: 2020/01/10 00:18:00.825558 bidirectConnector.go:97: Not find server
+INFO : 2020/01/10 00:18:00.825770 bidirectMainLogic.go:81: Close bidirectMainLogic and client logic in session 1
+INFO : 2020/01/10 00:18:00.825911 s2s.go:235: Close client decorator
+INFO : 2020/01/10 00:18:00.826156 c2c.go:183: Close client with id 72057594037927937 in session 1
+INFO : 2020/01/10 00:18:00.826364 bidirectConnector.go:60: Finish readHandler
+INFO : 2020/01/10 00:18:00.826534 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/10 00:18:00.826764 stat.go:44: Close connection
+INFO : 2020/01/10 00:18:00.827028 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/10 00:18:00.827164 c2c.go:166: Read channel is closed for device 72057594037927937 bla for session 1
+INFO : 2020/01/10 00:18:00.827331 s2s.go:184: EOF
+INFO : 2020/01/10 00:18:00.827475 s2s.go:172: Client delegat readhandler finish
+INFO : 2020/01/10 00:18:00.827628 s2s.go:216: Client read error
+INFO : 2020/01/10 00:18:00.827780 bidirectMainLogic.go:69: EOF
+INFO : 2020/01/10 00:18:00.827927 bidirectConnector.go:116: EOF
+INFO : 2020/01/10 00:18:00.831820 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/10 00:18:00.832102 main.go:156: Create new connection
+INFO : 2020/01/10 00:18:00.833368 conf.go:59: Request for configuration value by key: ReceiveBufferSize
+INFO : 2020/01/10 00:18:05.973158 bidirectConnector.go:76: Error when try read from conection: EOF
+INFO : 2020/01/10 00:18:05.973366 bidirectConnector.go:60: Finish readHandler
+INFO : 2020/01/10 00:18:05.973565 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/10 00:18:05.973804 stat.go:44: Close connection
+INFO : 2020/01/10 00:18:05.974076 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/10 00:18:05.974333 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/10 00:18:05.974555 main.go:156: Create new connection
+INFO : 2020/01/10 00:18:05.975678 conf.go:59: Request for configuration value by key: ReceiveBufferSize
+INFO : 2020/01/10 00:18:05.976172 bidirectConnector.go:102: Parser still not initialize
+INFO : 2020/01/10 00:18:05.976371 initParser.go:33: Create c2c parser
+INFO : 2020/01/10 00:18:05.976580 conf.go:59: Request for configuration value by key: clientType
+INFO : 2020/01/10 00:18:05.976773 conf.go:59: Request for configuration value by key: PeerList
+INFO : 2020/01/10 00:18:05.977444 bidirectMainLogic.go:47: Session 2 Try write to client logic
+INFO : 2020/01/10 00:18:05.978387 c2cParser.go:145: Message from bla to 0 type 6 jump 3 and content size 61
+INFO : 2020/01/10 00:18:05.978970 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:18:31.374343 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/10 00:18:31.374577 main.go:156: Create new connection
+INFO : 2020/01/10 00:18:31.375984 conf.go:59: Request for configuration value by key: ReceiveBufferSize
+INFO : 2020/01/10 00:18:31.381327 bidirectConnector.go:102: Parser still not initialize
+INFO : 2020/01/10 00:18:31.381510 initParser.go:33: Create c2c parser
+INFO : 2020/01/10 00:18:31.381674 conf.go:59: Request for configuration value by key: clientType
+INFO : 2020/01/10 00:18:31.381822 conf.go:59: Request for configuration value by key: PeerList
+INFO : 2020/01/10 00:18:31.382379 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:18:31.382596 c2cParser.go:145: Message from blabu to 0 type 6 jump 3 and content size 61
+INFO : 2020/01/10 00:18:31.383463 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:18:44.155691 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;8;3;0###
+INFO : 2020/01/10 00:18:44.156067 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:18:44.156324 c2cParser.go:145: Message from blabu to bla type 8 jump 3 and content size 0
+INFO : 2020/01/10 00:18:44.156950 c2c.go:81: Add channel from client 72057594037927937 to blabu
+INFO : 2020/01/10 00:18:44.157170 c2c.go:81: Add channel from client 72057594037927938 to bla
+INFO : 2020/01/10 00:18:44.157414 privateC2cFunc.go:100: Connect command from device blabu to device bla in session 3
+INFO : 2020/01/10 00:18:44.157709 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:18:48.486582 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;9;3;19###32fiV7H7iB5FGQCoNuIXmQ==
+INFO : 2020/01/10 00:18:48.486843 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:18:48.487212 c2cParser.go:145: Message from blabu to bla type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:18:48.487486 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:18:55.363062 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;9;3;19###32fiV7H7iB5FGQCoNuIXmQ==
+INFO : 2020/01/10 00:18:55.363330 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:18:55.363573 c2cParser.go:145: Message from blabu to bla type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:18:55.364347 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:19:13.163746 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;9;3;19###li1r621F3n9Ksgrho3XpRg==
+INFO : 2020/01/10 00:19:13.164090 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:19:13.164370 c2cParser.go:145: Message from blabu to bla type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:19:13.165042 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:19:16.558021 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;9;3;19###f5KP5w3Zs3EczOxgxhVbvQ==
+INFO : 2020/01/10 00:19:16.558446 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:19:16.558739 c2cParser.go:145: Message from blabu to bla type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:19:16.559470 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:19:20.856908 bidirectConnector.go:92: Receive Full message $V1;bla;blabu;8;3;0###
+INFO : 2020/01/10 00:19:20.857146 bidirectMainLogic.go:47: Session 2 Try write to client logic
+INFO : 2020/01/10 00:19:20.857336 c2cParser.go:145: Message from bla to blabu type 8 jump 3 and content size 0
+INFO : 2020/01/10 00:19:20.857796 c2c.go:81: Add channel from client 72057594037927938 to bla
+INFO : 2020/01/10 00:19:20.857904 c2c.go:81: Add channel from client 72057594037927937 to blabu
+INFO : 2020/01/10 00:19:20.858015 privateC2cFunc.go:100: Connect command from device bla to device blabu in session 2
+INFO : 2020/01/10 00:19:20.858206 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:19:23.655231 bidirectConnector.go:92: Receive Full message $V1;bla;blabu;9;3;19###YivZJHPp7BK7WW9KycRnIQ==
+INFO : 2020/01/10 00:19:23.655522 bidirectMainLogic.go:47: Session 2 Try write to client logic
+INFO : 2020/01/10 00:19:23.655795 c2cParser.go:145: Message from bla to blabu type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:19:23.656524 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:19:26.773710 bidirectConnector.go:92: Receive Full message $V1;bla;blabu;9;3;19###1mJI8EcTxwABFUyCWRNrjA==
+INFO : 2020/01/10 00:19:26.774000 bidirectMainLogic.go:47: Session 2 Try write to client logic
+INFO : 2020/01/10 00:19:26.774271 c2cParser.go:145: Message from bla to blabu type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:19:26.775016 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:19:32.858982 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;9;3;19###RV93dB9XwcmCn2ea8blzCg==
+INFO : 2020/01/10 00:19:32.859241 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:19:32.859499 c2cParser.go:145: Message from blabu to bla type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:19:32.860287 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:19:48.998227 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;9;3;19###2ICEzQW/DLbIW0udyTWPgQ==
+INFO : 2020/01/10 00:19:48.998625 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:19:48.998938 c2cParser.go:145: Message from blabu to bla type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:19:48.999608 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:21:16.378850 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;9;3;19###VCdwFZpePq/NjLya2VQo/w==
+INFO : 2020/01/10 00:21:16.379102 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:21:16.379364 c2cParser.go:145: Message from blabu to bla type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:21:16.380059 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:21:27.409348 bidirectConnector.go:92: Receive Full message $V1;bla;blabu;9;3;2d###Am4TsZSwszXSuJ3+CDBqsRMjXCLIUdHBbtO2LZcDPYc=
+INFO : 2020/01/10 00:21:27.409636 bidirectMainLogic.go:47: Session 2 Try write to client logic
+INFO : 2020/01/10 00:21:27.409891 c2cParser.go:145: Message from bla to blabu type 9 jump 3 and content size 45
+INFO : 2020/01/10 00:21:27.410595 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:21:43.267986 bidirectConnector.go:76: Error when try read from conection: EOF
+INFO : 2020/01/10 00:21:43.268351 bidirectMainLogic.go:81: Close bidirectMainLogic and client logic in session 2
+INFO : 2020/01/10 00:21:43.268530 s2s.go:235: Close client decorator
+INFO : 2020/01/10 00:21:43.268741 c2c.go:89: Delete channel from client 72057594037927937 for blabu
+INFO : 2020/01/10 00:21:43.268925 c2c.go:89: Delete channel from client 72057594037927937 for blabu
+INFO : 2020/01/10 00:21:43.269174 c2c.go:183: Close client with id 72057594037927937 in session 2
+INFO : 2020/01/10 00:21:43.269319 bidirectConnector.go:60: Finish readHandler
+INFO : 2020/01/10 00:21:43.269633 c2c.go:166: Read channel is closed for device 72057594037927937 bla for session 2
+INFO : 2020/01/10 00:21:43.269868 s2s.go:184: EOF
+INFO : 2020/01/10 00:21:43.270032 s2s.go:172: Client delegat readhandler finish
+INFO : 2020/01/10 00:21:43.270193 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/10 00:21:43.270425 stat.go:44: Close connection
+INFO : 2020/01/10 00:21:43.270829 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/10 00:21:43.271423 s2s.go:216: Client read error
+INFO : 2020/01/10 00:21:43.271651 bidirectMainLogic.go:69: EOF
+INFO : 2020/01/10 00:21:43.271816 bidirectConnector.go:116: EOF
+INFO : 2020/01/10 00:21:43.277144 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/10 00:21:43.277276 main.go:156: Create new connection
+INFO : 2020/01/10 00:21:43.277815 conf.go:59: Request for configuration value by key: ReceiveBufferSize
+INFO : 2020/01/10 00:21:43.285774 bidirectConnector.go:76: Error when try read from conection: EOF
+INFO : 2020/01/10 00:21:43.285916 bidirectConnector.go:60: Finish readHandler
+INFO : 2020/01/10 00:21:43.286043 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/10 00:21:43.286145 stat.go:44: Close connection
+INFO : 2020/01/10 00:21:43.286276 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/10 00:21:52.140982 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;9;3;19###eQ/H0xt+G5HkOvN7A2PcVA==
+INFO : 2020/01/10 00:21:52.141267 bidirectMainLogic.go:47: Session 3 Try write to client logic
+INFO : 2020/01/10 00:21:52.141525 c2cParser.go:145: Message from blabu to bla type 9 jump 3 and content size 25
+INFO : 2020/01/10 00:21:52.142182 s2s.go:129: Try find new connection
+INFO : 2020/01/10 00:21:52.142383 s2s.go:132: Try connect to 127.0.0.1:3555
+INFO : 2020/01/10 00:21:52.143417 s2s.go:135: Connecction fail
+INFO : 2020/01/10 00:21:52.143664 s2s.go:132: Try connect to 127.0.0.1:4555
+INFO : 2020/01/10 00:21:52.144620 s2s.go:135: Connecction fail
+INFO : 2020/01/10 00:21:52.144842 s2s.go:132: Try connect to 192.168.1.102:4555
+INFO : 2020/01/10 00:22:02.145501 s2s.go:135: Connecction fail
+ERROR: 2020/01/10 00:22:02.145844 bidirectConnector.go:97: Not find server
+INFO : 2020/01/10 00:22:02.146033 bidirectMainLogic.go:81: Close bidirectMainLogic and client logic in session 3
+INFO : 2020/01/10 00:22:02.146173 s2s.go:235: Close client decorator
+INFO : 2020/01/10 00:22:02.146398 c2c.go:89: Delete channel from client 72057594037927938 for bla
+INFO : 2020/01/10 00:22:02.146594 c2c.go:89: Delete channel from client 72057594037927938 for bla
+INFO : 2020/01/10 00:22:02.146833 c2c.go:183: Close client with id 72057594037927938 in session 3
+INFO : 2020/01/10 00:22:02.147169 bidirectConnector.go:60: Finish readHandler
+INFO : 2020/01/10 00:22:02.147341 c2c.go:166: Read channel is closed for device 72057594037927938 blabu for session 3
+INFO : 2020/01/10 00:22:02.147522 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/10 00:22:02.147865 stat.go:44: Close connection
+INFO : 2020/01/10 00:22:02.148383 s2s.go:184: EOF
+INFO : 2020/01/10 00:22:02.148623 s2s.go:172: Client delegat readhandler finish
+INFO : 2020/01/10 00:22:02.148874 s2s.go:216: Client read error
+INFO : 2020/01/10 00:22:02.149070 bidirectMainLogic.go:69: EOF
+INFO : 2020/01/10 00:22:02.149244 bidirectConnector.go:116: EOF
+INFO : 2020/01/10 00:22:02.149410 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/10 00:22:02.152337 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/10 00:22:02.152575 main.go:156: Create new connection
+INFO : 2020/01/10 00:22:02.153330 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/10 00:22:02.153543 main.go:156: Create new connection
+INFO : 2020/01/10 00:22:02.153733 conf.go:59: Request for configuration value by key: ReceiveBufferSize
+INFO : 2020/01/10 00:22:02.154194 bidirectConnector.go:76: Error when try read from conection: EOF
+INFO : 2020/01/10 00:22:02.154409 bidirectConnector.go:60: Finish readHandler
+INFO : 2020/01/10 00:22:02.154534 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/10 00:22:02.154599 stat.go:44: Close connection
+INFO : 2020/01/10 00:22:02.154657 conf.go:59: Request for configuration value by key: ReceiveBufferSize
+INFO : 2020/01/10 00:22:02.154812 bidirectConnector.go:102: Parser still not initialize
+INFO : 2020/01/10 00:22:02.154927 initParser.go:33: Create c2c parser
+INFO : 2020/01/10 00:22:02.155018 conf.go:59: Request for configuration value by key: clientType
+INFO : 2020/01/10 00:22:02.155094 conf.go:59: Request for configuration value by key: PeerList
+INFO : 2020/01/10 00:22:02.155397 bidirectMainLogic.go:47: Session 4 Try write to client logic
+INFO : 2020/01/10 00:22:02.155507 c2cParser.go:145: Message from blabu to 0 type 6 jump 3 and content size 61
+INFO : 2020/01/10 00:22:02.155844 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/10 00:22:02.156350 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:22:12.255142 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;8;3;0###
+INFO : 2020/01/10 00:22:12.255344 bidirectMainLogic.go:47: Session 4 Try write to client logic
+INFO : 2020/01/10 00:22:12.255525 c2cParser.go:145: Message from blabu to bla type 8 jump 3 and content size 0
+WARN : 2020/01/10 00:22:12.255930 c2cCashe.go:101: Client 72057594037927937 not find in online cache
+WARN : 2020/01/10 00:22:12.256159 privateC2cFunc.go:97: Can not create connection to device 72057594037927937
+INFO : 2020/01/10 00:22:12.256314 s2s.go:129: Try find new connection
+INFO : 2020/01/10 00:22:12.256438 s2s.go:132: Try connect to 127.0.0.1:3555
+INFO : 2020/01/10 00:22:12.257238 s2s.go:135: Connecction fail
+INFO : 2020/01/10 00:22:12.257627 s2s.go:132: Try connect to 127.0.0.1:4555
+INFO : 2020/01/10 00:22:12.258809 s2s.go:135: Connecction fail
+INFO : 2020/01/10 00:22:12.259008 s2s.go:132: Try connect to 192.168.1.102:4555
+INFO : 2020/01/10 00:22:22.259821 s2s.go:135: Connecction fail
+ERROR: 2020/01/10 00:22:22.259938 bidirectConnector.go:97: Not find server
+INFO : 2020/01/10 00:22:22.260111 bidirectMainLogic.go:81: Close bidirectMainLogic and client logic in session 4
+INFO : 2020/01/10 00:22:22.260238 s2s.go:235: Close client decorator
+INFO : 2020/01/10 00:22:22.260422 c2c.go:183: Close client with id 72057594037927938 in session 4
+INFO : 2020/01/10 00:22:22.260571 c2c.go:166: Read channel is closed for device 72057594037927938 blabu for session 4
+INFO : 2020/01/10 00:22:22.260788 bidirectConnector.go:60: Finish readHandler
+INFO : 2020/01/10 00:22:22.260952 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/10 00:22:22.261212 stat.go:44: Close connection
+INFO : 2020/01/10 00:22:22.261541 s2s.go:184: EOF
+INFO : 2020/01/10 00:22:22.261787 s2s.go:172: Client delegat readhandler finish
+INFO : 2020/01/10 00:22:22.261954 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/10 00:22:22.262155 s2s.go:216: Client read error
+INFO : 2020/01/10 00:22:22.262329 bidirectMainLogic.go:69: EOF
+INFO : 2020/01/10 00:22:22.262479 bidirectConnector.go:116: EOF
+INFO : 2020/01/10 00:22:22.264929 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/10 00:22:22.265125 main.go:156: Create new connection
+INFO : 2020/01/10 00:22:22.266122 conf.go:59: Request for configuration value by key: ReceiveBufferSize
+INFO : 2020/01/10 00:22:28.664572 bidirectConnector.go:76: Error when try read from conection: EOF
+INFO : 2020/01/10 00:22:28.664777 bidirectConnector.go:60: Finish readHandler
+INFO : 2020/01/10 00:22:28.665040 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/10 00:22:28.665223 stat.go:44: Close connection
+INFO : 2020/01/10 00:22:28.665363 allIPAddr.go:47: 127.0.0.1
+INFO : 2020/01/10 00:22:28.665612 main.go:156: Create new connection
+INFO : 2020/01/10 00:22:28.666258 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/10 00:22:28.666932 conf.go:59: Request for configuration value by key: ReceiveBufferSize
+INFO : 2020/01/10 00:22:28.667384 bidirectConnector.go:102: Parser still not initialize
+INFO : 2020/01/10 00:22:28.667560 initParser.go:33: Create c2c parser
+INFO : 2020/01/10 00:22:28.667765 conf.go:59: Request for configuration value by key: clientType
+INFO : 2020/01/10 00:22:28.667961 conf.go:59: Request for configuration value by key: PeerList
+INFO : 2020/01/10 00:22:28.668939 bidirectMainLogic.go:47: Session 5 Try write to client logic
+INFO : 2020/01/10 00:22:28.669253 c2cParser.go:145: Message from blabu to 0 type 6 jump 3 and content size 61
+INFO : 2020/01/10 00:22:28.670097 bidirectMainLogic.go:74: Received data from client logic fine
+INFO : 2020/01/10 00:22:31.148370 bidirectConnector.go:92: Receive Full message $V1;blabu;bla;8;3;0###
+INFO : 2020/01/10 00:22:31.148666 bidirectMainLogic.go:47: Session 5 Try write to client logic
+INFO : 2020/01/10 00:22:31.148868 c2cParser.go:145: Message from blabu to bla type 8 jump 3 and content size 0
+WARN : 2020/01/10 00:22:31.149333 c2cCashe.go:101: Client 72057594037927937 not find in online cache
+WARN : 2020/01/10 00:22:31.149548 privateC2cFunc.go:97: Can not create connection to device 72057594037927937
+INFO : 2020/01/10 00:22:31.150152 s2s.go:129: Try find new connection
+INFO : 2020/01/10 00:22:31.150365 s2s.go:132: Try connect to 127.0.0.1:3555
+INFO : 2020/01/10 00:22:31.151488 s2s.go:135: Connecction fail
+INFO : 2020/01/10 00:22:31.151738 s2s.go:132: Try connect to 127.0.0.1:4555
+INFO : 2020/01/10 00:22:31.152795 s2s.go:135: Connecction fail
+INFO : 2020/01/10 00:22:31.153033 s2s.go:132: Try connect to 192.168.1.102:4555
+INFO : 2020/01/10 00:22:41.153898 s2s.go:135: Connecction fail
+ERROR: 2020/01/10 00:22:41.154058 bidirectConnector.go:97: Not find server
+INFO : 2020/01/10 00:22:41.154194 bidirectMainLogic.go:81: Close bidirectMainLogic and client logic in session 5
+INFO : 2020/01/10 00:22:41.154323 s2s.go:235: Close client decorator
+INFO : 2020/01/10 00:22:41.154490 c2c.go:183: Close client with id 72057594037927938 in session 5
+INFO : 2020/01/10 00:22:41.154613 bidirectConnector.go:60: Finish readHandler
+INFO : 2020/01/10 00:22:41.154730 c2c.go:166: Read channel is closed for device 72057594037927938 blabu for session 5
+INFO : 2020/01/10 00:22:41.154883 s2s.go:184: EOF
+INFO : 2020/01/10 00:22:41.155028 bidirectConnector.go:167: Close connector finish network read operation
+INFO : 2020/01/10 00:22:41.155275 stat.go:44: Close connection
+INFO : 2020/01/10 00:22:41.155581 bidirectConnector.go:157: Finish connector
+INFO : 2020/01/10 00:22:41.155807 s2s.go:172: Client delegat readhandler finish
+INFO : 2020/01/10 00:22:41.156036 s2s.go:216: Client read error
+INFO : 2020/01/10 00:22:41.156203 bidirectMainLogic.go:69: EOF
+INFO : 2020/01/10 00:22:41.156336 bidirectConnector.go:116: EOF
+INFO : 2020/01/10 00:23:15.531496 main.go:130: Operation system kill server
+INFO : 2020/01/10 00:23:15.531968 main.go:146: Can not accept connection, accept tcp [::]:5888: use of closed network connection
