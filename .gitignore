@@ -3,4 +3,4 @@ telemetriAPI
 *.conf
 logDeleteIt/*
 *.db
-
+log/*
