@@ -18,7 +18,6 @@ HTTP Gateway is http server.
 can send some request to another peer over http protocol
 can upload server by wget command
 */
-
 const uploadBinPath = "/upload/bin"
 const uploadConfPath = "/upload/conf"
 const showStat = "/stat"

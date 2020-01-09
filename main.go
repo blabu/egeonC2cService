@@ -6,6 +6,7 @@ import (
 	http "blabu/c2cService/httpGateway"
 	"blabu/c2cService/server"
 	"blabu/c2cService/stat"
+	"flag"
 	"net"
 	"os"
 	"os/signal"
@@ -14,8 +15,6 @@ import (
 	"strings"
 	"syscall"
 	"time"
-
-	"flag"
 
 	"go.uber.org/atomic"
 
@@ -135,7 +134,9 @@ func main() {
 		log.Info("Start UDP server on ", portStr)
 		go startUDPServer(portStr, timeout, &st)
 	}
-	go http.RunGateway(cf.GetConfigValueOrDefault("GatewayAddr", "localhost:8080"), *confPath, &st)
+	if addr, err := cf.GetConfigValue("GatewayAddr"); err == nil {
+		go http.RunGateway(addr, *confPath, &st) // Если не нужен http можно закоментировать. -5.3Mb
+	}
 	for !isStoped.Load() {
 		Con, err := listen.Accept() // Ждущая функция (Висим ждем соединения)
 		if err != nil {

@@ -93,7 +93,6 @@ func (s *C2cDecorate) readFromConnection(reader io.Reader, handler func(dto.Mess
 	return nil
 }
 
-// TODO Возможно межсерверное шифрование
 func (s *C2cDecorate) writeToRemoteServerHandler(msg *dto.Message, conn net.Conn) error {
 	buf, err := s.p.FormMessage(*msg)
 	if err != nil {
