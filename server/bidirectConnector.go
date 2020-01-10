@@ -140,12 +140,12 @@ func (c *BidirectConnection) readHandler(Connect *net.Conn, kill <-chan bool, fi
 	}
 }
 
-// ManageSession - is a function that manage new connection.
+// SessionHandler - is a function that manage new connection.
 // Инициализирует парсер по первому сообщению.
 // Инициализирует и запускает клиентскую логику.
 // Контролирует с помощью парсера полноту сообщения и передает это сообщение клиентской логики
 // If connection is finished or some error net.Connection
-func (c *BidirectConnection) ManageSession(Connect net.Conn, st *stat.Statistics) {
+func (c *BidirectConnection) SessionHandler(Connect net.Conn, st *stat.Statistics) {
 	st.NewConnection() // Регистрируем новое соединение
 
 	kill := make(chan bool)

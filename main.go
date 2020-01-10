@@ -109,7 +109,7 @@ func startUDPServer(portStr string, timeout time.Duration, st *stat.Statistics) 
 			log.Error(err.Error())
 			return
 		}
-		go server.NewBidirectConnector(timeout*time.Second).ManageSession(Con, st)
+		go server.NewBidirectConnector(timeout*time.Second).SessionHandler(Con, st)
 	}
 }
 
@@ -154,6 +154,6 @@ func main() {
 			continue
 		}
 		log.Info("Create new connection")
-		go server.NewBidirectConnector(timeout*time.Second).ManageSession(Con, &st)
+		go server.NewBidirectConnector(timeout*time.Second).SessionHandler(Con, &st)
 	}
 }

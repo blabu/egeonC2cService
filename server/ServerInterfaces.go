@@ -18,7 +18,7 @@ Connector - основной интерфйес для создания соед
 */
 type Connector interface {
 	//ManageSession - функция управления сеансом с пользователем
-	ManageSession(Connect net.Conn, stat *stat.Statistics)
+	SessionHandler(Connect net.Conn, stat *stat.Statistics)
 }
 
 // ClientReader - базовый интерфейс для чтения из логики (вывод данных наружу)
