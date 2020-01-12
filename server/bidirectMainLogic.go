@@ -50,7 +50,6 @@ func (s *bidirectMainLogic) Write(data []byte) error {
 		log.Warningf("Can not parse message in session %d. Error %s", s.sessionID, err.Error())
 		return err
 	}
-	m.SessionID = s.sessionID
 	return s.c.Write(&m)
 }
 

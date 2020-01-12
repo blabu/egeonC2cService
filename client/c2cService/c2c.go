@@ -111,11 +111,8 @@ func NewC2cDevice(s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) clien
 
 // Write - обработка сообщений в соответствии с командами
 func (c *C2cDevice) Write(msg *dto.Message) error {
-	if msg == nil || msg.Content == nil {
+	if msg == nil {
 		return Errorf(NilMessageError, "Message is nil in session %d", c.sessionID)
-	}
-	if len(msg.Content) < 3 { // От кого, кому, данные (может быть пустым)
-		return Errorf(BadMessageError, "Not enough arguments in message in session %d", c.sessionID)
 	}
 	switch msg.Command {
 	case errorCOMMAND:

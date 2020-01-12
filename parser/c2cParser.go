@@ -55,24 +55,21 @@ type C2cParser struct {
 
 //FormMessage - from - Content[0], to - Content[1], data - Content[2]
 func (c2c *C2cParser) FormMessage(msg dto.Message) ([]byte, error) {
-	if len(msg.Content) < 3 {
-		return nil, fmt.Errorf("Error. Incorrect input message")
-	}
-	res := make([]byte, 0, 128+len(msg.Content[0].Data))
+	res := make([]byte, 0, 128+len(msg.Content))
 	res = append(res, beginHeader...)
 	res = append(res, []byte(strconv.FormatUint(uint64(msg.Proto), 16))...)
 	res = append(res, ';')
-	res = append(res, msg.Content[0].Data...)
+	res = append(res, msg.From...)
 	res = append(res, ';')
-	res = append(res, msg.Content[1].Data...)
+	res = append(res, msg.To...)
 	res = append(res, ';')
 	res = append(res, []byte(strconv.FormatUint(uint64(msg.Command), 16))...)
 	res = append(res, ';')
 	res = append(res, []byte(strconv.FormatUint(uint64(msg.Jmp), 16))...)
 	res = append(res, ';')
-	res = append(res, []byte(strconv.FormatUint(uint64(len(msg.Content[2].Data)), 16))...)
+	res = append(res, []byte(strconv.FormatUint(uint64(len(msg.Content)), 16))...)
 	res = append(res, []byte(endHeader)...)
-	res = append(res, msg.Content[2].Data...)
+	res = append(res, msg.Content...)
 	return res, nil
 }
 
@@ -142,6 +139,14 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 		log.Trace(err.Error())
 		return dto.Message{}, err
 	}
+	if len(data) < i+c2c.head.headerSize+c2c.head.contentSize {
+		e := fmt.Errorf("Not full message")
+		log.Error(e.Error())
+		return dto.Message{}, e
+	}
+	defer func() {
+		c2c.head = header{}
+	}()
 	log.Tracef("Message from %s to %s type %d jump %d and content size %d", c2c.head.from, c2c.head.to, c2c.head.mType, c2c.head.jumpCnt, c2c.head.contentSize)
 	c2c.head.jumpCnt--
 	jmp := make([]byte, 8)
@@ -150,36 +155,32 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 		Command: uint16(c2c.head.mType),
 		Proto:   uint16(c2c.head.protocolVer),
 		Jmp:     uint16(c2c.head.jumpCnt),
-		Content: []dto.Content{
-			dto.Content{ // from address
-				Data: []byte(c2c.head.from),
-			},
-			dto.Content{ // to address
-				Data: []byte(c2c.head.to),
-			},
-			dto.Content{ // All data
-				Data: data[i+c2c.head.headerSize : i+c2c.head.headerSize+c2c.head.contentSize],
-			},
-		},
+		From:    c2c.head.from,
+		To:      c2c.head.to,
+		Content: data[i+c2c.head.headerSize : i+c2c.head.headerSize+c2c.head.contentSize],
 	}, nil
 }
 
 // IsFullReceiveMsg - Проверка пришел полный пакет или нет
 // TODO каждый раз парсить заголовок не эффективно надо будет переписать
-func (c2c *C2cParser) IsFullReceiveMsg(data []byte) (bool, error) {
+func (c2c *C2cParser) IsFullReceiveMsg(data []byte) (int, error) {
 	var err error
 	var i int
-	if (c2c.head.headerSize+c2c.head.contentSize > 1) && (len(data) > c2c.head.headerSize+c2c.head.contentSize) {
-		return true, nil
+	if c2c.head.headerSize > 1 && c2c.head.contentSize > 1 {
+		if len(data) > c2c.head.headerSize+c2c.head.contentSize {
+			return 0, nil
+		}
+		return 1 + c2c.head.headerSize + c2c.head.contentSize - len(data), nil
 	}
 	if i, err = c2c.parseHeader(data); err != nil {
 		log.Trace(err.Error())
-		return false, err
+		log.Trace(string(data))
+		return -1, err
 	}
 	if len(data) >= i+c2c.head.contentSize+c2c.head.headerSize {
-		return true, nil
+		return 0, nil
 	}
-	return false, nil
+	return i + c2c.head.contentSize + c2c.head.headerSize - len(data), nil
 }
 
 // GetParserType - needed for parser interface

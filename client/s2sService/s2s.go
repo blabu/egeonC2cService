@@ -125,6 +125,8 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 		if er.ErrType > c2cService.DisableConnectionErrorLimit {
 			return er
 		}
+	} else {
+		return err
 	}
 	log.Trace("Try find new connection")
 	if s.conn == nil {

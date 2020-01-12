@@ -31,11 +31,9 @@ func (c *C2cDevice) ping(m *dto.Message) error {
 			Command: pingCOMMAND,
 			Proto:   m.Proto,
 			Jmp:     m.Jmp,
-			Content: []dto.Content{
-				dto.Content{Data: []byte("0")},
-				m.Content[0], // To abonent
-				dto.Content{Data: []byte(strings.ToUpper(currTimeStr))},
-			},
+			From:    "0",
+			To:      m.From,
+			Content: []byte(strings.ToUpper(currTimeStr)),
 		}
 		return nil
 	}
@@ -47,19 +45,19 @@ func (c *C2cDevice) connectByID(m *dto.Message) error {
 	if c.device.ID == 0 {
 		return NewC2cError(BadCommandError, "Initialize device at first")
 	}
-	from, err := strconv.ParseUint(string(m.Content[0].Data), 16, 64)
+	from, err := strconv.ParseUint(m.From, 16, 64)
 	if err != nil {
 		log.Warning(err.Error())
-		return Errorf(InvalidCredentials, "\"%s\" must be a number", string(m.Content[0].Data))
+		return Errorf(InvalidCredentials, "\"%s\" must be a number", m.From)
 	}
 	if c.device.ID != uint64(from) {
 		log.Warningf("session %d client ID in request command is incorrect originID %d != requestedID %d", c.sessionID, c.device.ID, from)
 		return NewC2cError(InvalidCredentials, "Incorrect client id")
 	}
-	to, err := strconv.ParseUint(string(m.Content[1].Data), 16, 64)
+	to, err := strconv.ParseUint(m.To, 16, 64)
 	if err != nil {
 		log.Warning(err.Error())
-		return Errorf(InvalidCredentials, "\"%s\" must be a number", string(m.Content[1].Data))
+		return Errorf(InvalidCredentials, "\"%s\" must be a number", m.To)
 	}
 	log.Tracef("SessionID %d Connect command from device %d to device %d", c.sessionID, from, to)
 	if err = connection.ConnectClients(to, from); err != nil {
@@ -70,11 +68,9 @@ func (c *C2cDevice) connectByID(m *dto.Message) error {
 		Command: connectByIDCOMMAND,
 		Jmp:     m.Jmp,
 		Proto:   m.Proto,
-		Content: []dto.Content{
-			m.Content[1], // FROM remote client
-			m.Content[0], // TO  local client
-			dto.Content{Data: []byte(answerConnectByIDOk)},
-		},
+		From:    m.To,
+		To:      m.From,
+		Content: []byte(answerConnectByIDOk),
 	}
 	return nil
 }
@@ -83,42 +79,39 @@ func (c *C2cDevice) connectByName(m *dto.Message) error {
 	if c.device.ID == 0 {
 		return NewC2cError(BadCommandError, "Initialize device at first")
 	}
-	from := string(m.Content[0].Data)
-	if c.device.Name != from {
-		log.Warningf("Incorrect device name %s != %s in session %d", c.device.Name, from, c.sessionID)
+	if c.device.Name != m.From {
+		log.Warningf("Incorrect device name %s != %s in session %d", c.device.Name, m.From, c.sessionID)
 		return NewC2cError(InvalidCredentials, "Incorrect client name")
 	}
-	toClient, err := c.storage.GetClientByName(string(m.Content[1].Data))
+	toClient, err := c.storage.GetClientByName(m.To)
 	if err != nil {
 		log.Warning(err.Error())
 		return NewC2cError(ClientNotFindError, "Undefined target client")
 	}
 	if err := connection.ConnectClients(toClient.ID, c.device.ID); err != nil {
 		log.Warning(err.Error())
-		return Errorf(ClientNotFindError, "Can not create connection from %s with abonnent %s", from, string(m.Content[1].Data))
+		return Errorf(ClientNotFindError, "Can not create connection from %s with abonnent %s", m.From, m.To)
 	}
-	log.Tracef("Connect command from device %s to device %s in session %d", from, string(m.Content[1].Data), c.sessionID)
+	log.Tracef("Connect command from device %s to device %s in session %d", m.From, m.To, c.sessionID)
 	c.readChan <- dto.Message{
 		Command: connectByNameCOMMAND,
 		Jmp:     m.Jmp,
 		Proto:   m.Proto,
-		Content: []dto.Content{
-			m.Content[1],
-			m.Content[0],
-			dto.Content{Data: []byte(answerConnectByNameOk)},
-		},
+		From:    m.To,
+		To:      m.From,
+		Content: []byte(answerConnectByNameOk),
 	}
 	return nil
 }
 
 // For init by ID you need send ID (Content[0]), (salt ; signature)-(Content[2]) signature-base64(SHA256(ID + salt + base64(SHA256(name+password))))
 func (c *C2cDevice) initByID(m *dto.Message) error {
-	id, err := strconv.ParseUint(string(m.Content[0].Data), 16, 64)
+	id, err := strconv.ParseUint(m.From, 16, 64)
 	if err != nil {
 		log.Warningf("Can not find corect ID in session %d %s", c.sessionID, err.Error())
 		return NewC2cError(InvalidCredentials, "ID must be a number")
 	}
-	credentials := strings.Split(string(m.Content[2].Data), ";") // Разделим соль от подписи
+	credentials := strings.Split(string(m.Content), ";") // Разделим соль от подписи
 	if len(credentials) < 2 {
 		err := Errorf(InvalidCredentials, "Client %d undefined signature for initialize in session %d", id, c.sessionID)
 		log.Warning(err.Error())
@@ -138,7 +131,7 @@ func (c *C2cDevice) initByID(m *dto.Message) error {
 		c.device = *device
 	}
 	if c.device.ID == id {
-		temp := sha256.Sum256([]byte(string(m.Content[0].Data) + credentials[0] + c.device.SecretKey))
+		temp := sha256.Sum256([]byte(string(m.From) + credentials[0] + c.device.SecretKey))
 		origin := base64.StdEncoding.EncodeToString(temp[:])
 		if origin != credentials[1] {
 			log.Warningf("Incorrect signature %s != %s in session %d", origin, credentials[1], c.sessionID)
@@ -151,11 +144,9 @@ func (c *C2cDevice) initByID(m *dto.Message) error {
 				Command: initByIDCOMMAND,
 				Jmp:     m.Jmp,
 				Proto:   m.Proto,
-				Content: []dto.Content{
-					dto.Content{Data: []byte("0")}, // FROM SERVER
-					m.Content[0],                   // TO sended client
-					dto.Content{Data: []byte(answerInitByIDOk)},
-				},
+				From:    "0",
+				To:      m.From,
+				Content: []byte(answerInitByIDOk),
 			}
 			return nil
 		}
@@ -171,28 +162,27 @@ func (c *C2cDevice) initByID(m *dto.Message) error {
 
 // For init by name you need send name (Content[0]), (salt ; signature)-(Content[2]) signature - base64(SHA256(name + salt + base64(SHA256(name+password))))
 func (c *C2cDevice) initByName(m *dto.Message) error {
-	name := string(m.Content[0].Data)
-	credentials := strings.Split(string(m.Content[2].Data), ";") // Разделим соль от подписи
+	credentials := strings.Split(string(m.Content), ";") // Разделим соль от подписи
 	if len(credentials) < 2 {
-		err := Errorf(InvalidCredentials, "Client %s undefined signature for initialize in session %d", name, c.sessionID)
+		err := Errorf(InvalidCredentials, "Client %s undefined signature for initialize in session %d", m.From, c.sessionID)
 		log.Warning(err.Error())
 		return err
 	}
-	if CheckSaltByUserName(name, credentials[0]) > saltUniqCount {
-		err := Errorf(InvalidCredentials, "Client %s salt already been used %d times", name, saltUniqCount)
+	if CheckSaltByUserName(m.From, credentials[0]) > saltUniqCount {
+		err := Errorf(InvalidCredentials, "Client %s salt already been used %d times", m.From, saltUniqCount)
 		log.Warning(err.Error())
 		return err
 	}
 	if c.device.ID == 0 {
-		device, err := c.storage.GetClientByName(name)
+		device, err := c.storage.GetClientByName(m.From)
 		if err != nil {
 			log.Warning(err.Error())
 			return NewC2cError(ClientNotFindError, err.Error())
 		}
 		c.device = *device
 	}
-	if c.device.Name == name {
-		t := string(m.Content[0].Data) + credentials[0] + c.device.SecretKey
+	if c.device.Name == m.From {
+		t := m.From + credentials[0] + c.device.SecretKey
 		temp := sha256.Sum256([]byte(t))
 		origin := base64.StdEncoding.EncodeToString(temp[:])
 		if origin != credentials[1] {
@@ -201,27 +191,26 @@ func (c *C2cDevice) initByName(m *dto.Message) error {
 			log.Errorf("Incorrect signature %s != %s in session %d", origin, credentials[1], c.sessionID)
 			c.device.ID = 0
 			c.device.Name = ""
-			return Errorf(InvalidCredentials, "client %s finded and initialize fail in session %d", name, c.sessionID)
+			return Errorf(InvalidCredentials, "client %s finded and initialize fail in session %d", m.From, c.sessionID)
 		}
-		if er := connection.AddClientToCache(c.device.ID, c); er == nil {
-			c.readChan <- dto.Message{
-				Command: initByNameCOMMAND,
-				Jmp:     m.Jmp,
-				Proto:   m.Proto,
-				Content: []dto.Content{
-					dto.Content{Data: []byte("0")},
-					m.Content[0],
-					dto.Content{Data: []byte(answerInitByNameOk)},
-				},
-			}
-			return nil
+		if er := connection.AddClientToCache(c.device.ID, c); er != nil {
+			log.Warning(er.Error())
+			log.Infof("Credentials is equals TODO destroy old session with client %s id: %d", c.device.Name, c.device.ID)
+			er = fmt.Errorf("Can not create abonent in session %d", c.sessionID)
+			log.Error(er.Error())
+			c.device.ID = 0
+			c.device.Name = ""
+			return er
 		}
-		log.Infof("Credentials is equals TODO destroy old session with client %s id: %d", c.device.Name, c.device.ID)
-		er := fmt.Errorf("Can not create abonent in session %d", c.sessionID)
-		log.Error(er.Error())
-		c.device.ID = 0
-		c.device.Name = ""
-		return er
+		c.readChan <- dto.Message{
+			Command: initByNameCOMMAND,
+			Jmp:     m.Jmp,
+			Proto:   m.Proto,
+			From:    "0",
+			To:      m.From,
+			Content: []byte(answerInitByNameOk),
+		}
+		return nil
 	}
 	c.device.ID = 0
 	c.device.Name = ""
@@ -237,27 +226,25 @@ func (c *C2cDevice) registerNewDevice(m *dto.Message) error {
 		log.Warning(err.Error())
 		return err
 	}
-	dev, err := c.storage.GenerateClient(c.clientType, string(m.Content[0].Data), string(m.Content[2].Data))
+	dev, err := c.storage.GenerateClient(c.clientType, m.From, string(m.Content))
 	if err != nil {
 		log.Warning(err.Error())
-		return Errorf(BadCommandError, "Client with name %s already exicst in session %d", string(m.Content[0].Data), c.sessionID)
+		return Errorf(BadCommandError, "Client with name %s already exicst in session %d", m.From, c.sessionID)
 	}
 	c.device = *dev
 	log.Tracef("Generat client with name %s and id %d", dev.Name, dev.ID)
 	if err = c.storage.SaveClient(dev); err != nil {
 		log.Warning(err.Error())
-		return Errorf(InternalError, "Can not save new client with name %s in session %d", string(m.Content[0].Data), c.sessionID)
+		return Errorf(InternalError, "Can not save new client with name %s in session %d", m.From, c.sessionID)
 	}
 	thisID := strconv.FormatUint(dev.ID, 16)
 	c.readChan <- dto.Message{
 		Command: registerCOMMAND,
 		Jmp:     m.Jmp,
 		Proto:   m.Proto,
-		Content: []dto.Content{
-			dto.Content{Data: []byte("0")},
-			m.Content[0],
-			dto.Content{Data: []byte(thisID)},
-		},
+		From:    "0",
+		To:      m.From,
+		Content: []byte(thisID),
 	}
 	connection.AddClientToCache(dev.ID, c)
 	return nil
@@ -269,20 +256,18 @@ func (c *C2cDevice) generateNewDevice(m *dto.Message) error {
 		log.Warning(err.Error())
 		return err
 	}
-	if dev, err := c.storage.GenerateRandomClient(c.clientType, string(m.Content[2].Data)); err == nil {
+	if dev, err := c.storage.GenerateRandomClient(c.clientType, string(m.Content)); err == nil {
 		if err = c.storage.SaveClient(dev); err != nil {
 			log.Warning(err.Error())
-			return Errorf(InternalError, "Can not save new client with name %s in session %d", string(m.Content[0].Data), c.sessionID)
+			return Errorf(InternalError, "Can not save new client with name %s in session %d", m.From, c.sessionID)
 		}
 		c.device = *dev
 		c.readChan <- dto.Message{
 			Command: generateCOMMAND,
 			Jmp:     m.Jmp,
 			Proto:   m.Proto,
-			Content: []dto.Content{
-				dto.Content{Data: []byte("0")},
-				dto.Content{Data: []byte(c.device.Name)},
-			},
+			From:    "0",
+			To:      c.device.Name,
 		}
 		connection.AddClientToCache(c.device.ID, c)
 		return nil
@@ -304,14 +289,13 @@ func (c *C2cDevice) findID(arg string) uint64 {
 }
 
 func (c *C2cDevice) sendNewMessage(msg *dto.Message) error {
-	toID := c.findID(string(msg.Content[1].Data))
+	toID := c.findID(msg.To)
 	c.listenerMtx.RLock()
 	defer c.listenerMtx.RUnlock()
 	if toID == 0 {
 		for id, ch := range c.listenerList {
 			if ch != nil {
-				to := strconv.FormatUint(id, 16)
-				msg.Content[1] = dto.Content{Data: []byte(to)}
+				msg.To = strconv.FormatUint(id, 16)
 				*ch <- *msg
 			}
 		}
@@ -331,23 +315,23 @@ func (c *C2cDevice) sendNewMessage(msg *dto.Message) error {
 //Content[0] - from: local ID or Name, Content[1] - destroy connection from who if == '0' destroy connection from all
 func (c *C2cDevice) destroyConnection(msg *dto.Message) error {
 	// check if name or id from is equal to local name or id
-	if !strings.EqualFold(string(msg.Content[0].Data), c.device.Name) {
+	if !strings.EqualFold(msg.From, c.device.Name) {
 		localID := strconv.FormatUint(c.device.ID, 16)
-		if !strings.EqualFold(string(msg.Content[0].Data), localID) {
+		if !strings.EqualFold(msg.From, localID) {
 			err := Errorf(BadCommandError, "User name or id %s is not equal to local name %s or id %s in session %d",
-				string(msg.Content[0].Data), c.device.Name, localID, c.sessionID)
+				msg.From, c.device.Name, localID, c.sessionID)
 			log.Warning(err.Error())
 			return err
 		}
 	}
-	toID := c.findID(string(msg.Content[1].Data))
+	toID := c.findID(msg.To)
 	if toID == 0 { // disconnect from all connected devices
 		log.Tracef("Close all connection for client %s: %d in session %d", c.device.Name, c.device.ID, c.sessionID)
 		c.listenerMtx.Lock()
 		for id, ch := range c.listenerList {
 			if ch != nil {
 				to := strconv.FormatUint(id, 16)
-				msg.Content[1] = dto.Content{Data: []byte(to)}
+				msg.To = to
 				*ch <- *msg                // Передаем сообщение об отключении себя от них
 				delete(c.listenerList, id) // Удаляем у себя подписанные устройства
 			}
@@ -376,7 +360,7 @@ func (c *C2cDevice) destroyConnection(msg *dto.Message) error {
 // На самом деле для сервера все равно какие настройки (данные) будут в аргументах
 // В качестве параметром "Кого" (msg.Content[0].Data) и "Кому" (msg.Content[1].Data) не может быть обобщенных данных. Все должно быть конкретно!!!
 func (c *C2cDevice) setProperies(msg *dto.Message) error {
-	toID := c.findID(string(msg.Content[1].Data))
+	toID := c.findID(msg.To)
 	if toID == 0 {
 		err := NewC2cError(BadCommandError, "To client must be specified")
 		log.Warning(err.Error())
@@ -395,15 +379,6 @@ func (c *C2cDevice) setProperies(msg *dto.Message) error {
 // errorHandler - пока затычка с логированием
 //TODO Обработка ошибок от телеметрии
 func (c *C2cDevice) errorHandler(msg *dto.Message) error {
-	errMsg := "Error "
-	for i, v := range msg.Content {
-		if i == 0 {
-			errMsg += "From "
-		} else if i == 1 {
-			errMsg += "To "
-		}
-		errMsg += string(v.Data) + " "
-	}
-	log.Error(errMsg)
+	log.Error(fmt.Sprintf("Error from %s, to %s", msg.From, msg.To))
 	return nil
 }

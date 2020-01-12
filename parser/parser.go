@@ -11,6 +11,6 @@ import (
 type Parser interface {
 	FormMessage(msg dto.Message) ([]byte, error)
 	ParseMessage(data []byte) (dto.Message, error)
-	IsFullReceiveMsg(data []byte) (bool, error)
+	IsFullReceiveMsg(data []byte) (int, error)
 	GetParserType() uint64
 }

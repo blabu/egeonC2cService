@@ -5,17 +5,19 @@ import (
 )
 
 // Content - Содержание сообщения
-type Content struct {
-	Data []byte
-}
+// type Content struct {
+// 	Data []byte
+// }
 
 // Message - это данные от устройства прошедшие валидацию и разделенные на содержимое и команду
 type Message struct {
-	SessionID uint32
+	messageID uint32
 	Proto     uint16
 	Jmp       uint16
 	Command   uint16
-	Content   []Content
+	From      string
+	To        string
+	Content   []byte
 }
 
 // ClientDescriptor - base entity for client to client messanger
