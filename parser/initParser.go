@@ -3,7 +3,9 @@ package parser
 import (
 	"bytes"
 	"fmt"
+	"strconv"
 
+	conf "blabu/c2cService/configuration"
 	log "blabu/c2cService/logWrapper"
 )
 
@@ -31,5 +33,8 @@ func InitParser(receivedData []byte) (Parser, error) {
 		return nil, fmt.Errorf("Data is too short")
 	}
 	log.Trace("Create c2c parser")
-	return new(C2cParser), nil
+	p := new(C2cParser)
+	maxPackageSize, _ := strconv.ParseUint(conf.GetConfigValueOrDefault("MaxPacketSize", "512"), 10, 32)
+	p.maxPackageSize = maxPackageSize * 1024
+	return p, nil
 }

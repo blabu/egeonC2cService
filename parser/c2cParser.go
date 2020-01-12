@@ -26,8 +26,6 @@ ss...ss - размер передаваемых данных (число в ше
 
 Пример: $V1;от кого;кому;тип сообщения(команда);размер сообщения###\0САМО СООБЩЕНИЕ
 */
-// maxPackageSzie - максимальный размер одного пакета в байтах
-const maxPackageSzie = 8 * 1048576 /*(8 * 1Mb)*/
 const headerParamSize = 6
 
 var endHeader = []byte("###")
@@ -50,7 +48,8 @@ type header struct {
 // C2cParser - Парсер разбирает сообщения по протоколу
 // 1 - клиент-клиент
 type C2cParser struct {
-	head header
+	maxPackageSize uint64
+	head           header
 }
 
 //FormMessage - from - Content[0], to - Content[1], data - Content[2]
@@ -80,14 +79,14 @@ func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
 	}
 	index := bytes.IndexByte(data, '$')
 	if index < 0 {
-		return 0, fmt.Errorf("Undefined start symb of package")
+		return 0, fmt.Errorf("Undefined start symb of package %s", string(data))
 	}
 	if !bytes.EqualFold(data[index:index+2], beginHeader) {
 		return index, fmt.Errorf("Package must be started from %s", beginHeader)
 	}
 	c2c.head.headerSize = bytes.Index(data, []byte(endHeader)) // Поиск конца заголовка
 	if c2c.head.headerSize < index || c2c.head.headerSize >= len(data) {
-		return index, fmt.Errorf("Undefined end header %s", endHeader)
+		return index, fmt.Errorf("Undefined end header %s in message %s", endHeader, string(data))
 	}
 	parsed := bytes.Split(data[index+2:c2c.head.headerSize], delim)
 	if len(parsed) < headerParamSize {
@@ -117,7 +116,7 @@ func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
 		if s, err = strconv.ParseUint(string(parsed[5]), 16, 64); err != nil { //размер сообщения
 			return index, fmt.Errorf("Icorrect message size, it must be a number")
 		}
-		if s > maxPackageSzie {
+		if s > c2c.maxPackageSize {
 			err := fmt.Errorf("Income package is too big. Overflow internal buffer")
 			log.Error(err.Error())
 			return index, err
@@ -164,23 +163,15 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 // IsFullReceiveMsg - Проверка пришел полный пакет или нет
 // TODO каждый раз парсить заголовок не эффективно надо будет переписать
 func (c2c *C2cParser) IsFullReceiveMsg(data []byte) (int, error) {
-	var err error
-	var i int
-	if c2c.head.headerSize > 1 && c2c.head.contentSize > 1 {
-		if len(data) > c2c.head.headerSize+c2c.head.contentSize {
-			return 0, nil
-		}
-		return 1 + c2c.head.headerSize + c2c.head.contentSize - len(data), nil
-	}
-	if i, err = c2c.parseHeader(data); err != nil {
+	if _, err := c2c.parseHeader(data); err != nil {
 		log.Trace(err.Error())
 		log.Trace(string(data))
 		return -1, err
 	}
-	if len(data) >= i+c2c.head.contentSize+c2c.head.headerSize {
+	if len(data) >= c2c.head.contentSize+c2c.head.headerSize {
 		return 0, nil
 	}
-	return i + c2c.head.contentSize + c2c.head.headerSize - len(data), nil
+	return c2c.head.contentSize + c2c.head.headerSize - len(data), nil
 }
 
 // GetParserType - needed for parser interface

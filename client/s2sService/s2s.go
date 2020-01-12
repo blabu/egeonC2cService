@@ -72,13 +72,13 @@ func (s *C2cDecorate) readFromConnection(reader io.Reader, handler func(dto.Mess
 				return
 			}
 			readBuffer = append(readBuffer, tempRead[:n]...)
-			isFull, err := s.p.IsFullReceiveMsg(readBuffer)
+			sz, err := s.p.IsFullReceiveMsg(readBuffer)
 			if err != nil { // Сообщение не корректное
 				log.Trace(er.Error())
 				handler(dto.Message{}, err)
 				continue
 			}
-			if isFull {
+			if sz == 0 {
 				m, er := s.p.ParseMessage(readBuffer)
 				if er != nil {
 					log.Trace(er.Error())
