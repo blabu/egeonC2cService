@@ -6,6 +6,7 @@ import (
 	http "blabu/c2cService/httpGateway"
 	"blabu/c2cService/server"
 	"blabu/c2cService/stat"
+	"crypto/tls"
 	"flag"
 	"net"
 	"os"
@@ -113,6 +114,18 @@ func startUDPServer(portStr string, timeout time.Duration, st *stat.Statistics) 
 	}
 }
 
+func startTlsServer(l net.Listener, timeout time.Duration, st *stat.Statistics) {
+	for {
+		Con, err := l.Accept()
+		if err != nil {
+			log.Error(err.Error())
+			return
+		}
+		log.Trace("New connection from ", Con.RemoteAddr().String())
+		go server.NewBidirectConnector(timeout*time.Second).SessionHandler(Con, st)
+	}
+}
+
 func main() {
 	// Подписываемся на оповещение, когда операционка захочет нас прибить
 	signal.Notify(sigTerm, os.Interrupt, os.Kill, syscall.SIGQUIT)
@@ -133,6 +146,28 @@ func main() {
 	if portStr, err := cf.GetConfigValue("ServerUdpPort"); err == nil {
 		log.Info("Start UDP server on ", portStr)
 		go startUDPServer(portStr, timeout, &st)
+	}
+	if portTls, err := cf.GetConfigValue("ServerTlsPort"); err == nil {
+		if certPath, err := cf.GetConfigValue("CertificatePath"); err == nil {
+			if privateKeyPath, err := cf.GetConfigValue("PrivateKeyPath"); err == nil {
+				log.Info("Start tls server on ", portTls)
+				if certificate, err := tls.LoadX509KeyPair(certPath, privateKeyPath); err == nil {
+					if localSrv, err := net.Listen("tcp", portTls); err == nil {
+						conf := &tls.Config{Certificates: []tls.Certificate{certificate}}
+						server := tls.NewListener(localSrv, conf)
+						go startTlsServer(server, timeout, &st)
+					} else {
+						log.Error(err.Error())
+					}
+				} else {
+					log.Error(err.Error())
+				}
+			} else {
+				log.Error(err.Error())
+			}
+		} else {
+			log.Error(err.Error())
+		}
 	}
 	if addr, err := cf.GetConfigValue("GatewayAddr"); err == nil {
 		go http.RunGateway(addr, *confPath, &st) // Если не нужен http можно закоментировать. -5.3Mb

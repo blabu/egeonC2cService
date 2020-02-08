@@ -4,3 +4,5 @@ telemetriAPI
 logDeleteIt/*
 *.db
 log/*
+*.key
+*.pem
