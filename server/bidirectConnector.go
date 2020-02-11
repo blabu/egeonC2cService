@@ -73,7 +73,6 @@ func (c *BidirectSession) readHandler(Connect *net.Conn, kill <-chan bool, finis
 				return
 			}
 			if n == 0 {
-				log.Debug(string(c.netReq))
 				if err := c.logic.Get().Write(c.netReq); err != nil {
 					log.Error(err.Error())
 					return // TODO Выполнять обработку ошибок
