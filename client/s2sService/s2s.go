@@ -8,6 +8,7 @@ import (
 	"blabu/c2cService/dto"
 	log "blabu/c2cService/logWrapper"
 	"blabu/c2cService/parser"
+	"crypto/tls"
 	"errors"
 	"io"
 	"net"
@@ -47,7 +48,7 @@ type C2cDecorate struct {
 	client         client.ClientInterface
 	serverReadChan chan dto.Message
 	conMtx         sync.Mutex
-	conn           *net.Conn
+	conn           net.Conn
 	timeout        time.Duration
 }
 
@@ -108,8 +109,8 @@ func (s *C2cDecorate) writeToRemoteServerHandler(msg *dto.Message, conn net.Conn
 func (s *C2cDecorate) Write(msg *dto.Message) error {
 	s.conMtx.Lock()
 	if s.conn != nil {
-		if er := s.writeToRemoteServerHandler(msg, *s.conn); er != nil {
-			(*s.conn).Close()
+		if er := s.writeToRemoteServerHandler(msg, s.conn); er != nil {
+			s.conn.Close()
 			s.conn = nil
 		} else {
 			s.conMtx.Unlock()
@@ -132,7 +133,10 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 	if s.conn == nil {
 		for _, addr := range s.serverLists {
 			log.Trace("Try connect to ", addr)
-			conn, e := net.DialTimeout("tcp", addr, s.timeout)
+			conf := tls.Config{
+				InsecureSkipVerify: true,
+			}
+			conn, e := tls.Dial("tcp", addr, &conf)
 			if e != nil {
 				log.Trace("Connecction fail")
 				continue
@@ -142,12 +146,12 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 				continue
 			}
 			s.conMtx.Lock()
-			s.conn = &conn
+			s.conn = conn
 			s.conMtx.Unlock()
 			if er := s.readFromConnection(conn, func(m dto.Message, err error) {
 				if err != nil {
 					s.conMtx.Lock()
-					(*s.conn).Close()
+					s.conn.Close()
 					s.conn = nil
 					s.conMtx.Unlock()
 					close(s.serverReadChan)
@@ -156,7 +160,7 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 				s.serverReadChan <- m
 			}); er != nil {
 				s.conMtx.Lock()
-				(*s.conn).Close()
+				s.conn.Close()
 				s.conn = nil
 				s.conMtx.Unlock()
 				continue
@@ -232,7 +236,7 @@ func (s *C2cDecorate) Close() {
 	s.conMtx.Lock()
 	defer s.conMtx.Unlock()
 	if s.conn != nil {
-		(*s.conn).Close()
+		s.conn.Close()
 	}
 	log.Trace("Close client decorator")
 	s.client.Close()
