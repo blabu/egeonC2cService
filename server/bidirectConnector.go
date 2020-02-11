@@ -66,15 +66,14 @@ func (c *BidirectConnection) initParser(r io.Reader, resp *[]byte) (parser.Parse
 	return parser.InitParser(*resp)
 }
 
-//readHandler - Поток дял чтения данных из интернета (всегда ждем данных), проверяем полное ли сообщение, если полное, отправляем дальше в канал readData
-func (c *BidirectConnection) readHandler(Connect *net.Conn, kill <-chan bool, finishRead chan<- bool) {
+//readHandler - Поток для чтения данных из интернета (всегда ждем данных), проверяем полное ли сообщение, если полное, отправляем дальше в канал readData
+func (c *BidirectConnection) readHandler(Connect *net.Conn, stopConnectionFromNet <-chan bool, stopConnectionFromClient chan<- bool) {
 	defer func() {
-		close(finishRead)
+		close(stopConnectionFromClient)
 		log.Trace("Finish readHandler")
 	}()
 	maxPacketSize, _ := strconv.ParseUint(conf.GetConfigValueOrDefault("MaxPacketSize", "512"), 10, 32)
 	maxPacketSize *= 1024
-	//	request := make([]byte, 0, res)
 	resp := make([]byte, 128)
 	bufferdReader := bufio.NewReader(*Connect)
 	p, err := c.initParser(bufferdReader, &resp)
@@ -89,6 +88,9 @@ func (c *BidirectConnection) readHandler(Connect *net.Conn, kill <-chan bool, fi
 			log.Debug(err.Error())
 			(*Connect).Close()
 			return
+		}
+		if err != nil {
+			log.Info(err.Error())
 		} else if err == nil && data != nil {
 			(*Connect).SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * time.Millisecond)) // timeout for write data 1 millisecond for every bytes
 			if _, err := (*Connect).Write(data); err != nil {                                        // Отправляем в сеть
@@ -101,8 +103,8 @@ func (c *BidirectConnection) readHandler(Connect *net.Conn, kill <-chan bool, fi
 	})
 	for {
 		select {
-		case <-kill:
-			log.Info("Close read handler in BidirectConnection")
+		case <-stopConnectionFromNet:
+			log.Info("Close read handler in BidirectConnection from network")
 			return
 		default:
 			c.updateWatchDogTimer()
@@ -151,22 +153,22 @@ func (c *BidirectConnection) readHandler(Connect *net.Conn, kill <-chan bool, fi
 func (c *BidirectConnection) SessionHandler(Connect net.Conn, st *stat.Statistics) {
 	st.NewConnection() // Регистрируем новое соединение
 
-	kill := make(chan bool)
+	stopConnectionFromNet := make(chan bool)
 	defer func(start time.Time) { // Если с из вне произошло отключение
 		st.CloseConnection()
 		st.SetConnectionTime(time.Since(start))
-		close(kill)
+		close(stopConnectionFromNet)
 		Connect.Close() // Соединение необходимо разрушить в случае конца сессии
 		log.Info("Finish connector")
 	}(time.Now()) // Фиксируем конец сесии во времени
 
-	readNetworkStoped := make(chan bool) // Канал для остановки логики работ с соединением
-	go c.readHandler(&Connect, kill, readNetworkStoped)
+	stopConnectionFromLogic := make(chan bool) // Канал для остановки логики работ с соединением
+	go c.readHandler(&Connect, stopConnectionFromNet, stopConnectionFromLogic)
 	select {
 	case <-c.Tm.C:
 		log.Info("Timeout close connector")
 		return
-	case <-readNetworkStoped:
+	case <-stopConnectionFromLogic:
 		log.Info("Close connector finish network read operation")
 		return
 	}
