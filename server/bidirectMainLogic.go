@@ -14,6 +14,9 @@ import (
 )
 
 // bidirectMainLogic - двунаправленная реализация MainLogicIO для независимого чтения и записи информации
+// Реализовано:
+// 1. чтение с клиента и запись в сеть метод Read()
+// 2. запись в клиента метод Write()
 type bidirectMainLogic struct {
 	sessionID uint32
 	dt        time.Duration
@@ -36,7 +39,7 @@ func CreateReadWriteMainLogic(p parser.Parser, readTimeout time.Duration) MainLo
 	}
 }
 
-// Write - синхронный вызов парсит согласно парсеру и пишет данные внутрь сервера (в клиентскую логику)
+// Write - синхронный вызов парсит сообщение полученное с сети и пишет данные в клиентскую логику
 func (s *bidirectMainLogic) Write(data []byte) error {
 	if s.p == nil {
 		return fmt.Errorf("Error parser is nil in session %d", s.sessionID)
@@ -53,6 +56,7 @@ func (s *bidirectMainLogic) Write(data []byte) error {
 	return s.c.Write(&m)
 }
 
+//Read - читает из бизнес логики и передает данные обработчику handler
 func (s *bidirectMainLogic) Read(handler func([]byte, error)) {
 	if s.p == nil {
 		handler(nil, errors.New("Parser is nil"))

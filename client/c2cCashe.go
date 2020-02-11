@@ -11,8 +11,9 @@ const maxCONNECTION = 16 /*Максимальное кол-во коннекто
 // Структура клиента (для хранения его в онлайн кеше)
 type cachedClient struct {
 	base             ClientListenerInterface   // Указатель на сам клиент.
-	connectedReaders []ClientListenerInterface // Список указателей на всех клиентов, которые читают нужен для удаления данного клиента как публикующего данные у его читателей
-	mtx              *sync.RWMutex             // Для модификации connectedReaders
+	connectedReaders []ClientListenerInterface // Список указателей на всех клиентов, которые читают.
+	// Нужен для удаления данного клиента как публикующего данные у его читателей
+	mtx *sync.RWMutex // Для модификации connectedReaders
 }
 
 //ConnectionCache - кеш всех подключений

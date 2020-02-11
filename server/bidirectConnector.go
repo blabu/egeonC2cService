@@ -47,9 +47,14 @@ func (c *BidirectSession) updateWatchDogTimer() {
 
 //readHandler - Поток для чтения данных из интернета (всегда ждем данных),
 // проверяем полное ли сообщение, если полное, отправляем дальше
-func (c *BidirectSession) readHandler(Connect *net.Conn, kill <-chan bool, finishRead chan<- bool, p parser.Parser) {
+func (c *BidirectSession) readHandler(
+	Connect *net.Conn,
+	stopConnectionFromNet <-chan bool,
+	stopConnectionFromClient chan<- bool,
+	p parser.Parser) {
+
 	defer func() {
-		close(finishRead)
+		close(stopConnectionFromClient)
 		log.Trace("Finish readHandler")
 	}()
 	maxPacketSize, _ := strconv.ParseUint(conf.GetConfigValueOrDefault("MaxPacketSize", "512"), 10, 32)
@@ -58,8 +63,8 @@ func (c *BidirectSession) readHandler(Connect *net.Conn, kill <-chan bool, finis
 
 	for {
 		select {
-		case <-kill:
-			log.Info("Close read handler in BidirectConnection")
+		case <-stopConnectionFromNet:
+			log.Info("Close read handler in BidirectConnection from network")
 			return
 		default:
 			c.updateWatchDogTimer()
@@ -106,8 +111,8 @@ func (c *BidirectSession) readHandler(Connect *net.Conn, kill <-chan bool, finis
 // Контролирует с помощью парсера полноту сообщения и передает это сообщение клиентской логики
 // If connection is finished or some error net.Connection
 func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
-	kill := make(chan bool)
-	defer close(kill)
+	stopConnectionFromNet := make(chan bool)
+	defer close(stopConnectionFromNet)
 
 	go c.logic.Get().Read(func(data []byte, err error) {
 		if err == io.EOF {
@@ -125,13 +130,13 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 		return
 	})
 
-	readNetworkStoped := make(chan bool) // Канал для остановки логики работ с соединением
-	go c.readHandler(&Connect, kill, readNetworkStoped, p)
+	stopConnectionFromClient := make(chan bool) // Канал для остановки логики работ с соединением
+	go c.readHandler(&Connect, stopConnectionFromNet, stopConnectionFromClient, p)
 	select {
 	case <-c.Tm.C:
 		log.Info("Timeout close connector")
 		return
-	case <-readNetworkStoped:
+	case <-stopConnectionFromClient:
 		log.Info("Close connector finish network read operation")
 		return
 	}
