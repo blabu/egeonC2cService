@@ -110,7 +110,7 @@ func startUDPServer(portStr string, timeout time.Duration, st *stat.Statistics) 
 			log.Error(err.Error())
 			return
 		}
-		go server.NewBidirectConnector(timeout*time.Second).SessionHandler(Con, st)
+		go server.StartNewSession(Con, timeout*time.Second, st)
 	}
 }
 
@@ -122,7 +122,7 @@ func startTlsServer(l net.Listener, timeout time.Duration, st *stat.Statistics) 
 			return
 		}
 		log.Trace("New connection from ", Con.RemoteAddr().String())
-		go server.NewBidirectConnector(timeout*time.Second).SessionHandler(Con, st)
+		go server.StartNewSession(Con, timeout*time.Second, st)
 	}
 }
 
@@ -189,6 +189,6 @@ func main() {
 			continue
 		}
 		log.Info("Create new connection")
-		go server.NewBidirectConnector(timeout*time.Second).SessionHandler(Con, &st)
+		go server.StartNewSession(Con, timeout*time.Second, &st)
 	}
 }
