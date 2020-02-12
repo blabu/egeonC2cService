@@ -69,7 +69,7 @@ func (s *bidirectMainLogic) Read(handler func([]byte, error)) {
 	s.c.Read(s.dt, func(msg dto.Message, err error) {
 		if err != nil {
 			if err == io.EOF { // Читать больше нечего
-				log.Debug(err.Error())
+				log.Info(err.Error())
 				handler(nil, io.EOF)
 			}
 			return

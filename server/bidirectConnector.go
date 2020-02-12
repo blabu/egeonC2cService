@@ -84,12 +84,12 @@ func (c *BidirectSession) readHandler(
 				}
 				c.netReq = c.netReq[:128]
 				(*Connect).SetReadDeadline(time.Now().Add(c.Duration))
-				n, err = bufferdReader.Read(c.netReq) // Читаем!!!
+				numb, err := bufferdReader.Read(c.netReq) // Читаем!!!
 				if err != nil {
 					log.Infof("Error when try read from conection: %v\n", err)
 					return
 				}
-				c.netReq = c.netReq[:n]
+				c.netReq = c.netReq[:numb]
 				continue
 			}
 			log.Tracef("Try read last %d bytes", n)
@@ -114,9 +114,9 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 	stopConnectionFromNet := make(chan bool)
 	defer close(stopConnectionFromNet)
 
-	go c.logic.Get().Read(func(data []byte, err error) {
-		if err == io.EOF {
-			log.Debug(err.Error())
+	go c.logic.Get().Read(func(data []byte, err error) { // Обработка чтения из бизнес логики
+		if err == io.EOF { //Read is over finish session
+			log.Info(err.Error())
 			Connect.Close()
 			return
 		} else if err == nil && data != nil {
@@ -126,7 +126,7 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 			}
 			return
 		}
-		log.Info("Data to transmit is nil")
+		log.Warning("Data to transmit is nil or error occurs")
 		return
 	})
 

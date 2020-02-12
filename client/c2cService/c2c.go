@@ -160,7 +160,7 @@ func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err err
 		case m, ok := <-c.readChan:
 			if !ok {
 				t.Stop()
-				log.Tracef("Read channel is closed for device %d %s for session %d", c.device.ID, c.device.Name, c.sessionID)
+				log.Tracef("Read channel is closed for device %d name %s for session %d", c.device.ID, c.device.Name, c.sessionID)
 				handler(dto.Message{}, io.EOF)
 				return
 			}
