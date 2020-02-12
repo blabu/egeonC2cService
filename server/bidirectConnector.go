@@ -70,7 +70,7 @@ func (c *BidirectSession) readHandler(
 			c.updateWatchDogTimer()
 			n, err := p.IsFullReceiveMsg(c.netReq)
 			if err != nil {
-				log.Error(err.Error())
+				log.Warning(err.Error())
 				return
 			}
 			if uint64(n+len(c.netReq)) > maxPacketSize {
@@ -79,7 +79,7 @@ func (c *BidirectSession) readHandler(
 			}
 			if n == 0 {
 				if err := c.logic.Get().Write(c.netReq); err != nil {
-					log.Error(err.Error())
+					log.Warning(err.Error())
 					return // TODO Выполнять обработку ошибок
 				}
 				c.netReq = c.netReq[:128]
@@ -95,7 +95,7 @@ func (c *BidirectSession) readHandler(
 			log.Tracef("Try read last %d bytes", n)
 			temp := make([]byte, n)
 			(*Connect).SetReadDeadline(time.Now().Add(c.Duration))
-			n, err = bufferdReader.Read(temp) // Читаем!!!
+			n, err = io.ReadFull(bufferdReader, temp) // Читаем!!!
 			if err != nil {
 				log.Infof("Error when try read from conection: %v\n", err)
 				return
@@ -114,15 +114,15 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 	stopConnectionFromNet := make(chan bool)
 	defer close(stopConnectionFromNet)
 
-	go c.logic.Get().Read(func(data []byte, err error) {
+	go c.logic.Get().Read(func(data []byte, err error) { // Read from logic and write to Internet
 		if err == io.EOF {
-			log.Debug(err.Error())
+			log.Info(err.Error())
 			Connect.Close()
 			return
 		} else if err == nil && data != nil {
 			Connect.SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * time.Millisecond)) // timeout for write data 1 millisecond for every bytes
 			if _, err := Connect.Write(data); err != nil {                                        // Отправляем в сеть
-				log.Debug("Write ok")
+				log.Trace("Write ok")
 			}
 			return
 		}
