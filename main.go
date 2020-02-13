@@ -188,7 +188,7 @@ func main() {
 			Con.Close()
 			continue
 		}
-		log.Info("Create new connection")
+		log.Info("Create new connection from ", Con.RemoteAddr().String())
 		go server.StartNewSession(Con, timeout*time.Second, &st)
 	}
 }

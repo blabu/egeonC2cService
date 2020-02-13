@@ -138,7 +138,7 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 			}
 			conn, e := tls.Dial("tcp", addr, &conf)
 			if e != nil {
-				log.Trace("Connecction fail")
+				log.Trace("Connection fail")
 				continue
 			}
 			if e := s.writeToRemoteServerHandler(msg, conn); e != nil {

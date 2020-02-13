@@ -54,6 +54,7 @@ type C2cParser struct {
 
 //FormMessage - from - Content[0], to - Content[1], data - Content[2]
 func (c2c *C2cParser) FormMessage(msg dto.Message) ([]byte, error) {
+	log.Tracef("Form message from %s to %s type %d jump %d and content size %d", msg.From, msg.To, msg.Command, msg.Jmp, len(msg.Content))
 	res := make([]byte, 0, 128+len(msg.Content))
 	res = append(res, beginHeader...)
 	res = append(res, []byte(strconv.FormatUint(uint64(msg.Proto), 16))...)
@@ -94,7 +95,6 @@ func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
 	}
 	var err error
 	if c2c.head.protocolVer, err = strconv.ParseUint(string(parsed[0]), 16, 64); err != nil { //Версия протокола
-		log.Tracef("Can not parse number in %s error %s", parsed[0], err.Error())
 		return index, fmt.Errorf("Icorrect protocol version, it must be a number")
 	}
 	switch c2c.head.protocolVer {
@@ -146,7 +146,7 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 	defer func() {
 		c2c.head = header{}
 	}()
-	log.Tracef("Message from %s to %s type %d jump %d and content size %d", c2c.head.from, c2c.head.to, c2c.head.mType, c2c.head.jumpCnt, c2c.head.contentSize)
+	log.Tracef("Parse message from %s to %s type %d jump %d and content size %d", c2c.head.from, c2c.head.to, c2c.head.mType, c2c.head.jumpCnt, c2c.head.contentSize)
 	c2c.head.jumpCnt--
 	jmp := make([]byte, 8)
 	binary.LittleEndian.PutUint64(jmp, c2c.head.jumpCnt)
