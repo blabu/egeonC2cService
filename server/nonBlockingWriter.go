@@ -1,7 +1,6 @@
 package server
 
 import (
-	log "blabu/c2cService/logWrapper"
 	"errors"
 	"io"
 	"sync/atomic"
@@ -35,13 +34,11 @@ func (w *writeWrapper) write() {
 		if !ok {
 			w.err = errors.New("Finish write. Channel was closed")
 			atomic.StoreInt32(&w.cntr, -1)
-			log.Error(w.err.Error())
 			return
 		}
 		if _, err := w.stream.Write(b); err != nil {
 			w.err = err
 			atomic.StoreInt32(&w.cntr, -1)
-			log.Error(w.err.Error())
 			return
 		}
 		atomic.AddInt32(&w.cntr, -1)
@@ -53,7 +50,7 @@ func (w *writeWrapper) Write(data []byte) (int, error) {
 		return 0, errors.New("Write fail: " + w.err.Error())
 	}
 	atomic.AddInt32(&w.cntr, 1)
-	var dst []byte
+	dst := make([]byte, len(data))
 	copy(dst, data)
 	w.writeChan <- dst
 	return len(data), nil

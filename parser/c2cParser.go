@@ -150,7 +150,7 @@ func (c2c *C2cParser) ParseMessage(data []byte) (dto.Message, error) {
 	c2c.head.jumpCnt--
 	jmp := make([]byte, 8)
 	binary.LittleEndian.PutUint64(jmp, c2c.head.jumpCnt)
-	var content []byte
+	content := make([]byte, c2c.head.contentSize)
 	copy(content, data[i+c2c.head.headerSize:i+c2c.head.headerSize+c2c.head.contentSize])
 	return dto.Message{
 		Command: uint16(c2c.head.mType),
