@@ -21,12 +21,9 @@ func StartNewSession(conn net.Conn, dT time.Duration, st *stat.Statistics) {
 				Duration: dT,
 				Tm:       time.NewTimer(dT),
 				netReq:   req,
-				logic: atomicMainLog{
-					main: CreateReadWriteMainLogic(p, time.Second),
-				},
+				logic:    CreateReadWriteMainLogic(p, dT),
 			}
 			s.Run(conn, p)
-			s.logic.Get().Close()
 			st.CloseConnection()
 			st.SetConnectionTime(time.Since(start))
 		}

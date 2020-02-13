@@ -30,6 +30,5 @@ type ClientReader interface {
 // MainLogicIO - основоной интерфейс логики взаимодействия сервера с логикой приложения
 type MainLogicIO interface {
 	ClientReader
-	io.Writer
-	io.Closer
+	io.WriteCloser
 }

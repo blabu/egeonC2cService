@@ -18,7 +18,7 @@ type BidirectSession struct {
 	Tm       *time.Timer
 	Duration time.Duration
 	netReq   []byte
-	logic    atomicMainLog
+	logic    MainLogicIO
 }
 
 func (c *BidirectSession) updateWatchDogTimer() {
@@ -37,9 +37,10 @@ func (c *BidirectSession) readHandler(
 
 	defer close(stopConnectionFromClient)
 	maxPacketSize, _ := strconv.ParseUint(conf.GetConfigValueOrDefault("MaxPacketSize", "512"), 10, 32)
+	w := NonBlockingWriter(c.logic, int(maxPacketSize))
+	defer w.Close()
 	maxPacketSize *= 1024
 	bufferdReader := bufio.NewReader(*Connect)
-
 	for {
 		select {
 		case <-stopConnectionFromNet:
@@ -57,7 +58,7 @@ func (c *BidirectSession) readHandler(
 				return
 			}
 			if n == 0 {
-				if _, err := c.logic.Get().Write(c.netReq); err != nil {
+				if _, err := w.Write(c.netReq); err != nil {
 					log.Warning(err.Error())
 					return // TODO Выполнять обработку ошибок
 				}
@@ -93,7 +94,7 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 	stopConnectionFromNet := make(chan bool)
 	defer close(stopConnectionFromNet)
 
-	go c.logic.Get().Read(func(data []byte, err error) { // Read from logic and write to Internet
+	go c.logic.Read(func(data []byte, err error) { // Read from logic and write to Internet
 		if err == io.EOF {
 			log.Info(err.Error())
 			Connect.Close()
