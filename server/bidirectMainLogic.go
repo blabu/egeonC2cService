@@ -41,13 +41,9 @@ func CreateReadWriteMainLogic(p parser.Parser, readTimeout time.Duration) MainLo
 
 // Write - синхронный вызов парсит сообщение полученное с сети и пишет данные в клиентскую логику
 func (s *bidirectMainLogic) Write(data []byte) (int, error) {
-	if s.p == nil {
-		return 0, fmt.Errorf("Error parser is nil in session %d", s.sessionID)
+	if s.c == nil || s.p == nil {
+		return 0, errors.New("Nil error")
 	}
-	if s.c == nil {
-		return 0, fmt.Errorf("Error client logic is nil in session %d", s.sessionID)
-	}
-	log.Tracef("Session %d Try write to client logic", s.sessionID)
 	m, err := s.p.ParseMessage(data)
 	if err != nil {
 		log.Warningf("Can not parse message in session %d. Error %s", s.sessionID, err.Error())
@@ -58,12 +54,8 @@ func (s *bidirectMainLogic) Write(data []byte) (int, error) {
 
 //Read - читает из бизнес логики и передает данные обработчику handler
 func (s *bidirectMainLogic) Read(handler func([]byte, error)) {
-	if s.p == nil {
-		handler(nil, errors.New("Parser is nil"))
-		return
-	}
-	if s.c == nil {
-		handler(nil, errors.New("Client is nil"))
+	if s.p == nil || s.c == nil {
+		handler(nil, errors.New("Parser or client is nil"))
 		return
 	}
 	s.c.Read(s.dt, func(msg dto.Message, err error) {

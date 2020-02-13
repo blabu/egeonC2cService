@@ -35,10 +35,12 @@ func (c *BidirectSession) readHandler(
 	stopConnectionFromClient chan<- bool,
 	p parser.Parser) {
 
-	defer close(stopConnectionFromClient)
+	w := c.logic //NonBlockingWriter(c.logic, 32)
+	defer func() {
+		close(stopConnectionFromClient)
+		w.Close()
+	}()
 	maxPacketSize, _ := strconv.ParseUint(conf.GetConfigValueOrDefault("MaxPacketSize", "512"), 10, 32)
-	w := NonBlockingWriter(c.logic, int(maxPacketSize))
-	defer w.Close()
 	maxPacketSize *= 1024
 	bufferdReader := bufio.NewReader(*Connect)
 	for {
@@ -66,7 +68,7 @@ func (c *BidirectSession) readHandler(
 				(*Connect).SetReadDeadline(time.Now().Add(c.Duration))
 				n, err = bufferdReader.Read(c.netReq) // Читаем!!!
 				if err != nil {
-					log.Infof("Error when try read from conection: %v\n", err)
+					log.Infof("Error when try read from conection: %v", err)
 					return
 				}
 				c.netReq = c.netReq[:n]
@@ -77,7 +79,7 @@ func (c *BidirectSession) readHandler(
 			(*Connect).SetReadDeadline(time.Now().Add(c.Duration))
 			n, err = io.ReadFull(bufferdReader, temp) // Читаем!!!
 			if err != nil {
-				log.Infof("Error when try read from conection: %v\n", err)
+				log.Infof("Error when try read from conection: %v", err)
 				return
 			}
 			c.netReq = append(c.netReq, temp[:n]...) // Добавляем к сообщению прочтенное
@@ -95,18 +97,21 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 	defer close(stopConnectionFromNet)
 
 	go c.logic.Read(func(data []byte, err error) { // Read from logic and write to Internet
-		if err == io.EOF {
-			log.Info(err.Error())
-			Connect.Close()
-			return
-		} else if err == nil && data != nil {
-			Connect.SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * time.Millisecond)) // timeout for write data 1 millisecond for every bytes
-			if _, err := Connect.Write(data); err != nil {                                        // Отправляем в сеть
-				log.Trace("Write ok")
-			}
+		if err == nil && data != nil {
+			Connect.SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * 10 * time.Millisecond))
+			Connect.Write(data)
 			return
 		}
-		log.Info("Data to transmit is nil")
+		if err != nil {
+			if err == io.EOF {
+				log.Info(err.Error())
+				Connect.Close()
+				return
+			}
+			log.Error(err.Error()) //TODO Обработка других ошибок
+			return
+		}
+		log.Error("Data to transmit is nil")
 		return
 	})
 

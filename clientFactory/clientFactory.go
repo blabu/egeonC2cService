@@ -11,7 +11,7 @@ func CreateClientLogic(p parser.Parser, sessionID uint32) client.ClientInterface
 	switch p.GetParserType() {
 	case parser.C2cParserType:
 		return s2sService.NewDecorator(p, c2cData.GetBoltDbInstance(), sessionID, 16)
-		// return c2cService.NewC2cDevice(c2cData.GetBoltDbInstance(), sessionID, 16)
+		//return c2cService.NewC2cDevice(c2cData.GetBoltDbInstance(), sessionID, 16)
 	default:
 		return nil
 	}

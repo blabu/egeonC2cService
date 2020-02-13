@@ -129,7 +129,7 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 	} else {
 		return err
 	}
-	log.Trace("Try find new connection")
+	log.Infof("Client session finished with error %s, so try find new connection", err.Error())
 	if s.conn == nil {
 		for _, addr := range s.serverLists {
 			log.Trace("Try connect to ", addr)

@@ -30,7 +30,7 @@ func NewConnectionCache() ConnectionCache {
 }
 
 // AddClientToCache - check if client does not exist create all needed meta data and add him to online cache store
-func (con ConnectionCache) AddClientToCache(devID uint64, cl ClientListenerInterface) error {
+func (con *ConnectionCache) AddClientToCache(devID uint64, cl ClientListenerInterface) error {
 	if cl != nil {
 		con.ml.Lock()
 		defer con.ml.Unlock()
@@ -52,7 +52,7 @@ func (con ConnectionCache) AddClientToCache(devID uint64, cl ClientListenerInter
 
 // DelClientFromCashe - delete this client from all connected to him valid devices
 // and than delete this client from online cache store
-func (con ConnectionCache) DelClientFromCashe(devID uint64) {
+func (con *ConnectionCache) DelClientFromCashe(devID uint64) {
 	con.ml.Lock()
 	defer con.ml.Unlock()
 	clientBase, ok := con.onlineClientsCashe[devID]
@@ -71,7 +71,7 @@ func (con ConnectionCache) DelClientFromCashe(devID uint64) {
 }
 
 // DisconnectClient - close connection from devTo and devFrom
-func (con ConnectionCache) DisconnectClient(devTo, devFrom uint64) error {
+func (con *ConnectionCache) DisconnectClient(devTo, devFrom uint64) error {
 	con.ml.RLock()
 	cTo, ok1 := con.onlineClientsCashe[devTo]
 	cFrom, ok2 := con.onlineClientsCashe[devFrom]
@@ -92,7 +92,7 @@ func (con ConnectionCache) DisconnectClient(devTo, devFrom uint64) error {
 }
 
 // ConnectClients - Создает соединение и регистрирует его в кеше
-func (con ConnectionCache) ConnectClients(devTo, devFrom uint64) error {
+func (con *ConnectionCache) ConnectClients(devTo, devFrom uint64) error {
 	con.ml.RLock()
 	cTo, ok1 := con.onlineClientsCashe[devTo]
 	cFrom, ok2 := con.onlineClientsCashe[devFrom]
