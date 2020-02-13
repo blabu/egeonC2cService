@@ -9,26 +9,8 @@ import (
 	"bufio"
 	"net"
 	"strconv"
-	"sync"
 	"time"
 )
-
-type atomicMainLog struct {
-	mtx  sync.RWMutex
-	main MainLogicIO
-}
-
-func (a *atomicMainLog) Get() MainLogicIO {
-	a.mtx.RLock()
-	defer a.mtx.RUnlock()
-	return a.main
-}
-
-func (a *atomicMainLog) Set(m MainLogicIO) {
-	a.mtx.Lock()
-	defer a.mtx.Unlock()
-	a.main = m
-}
 
 //BidirectConnection - структура, которая управляет соединением реализует интерфейс Connector
 //У сервера два независимых процесса чтения и записи могут происходить одновременно
@@ -53,10 +35,7 @@ func (c *BidirectSession) readHandler(
 	stopConnectionFromClient chan<- bool,
 	p parser.Parser) {
 
-	defer func() {
-		close(stopConnectionFromClient)
-		log.Trace("Finish readHandler")
-	}()
+	defer close(stopConnectionFromClient)
 	maxPacketSize, _ := strconv.ParseUint(conf.GetConfigValueOrDefault("MaxPacketSize", "512"), 10, 32)
 	maxPacketSize *= 1024
 	bufferdReader := bufio.NewReader(*Connect)
@@ -82,7 +61,7 @@ func (c *BidirectSession) readHandler(
 					log.Warning(err.Error())
 					return // TODO Выполнять обработку ошибок
 				}
-				c.netReq = c.netReq[:128]
+				c.netReq = c.netReq[:minHeaderSize]
 				(*Connect).SetReadDeadline(time.Now().Add(c.Duration))
 				n, err = bufferdReader.Read(c.netReq) // Читаем!!!
 				if err != nil {

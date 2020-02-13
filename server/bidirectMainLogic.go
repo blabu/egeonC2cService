@@ -9,9 +9,27 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"sync"
 	"sync/atomic"
 	"time"
 )
+
+type atomicMainLog struct {
+	mtx  sync.RWMutex
+	main MainLogicIO
+}
+
+func (a *atomicMainLog) Get() MainLogicIO {
+	a.mtx.RLock()
+	defer a.mtx.RUnlock()
+	return a.main
+}
+
+func (a *atomicMainLog) Set(m MainLogicIO) {
+	a.mtx.Lock()
+	defer a.mtx.Unlock()
+	a.main = m
+}
 
 // bidirectMainLogic - двунаправленная реализация MainLogicIO для независимого чтения и записи информации
 // Реализовано:

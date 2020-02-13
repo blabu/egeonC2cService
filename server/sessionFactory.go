@@ -7,9 +7,11 @@ import (
 	"time"
 )
 
+const minHeaderSize = 128
+
 // StartNewSession - инициализирует все и стартует сессию
 func StartNewSession(conn net.Conn, dT time.Duration, st *stat.Statistics) {
-	req := make([]byte, 128)
+	req := make([]byte, minHeaderSize)
 	conn.SetReadDeadline(time.Now().Add(dT))
 	if n, err := conn.Read(req); err == nil {
 		if p, err := parser.InitParser(req[:n]); err == nil {
