@@ -8,6 +8,7 @@ package client
 
 import (
 	"blabu/c2cService/dto"
+	"io"
 	"time"
 )
 
@@ -27,5 +28,5 @@ type ClientInterface interface {
 	Read(dt time.Duration, handler func(msg dto.Message, err error))
 
 	// Close - информирует бизнес логику про разрыв соединения
-	Close()
+	io.Closer
 }

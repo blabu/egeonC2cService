@@ -14,7 +14,7 @@ import (
 var OldIPAddrTime time.Duration
 
 type AllIP struct {
-	ip               string    `json:IP`
+	IP               string    `json:IP`
 	count            uint32    `json:Count`
 	timeLastActivity time.Time `json:LastTime`
 }
@@ -53,7 +53,7 @@ func AddIPAddres(addr string) uint32 {
 	} else {
 		res.count++
 	}
-	res.ip = addr
+	res.IP = addr
 	res.timeLastActivity = time.Now()
 	ipAddreses[addr] = res
 	return res.count

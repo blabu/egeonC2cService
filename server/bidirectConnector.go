@@ -9,26 +9,8 @@ import (
 	"bufio"
 	"net"
 	"strconv"
-	"sync"
 	"time"
 )
-
-type atomicMainLog struct {
-	mtx  sync.RWMutex
-	main MainLogicIO
-}
-
-func (a *atomicMainLog) Get() MainLogicIO {
-	a.mtx.RLock()
-	defer a.mtx.RUnlock()
-	return a.main
-}
-
-func (a *atomicMainLog) Set(m MainLogicIO) {
-	a.mtx.Lock()
-	defer a.mtx.Unlock()
-	a.main = m
-}
 
 //BidirectConnection - структура, которая управляет соединением реализует интерфейс Connector
 //У сервера два независимых процесса чтения и записи могут происходить одновременно
@@ -36,7 +18,7 @@ type BidirectSession struct {
 	Tm       *time.Timer
 	Duration time.Duration
 	netReq   []byte
-	logic    atomicMainLog
+	logic    MainLogicIO
 }
 
 func (c *BidirectSession) updateWatchDogTimer() {
@@ -53,14 +35,10 @@ func (c *BidirectSession) readHandler(
 	stopConnectionFromClient chan<- bool,
 	p parser.Parser) {
 
-	defer func() {
-		close(stopConnectionFromClient)
-		log.Trace("Finish readHandler")
-	}()
+	defer close(stopConnectionFromClient)
 	maxPacketSize, _ := strconv.ParseUint(conf.GetConfigValueOrDefault("MaxPacketSize", "512"), 10, 32)
 	maxPacketSize *= 1024
 	bufferdReader := bufio.NewReader(*Connect)
-
 	for {
 		select {
 		case <-stopConnectionFromNet:
@@ -78,15 +56,15 @@ func (c *BidirectSession) readHandler(
 				return
 			}
 			if n == 0 {
-				if err := c.logic.Get().Write(c.netReq); err != nil {
+				if _, err := c.logic.Write(c.netReq); err != nil {
 					log.Warning(err.Error())
 					return // TODO Выполнять обработку ошибок
 				}
-				c.netReq = c.netReq[:128]
+				c.netReq = c.netReq[:minHeaderSize]
 				(*Connect).SetReadDeadline(time.Now().Add(c.Duration))
 				numb, err := bufferdReader.Read(c.netReq) // Читаем!!!
 				if err != nil {
-					log.Infof("Error when try read from conection: %v\n", err)
+					log.Infof("Error when try read from conection: %v", err)
 					return
 				}
 				c.netReq = c.netReq[:numb]
@@ -97,7 +75,7 @@ func (c *BidirectSession) readHandler(
 			(*Connect).SetReadDeadline(time.Now().Add(c.Duration))
 			n, err = io.ReadFull(bufferdReader, temp) // Читаем!!!
 			if err != nil {
-				log.Infof("Error when try read from conection: %v\n", err)
+				log.Infof("Error when try read from conection: %v", err)
 				return
 			}
 			c.netReq = append(c.netReq, temp[:n]...) // Добавляем к сообщению прочтенное
@@ -114,16 +92,19 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 	stopConnectionFromNet := make(chan bool)
 	defer close(stopConnectionFromNet)
 
-	go c.logic.Get().Read(func(data []byte, err error) { // Обработка чтения из бизнес логики
-		if err == io.EOF { //Read is over finish session
-			log.Info(err.Error())
-			Connect.Close()
+	go c.logic.Read(func(data []byte, err error) { // Read from logic and write to Internet
+		if err == nil && data != nil {
+			Connect.SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * 10 * time.Millisecond))
+			Connect.Write(data)
 			return
-		} else if err == nil && data != nil {
-			Connect.SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * time.Millisecond)) // timeout for write data 1 millisecond for every bytes
-			if _, err := Connect.Write(data); err != nil {                                        // Отправляем в сеть
-				log.Trace("Write ok")
+		}
+		if err != nil {
+			if err == io.EOF {
+				log.Info(err.Error())
+				Connect.Close()
+				return
 			}
+			log.Error(err.Error()) //TODO Обработка других ошибок
 			return
 		}
 		log.Warning("Data to transmit is nil or error occurs")

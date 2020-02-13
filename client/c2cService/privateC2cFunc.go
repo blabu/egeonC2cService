@@ -35,6 +35,7 @@ func (c *C2cDevice) ping(m *dto.Message) error {
 			To:      m.From,
 			Content: []byte(strings.ToUpper(currTimeStr)),
 		}
+		log.Tracef("Ping command from device %s", m.From)
 		return nil
 	}
 	log.Errorf("PING error. Undefined client in session %d", c.sessionID)
@@ -59,7 +60,6 @@ func (c *C2cDevice) connectByID(m *dto.Message) error {
 		log.Warning(err.Error())
 		return Errorf(InvalidCredentials, "\"%s\" must be a number", m.To)
 	}
-	log.Tracef("SessionID %d Connect command from device %d to device %d", c.sessionID, from, to)
 	if err = connection.ConnectClients(to, from); err != nil {
 		log.Warning(err.Error())
 		return Errorf(ClientNotFindError, "Can not create connection from %d whith abonnent %d", from, to)
@@ -72,6 +72,7 @@ func (c *C2cDevice) connectByID(m *dto.Message) error {
 		To:      m.From,
 		Content: []byte(answerConnectByIDOk),
 	}
+	log.Infof("Connect by ID command from device %d to device %d finished fine", from, to)
 	return nil
 }
 
@@ -92,7 +93,6 @@ func (c *C2cDevice) connectByName(m *dto.Message) error {
 		log.Warning(err.Error())
 		return Errorf(ClientNotFindError, "Can not create connection from %s with abonnent %s", m.From, m.To)
 	}
-	log.Tracef("Connect command from device %s to device %s in session %d", m.From, m.To, c.sessionID)
 	c.readChan <- dto.Message{
 		Command: connectByNameCOMMAND,
 		Jmp:     m.Jmp,
@@ -101,6 +101,7 @@ func (c *C2cDevice) connectByName(m *dto.Message) error {
 		To:      m.From,
 		Content: []byte(answerConnectByNameOk),
 	}
+	log.Infof("Connect by name command from device %s to device %s finished fine", m.From, m.To)
 	return nil
 }
 
@@ -148,6 +149,7 @@ func (c *C2cDevice) initByID(m *dto.Message) error {
 				To:      m.From,
 				Content: []byte(answerInitByIDOk),
 			}
+			log.Infof("Client %d init by id ok", c.device.ID)
 			return nil
 		}
 		log.Infof("Credentials is equals TODO destroy old session with client %s id: %d", c.device.Name, c.device.ID)
@@ -210,6 +212,7 @@ func (c *C2cDevice) initByName(m *dto.Message) error {
 			To:      m.From,
 			Content: []byte(answerInitByNameOk),
 		}
+		log.Infof("Client %s init by name ok", c.device.Name)
 		return nil
 	}
 	c.device.ID = 0
@@ -246,6 +249,7 @@ func (c *C2cDevice) registerNewDevice(m *dto.Message) error {
 		To:      m.From,
 		Content: []byte(thisID),
 	}
+	log.Infof("Registered new client with ID %d", c.device.ID)
 	connection.AddClientToCache(dev.ID, c)
 	return nil
 }
@@ -269,6 +273,7 @@ func (c *C2cDevice) generateNewDevice(m *dto.Message) error {
 			From:    "0",
 			To:      c.device.Name,
 		}
+		log.Infof("Generate new client with ID %d and name %s", c.device.ID, c.device.Name)
 		connection.AddClientToCache(c.device.ID, c)
 		return nil
 	}
@@ -326,7 +331,7 @@ func (c *C2cDevice) destroyConnection(msg *dto.Message) error {
 	}
 	toID := c.findID(msg.To)
 	if toID == 0 { // disconnect from all connected devices
-		log.Tracef("Close all connection for client %s: %d in session %d", c.device.Name, c.device.ID, c.sessionID)
+		log.Infof("Close all connection for client %s: %d in session %d", c.device.Name, c.device.ID, c.sessionID)
 		c.listenerMtx.Lock()
 		for id, ch := range c.listenerList {
 			if ch != nil {
@@ -345,7 +350,7 @@ func (c *C2cDevice) destroyConnection(msg *dto.Message) error {
 	ch, ok := c.listenerList[toID]
 	if !ok {
 		c.listenerMtx.Unlock()
-		return NewC2cError(ClientNotFindError, "Undefined client when try destroy session")
+		return Errorf(ClientNotFindError, "Undefined client %s when try destroy session whith %s", msg.To, c.device.Name)
 	}
 	log.Tracef("Destroy connection with on client %d in session %d", toID, c.sessionID)
 	*ch <- *msg                  // Send destroy connection message to the remote device

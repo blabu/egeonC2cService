@@ -174,8 +174,9 @@ func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err err
 }
 
 // Close - информирует бизнес логику про разрыв соединения
-func (c *C2cDevice) Close() {
+func (c *C2cDevice) Close() error {
 	connection.DelClientFromCashe(c.device.ID)
 	close(c.readChan)
 	log.Infof("Close client with id %d in session %d", c.device.ID, c.sessionID)
+	return nil
 }

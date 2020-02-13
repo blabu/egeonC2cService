@@ -37,7 +37,7 @@ func (l *LogFileType) newFile(f *os.File) {
 			l.logWrapper.Infof("Error when try close file %s", err.Error())
 		}
 	} else {
-		logger.Warningln("Warn old file is nil")
+		logger.Warning("Old file is nil")
 	}
 	l.file = f
 }

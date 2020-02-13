@@ -129,7 +129,7 @@ func (s *C2cDecorate) Write(msg *dto.Message) error {
 	} else {
 		return err
 	}
-	log.Trace("Try find new connection")
+	log.Infof("Client session finished with error %s, so try find new connection", err.Error())
 	if s.conn == nil {
 		for _, addr := range s.serverLists {
 			log.Trace("Try connect to ", addr)
@@ -232,12 +232,12 @@ func (s *C2cDecorate) Read(dt time.Duration, handler func(msg dto.Message, err e
 }
 
 // Close - информирует бизнес логику про разрыв соединения
-func (s *C2cDecorate) Close() {
+func (s *C2cDecorate) Close() error {
 	s.conMtx.Lock()
 	defer s.conMtx.Unlock()
 	if s.conn != nil {
 		s.conn.Close()
 	}
 	log.Trace("Close client decorator")
-	s.client.Close()
+	return s.client.Close()
 }
