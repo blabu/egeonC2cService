@@ -40,20 +40,20 @@ func CreateReadWriteMainLogic(p parser.Parser, readTimeout time.Duration) MainLo
 }
 
 // Write - синхронный вызов парсит сообщение полученное с сети и пишет данные в клиентскую логику
-func (s *bidirectMainLogic) Write(data []byte) error {
+func (s *bidirectMainLogic) Write(data []byte) (int, error) {
 	if s.p == nil {
-		return fmt.Errorf("Error parser is nil in session %d", s.sessionID)
+		return 0, fmt.Errorf("Error parser is nil in session %d", s.sessionID)
 	}
 	if s.c == nil {
-		return fmt.Errorf("Error client logic is nil in session %d", s.sessionID)
+		return 0, fmt.Errorf("Error client logic is nil in session %d", s.sessionID)
 	}
 	log.Tracef("Session %d Try write to client logic", s.sessionID)
 	m, err := s.p.ParseMessage(data)
 	if err != nil {
 		log.Warningf("Can not parse message in session %d. Error %s", s.sessionID, err.Error())
-		return err
+		return 0, err
 	}
-	return s.c.Write(&m)
+	return len(data), s.c.Write(&m)
 }
 
 //Read - читает из бизнес логики и передает данные обработчику handler
@@ -80,9 +80,11 @@ func (s *bidirectMainLogic) Read(handler func([]byte, error)) {
 }
 
 // Close - закрываем соединения с клиентской логикой
-func (s *bidirectMainLogic) Close() {
+func (s *bidirectMainLogic) Close() error {
 	log.Infof("Close bidirectMainLogic and client logic in session %d", s.sessionID)
 	if s.c != nil {
 		s.c.Close()
+		return nil
 	}
+	return fmt.Errorf("Client logic is nil")
 }

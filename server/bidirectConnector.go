@@ -78,7 +78,7 @@ func (c *BidirectSession) readHandler(
 				return
 			}
 			if n == 0 {
-				if err := c.logic.Get().Write(c.netReq); err != nil {
+				if _, err := c.logic.Get().Write(c.netReq); err != nil {
 					log.Warning(err.Error())
 					return // TODO Выполнять обработку ошибок
 				}

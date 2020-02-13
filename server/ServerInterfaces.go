@@ -2,6 +2,7 @@ package server
 
 import (
 	"blabu/c2cService/stat"
+	"io"
 	"net"
 )
 
@@ -26,14 +27,9 @@ type ClientReader interface {
 	Read(handler func([]byte, error))
 }
 
-// ClientWriter - базовый интерфейс для записи в логику (ввод данных из вне)
-type ClientWriter interface {
-	Write([]byte) error
-}
-
 // MainLogicIO - основоной интерфейс логики взаимодействия сервера с логикой приложения
 type MainLogicIO interface {
 	ClientReader
-	ClientWriter
-	Close()
+	io.Writer
+	io.Closer
 }
