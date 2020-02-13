@@ -232,12 +232,12 @@ func (s *C2cDecorate) Read(dt time.Duration, handler func(msg dto.Message, err e
 }
 
 // Close - информирует бизнес логику про разрыв соединения
-func (s *C2cDecorate) Close() {
+func (s *C2cDecorate) Close() error {
 	s.conMtx.Lock()
 	defer s.conMtx.Unlock()
 	if s.conn != nil {
 		s.conn.Close()
 	}
 	log.Trace("Close client decorator")
-	s.client.Close()
+	return s.client.Close()
 }
