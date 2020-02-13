@@ -162,7 +162,7 @@ func (c *C2cDevice) initByID(m *dto.Message) error {
 	return Errorf(BadCommandError, "Incorrect ID in session %d", c.sessionID)
 }
 
-// For init by name you need send name (Content[0]), (salt ; signature)-(Content[2]) signature - base64(SHA256(name + salt + base64(SHA256(name+password))))
+// For init by name you need send name (m.From), (salt ; signature)-(m.Content) signature - base64(SHA256(name + salt + base64(SHA256(name+password))))
 func (c *C2cDevice) initByName(m *dto.Message) error {
 	credentials := strings.Split(string(m.Content), ";") // Разделим соль от подписи
 	if len(credentials) < 2 {
@@ -234,12 +234,11 @@ func (c *C2cDevice) registerNewDevice(m *dto.Message) error {
 		log.Warning(err.Error())
 		return Errorf(BadCommandError, "Client with name %s already exicst in session %d", m.From, c.sessionID)
 	}
-	c.device = *dev
-	log.Tracef("Generat client with name %s and id %d", dev.Name, dev.ID)
 	if err = c.storage.SaveClient(dev); err != nil {
 		log.Warning(err.Error())
 		return Errorf(InternalError, "Can not save new client with name %s in session %d", m.From, c.sessionID)
 	}
+	c.device = *dev
 	thisID := strconv.FormatUint(dev.ID, 16)
 	c.readChan <- dto.Message{
 		Command: registerCOMMAND,
@@ -249,11 +248,11 @@ func (c *C2cDevice) registerNewDevice(m *dto.Message) error {
 		To:      m.From,
 		Content: []byte(thisID),
 	}
-	log.Infof("Registered new client with ID %d", c.device.ID)
-	connection.AddClientToCache(dev.ID, c)
-	return nil
+	log.Infof("Registered new client %s with ID %d", c.device.Name, c.device.ID)
+	return connection.AddClientToCache(dev.ID, c)
 }
 
+// generateNewDevice - генерирует имя и  идентификатор для указанного в m.Content пароля минимум три символа
 func (c *C2cDevice) generateNewDevice(m *dto.Message) error {
 	if c.device.ID != 0 {
 		err := Errorf(BadCommandError, "Client %d already exist error in session %d", c.device.ID, c.sessionID)
@@ -273,13 +272,13 @@ func (c *C2cDevice) generateNewDevice(m *dto.Message) error {
 			From:    "0",
 			To:      c.device.Name,
 		}
-		log.Infof("Generate new client with ID %d and name %s", c.device.ID, c.device.Name)
-		connection.AddClientToCache(c.device.ID, c)
-		return nil
+		log.Infof("Generate new client %s with ID %d", c.device.Name, c.device.ID)
+		return connection.AddClientToCache(c.device.ID, c)
 	}
 	return Errorf(InternalError, "Can not generate new client in session %d", c.sessionID)
 }
 
+// findID - вернет идентификатор клиента. На вход подается либо идентификатор либо имя
 func (c *C2cDevice) findID(arg string) uint64 {
 	var toID uint64
 	var err error
@@ -317,7 +316,7 @@ func (c *C2cDevice) sendNewMessage(msg *dto.Message) error {
 }
 
 //TODO not tested yet
-//Content[0] - from: local ID or Name, Content[1] - destroy connection from who if == '0' destroy connection from all
+//m.From - from: local ID or Name, m.To - destroy connection from who if == '0' destroy connection from all
 func (c *C2cDevice) destroyConnection(msg *dto.Message) error {
 	// check if name or id from is equal to local name or id
 	if !strings.EqualFold(msg.From, c.device.Name) {
