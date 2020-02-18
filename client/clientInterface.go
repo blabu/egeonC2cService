@@ -12,15 +12,16 @@ import (
 	"time"
 )
 
-/*
-ClientInterface - создает интерфейс работы с клиентом
-Этот слой ответственен за базовый функционал, который должен поддерживатся всеми устройствами.
-Здесь реализована логика регистрации (передачу типа), авторизации(передачу идентификатора и ключа), синхронизации(передачу времени).
-Это базовый набор команд, который должен поддерживать
-любое устрйоство, подключаемое к серверу
-Создает инстанс девайса по его идентификатору и делегирует все не знакомые ему функции девайсу (если конечно последний авторизован)
-*/
-type ClientInterface interface {
+//ListenerInterface - интерфейс, который позволяет реализовать систему подписки
+// на рассылку от устройства устройству
+type ListenerInterface interface {
+	AddListener(from uint64, ch *chan dto.Message)
+	DelListener(from uint64)
+	GetListenerChan() *chan dto.Message
+}
+
+//ReadWriteCloser - создает интерфейс работы с клиентом
+type ReadWriteCloser interface {
 	// Write - Передаем данные полученные из сети бизнес логике
 	Write(msg *dto.Message) error
 
@@ -29,4 +30,10 @@ type ClientInterface interface {
 
 	// Close - информирует бизнес логику про разрыв соединения
 	io.Closer
+}
+
+// CachedClientInterface - агрегация клиентского интерфейса
+type CachedClientInterface interface {
+	ListenerInterface
+	ReadWriteCloser
 }

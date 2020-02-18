@@ -26,7 +26,7 @@ import (
 */
 
 // NewDecorator - создает новый клиент обертку для поиска клиентов по сети из серверов
-func NewDecorator(p parser.Parser, s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) client.ClientInterface {
+func NewDecorator(p parser.Parser, s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) client.ReadWriteCloser {
 	client := c2cService.NewC2cDevice(s, sessionID, maxCONNECTION)
 	srvListString := configuration.GetConfigValueOrDefault("PeerList", "")
 	srvList := strings.Split(srvListString, ",")
@@ -45,7 +45,7 @@ func NewDecorator(p parser.Parser, s c2cData.C2cDB, sessionID uint32, maxCONNECT
 type C2cDecorate struct {
 	p              parser.Parser
 	serverLists    []string
-	client         client.ClientInterface
+	client         client.ReadWriteCloser
 	serverReadChan chan dto.Message
 	conMtx         sync.Mutex
 	conn           net.Conn

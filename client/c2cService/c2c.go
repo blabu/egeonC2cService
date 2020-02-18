@@ -46,7 +46,7 @@ func (err C2cError) Error() string {
 }
 
 // NewC2cError Создание новой ошибки
-func NewC2cError(t uint16, text string) C2cError {
+func NewC2cError(t uint16, text string) error {
 	return C2cError{
 		t,
 		text,
@@ -54,7 +54,7 @@ func NewC2cError(t uint16, text string) C2cError {
 }
 
 // Errorf Создание новой ошибки из форматированной строки
-func Errorf(t uint16, format string, data ...interface{}) C2cError {
+func Errorf(t uint16, format string, data ...interface{}) error {
 	return C2cError{
 		ErrType: t,
 		text:    fmt.Sprintf(format, data...),
@@ -73,6 +73,7 @@ type C2cDevice struct {
 	listenerMtx  sync.RWMutex                 // Для защиты списка каналов устройств слушающих сообщения этого клиента
 }
 
+// AddListener - Добавляет нового слушателя в список подписчиков для раздачи данных
 func (c *C2cDevice) AddListener(from uint64, ch *chan dto.Message) {
 	if ch != nil {
 		c.listenerMtx.Lock()
@@ -82,6 +83,7 @@ func (c *C2cDevice) AddListener(from uint64, ch *chan dto.Message) {
 	}
 }
 
+// DelListener - Удаляем слушателя из списка подписчиков для конкретного клиента
 func (c *C2cDevice) DelListener(from uint64) {
 	c.listenerMtx.Lock()
 	delete(c.listenerList, from)
@@ -89,12 +91,13 @@ func (c *C2cDevice) DelListener(from uint64) {
 	log.Tracef("Delete channel from client %d for %s", from, c.device.Name)
 }
 
+// GetListenerChan - Необходим для подключения одного клиента к другому в кеше клиентов
 func (c *C2cDevice) GetListenerChan() *chan dto.Message {
 	return &c.readChan
 }
 
 // NewC2cDevice - Конструктор нового клеинта
-func NewC2cDevice(s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) client.ClientInterface {
+func NewC2cDevice(s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) client.ReadWriteCloser {
 	clTypeStr := cf.GetConfigValueOrDefault("clientType", "0")
 	clType, _ := strconv.ParseUint(clTypeStr, 10, 16)
 	if clType == 0 {
@@ -175,6 +178,12 @@ func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err err
 
 // Close - информирует бизнес логику про разрыв соединения
 func (c *C2cDevice) Close() error {
+	c.destroyConnection(&dto.Message{
+		From:  c.device.Name,
+		To:    "0",
+		Jmp:   1,
+		Proto: 1, //TODO set Proto obviously is a bad practice
+	})
 	connection.DelClientFromCashe(c.device.ID)
 	close(c.readChan)
 	log.Infof("Close client with id %d in session %d", c.device.ID, c.sessionID)

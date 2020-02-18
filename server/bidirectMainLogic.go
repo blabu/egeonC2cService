@@ -21,7 +21,7 @@ type bidirectMainLogic struct {
 	sessionID uint32
 	dt        time.Duration
 	p         parser.Parser
-	c         client.ClientInterface
+	c         client.ReadWriteCloser
 }
 
 //CreateReadWriteMainLogic - Создаем новый интерфейс для MainLogicIO (логики взаимодействия сервера и клиентской логики)

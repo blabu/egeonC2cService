@@ -10,8 +10,8 @@ const maxCONNECTION = 16 /*Максимальное кол-во коннекто
 
 // Структура клиента (для хранения его в онлайн кеше)
 type cachedClient struct {
-	base             ClientListenerInterface   // Указатель на сам клиент.
-	connectedReaders []ClientListenerInterface // Список указателей на всех клиентов, которые читают.
+	base             ListenerInterface   // Указатель на сам клиент.
+	connectedReaders []ListenerInterface // Список указателей на всех клиентов, которые читают.
 	// Нужен для удаления данного клиента как публикующего данные у его читателей
 	mtx *sync.RWMutex // Для модификации connectedReaders
 }
@@ -30,7 +30,7 @@ func NewConnectionCache() ConnectionCache {
 }
 
 // AddClientToCache - check if client does not exist create all needed meta data and add him to online cache store
-func (con *ConnectionCache) AddClientToCache(devID uint64, cl ClientListenerInterface) error {
+func (con *ConnectionCache) AddClientToCache(devID uint64, cl ListenerInterface) error {
 	if cl != nil {
 		con.ml.Lock()
 		defer con.ml.Unlock()
@@ -39,7 +39,7 @@ func (con *ConnectionCache) AddClientToCache(devID uint64, cl ClientListenerInte
 			log.Warning("Can not append new abonent with diviceID ", devID, " abonent exist")
 			return fmt.Errorf("Abonent exist")
 		}
-		allReaders := make([]ClientListenerInterface, 0, maxCONNECTION) // Для избежания случайных переалокаций
+		allReaders := make([]ListenerInterface, 0, maxCONNECTION) // Для избежания случайных переалокаций
 		con.onlineClientsCashe[devID] = cachedClient{
 			base:             cl,
 			connectedReaders: allReaders,
