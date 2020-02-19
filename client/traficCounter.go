@@ -7,6 +7,7 @@ import (
 	"io"
 	"strconv"
 	"time"
+	log "blabu/c2cService/logWrapper"
 )
 
 type traficCounterWrapper struct {
@@ -45,6 +46,7 @@ func (c *traficCounterWrapper) Read(dt time.Duration, handler func(msg dto.Messa
 		if err == nil {
 			c.transmittedBytes += uint64(len(msg.Content))
 			if c.maxTransmittedBytes != 0 && c.transmittedBytes > c.maxTransmittedBytes {
+				log.Error("Overflow transmite limit")
 				handler(dto.Message{}, io.EOF)
 				return
 			}

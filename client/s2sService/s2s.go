@@ -3,7 +3,7 @@ package s2sService
 import (
 	"blabu/c2cService/client"
 	"blabu/c2cService/client/c2cService"
-	"blabu/c2cService/configuration"
+	cf "blabu/c2cService/configuration"
 	"blabu/c2cService/data/c2cData"
 	"blabu/c2cService/dto"
 	log "blabu/c2cService/logWrapper"
@@ -28,7 +28,7 @@ import (
 // NewDecorator - создает новый клиент обертку для поиска клиентов по сети из серверов
 func NewDecorator(p parser.Parser, s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) client.ReadWriteCloser {
 	client := c2cService.NewC2cDevice(s, sessionID, maxCONNECTION)
-	srvListString := configuration.GetConfigValueOrDefault("PeerList", "")
+	srvListString := cf.GetConfigValueOrDefault("PeerList", "")
 	srvList := strings.Split(srvListString, ",")
 	service := C2cDecorate{
 		p:              p,
