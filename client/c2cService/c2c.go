@@ -179,10 +179,11 @@ func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err err
 // Close - информирует бизнес логику про разрыв соединения
 func (c *C2cDevice) Close() error {
 	c.destroyConnection(&dto.Message{
-		From:  c.device.Name,
-		To:    "0",
-		Jmp:   1,
-		Proto: 1, //TODO set Proto obviously is a bad practice
+		From:    c.device.Name,
+		To:      "0",
+		Command: destroyConCOMMAND,
+		Jmp:     1, // TODO set Jmp obviously is a bad practice
+		Proto:   1, //TODO set Proto obviously is a bad practice
 	})
 	connection.DelClientFromCashe(c.device.ID)
 	close(c.readChan)

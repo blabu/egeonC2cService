@@ -94,6 +94,7 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 
 	go c.logic.Read(func(data []byte, err error) { // Read from logic and write to Internet
 		if err == nil && data != nil {
+			c.updateWatchDogTimer()
 			Connect.SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * 10 * time.Millisecond))
 			Connect.Write(data)
 			return
