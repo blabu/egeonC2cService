@@ -183,10 +183,10 @@ func (c *C2cDevice) Close() error {
 		To:      "0",
 		Command: destroyConCOMMAND,
 		Jmp:     1, // TODO set Jmp obviously is a bad practice
-		Proto:   1, //TODO set Proto obviously is a bad practice
+		Proto:   1, // TODO set Proto obviously is a bad practice
 	})
 	connection.DelClientFromCashe(c.device.ID)
 	close(c.readChan)
-	log.Infof("Close client with id %d in session %d", c.device.ID, c.sessionID)
+	log.Infof("Close client %s with id %d in session %d", c.device.Name, c.device.ID, c.sessionID)
 	return nil
 }

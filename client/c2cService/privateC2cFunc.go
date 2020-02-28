@@ -35,7 +35,7 @@ func (c *C2cDevice) ping(m *dto.Message) error {
 			To:      m.From,
 			Content: []byte(strings.ToUpper(currTimeStr)),
 		}
-		log.Tracef("Ping command from device %s", m.From)
+		log.Tracef("Ping command from device %s, id %d", c.device.Name, c.device.ID)
 		return nil
 	}
 	log.Errorf("PING error. Undefined client in session %d", c.sessionID)
