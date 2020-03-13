@@ -3,6 +3,8 @@ package main
 import (
 	cf "blabu/c2cService/configuration"
 	"blabu/c2cService/data/c2cData"
+
+	//http "blabu/c2cService/httpGateway"
 	"blabu/c2cService/server"
 	"blabu/c2cService/stat"
 	"crypto/tls"
@@ -168,9 +170,11 @@ func main() {
 			log.Error(err.Error())
 		}
 	}
-	// if addr, err := cf.GetConfigValue("GatewayAddr"); err == nil {
-	// 	go http.RunGateway(addr, *confPath, &st) // Если не нужен http можно закоментировать. -5.3Mb
-	// }
+	/*
+		if addr, err := cf.GetConfigValue("GatewayAddr"); err == nil {
+			go http.RunGateway(addr, *confPath, &st) // Если не нужен http можно закоментировать. -5.3Mb
+		}
+	*/
 	for !isStoped.Load() {
 		Con, err := listen.Accept() // Ждущая функция (Висим ждем соединения)
 		if err != nil {

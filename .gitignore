@@ -6,3 +6,5 @@ logDeleteIt/*
 log/*
 *.key
 *.pem
+httpresource/node_modules
+httpresource/build
