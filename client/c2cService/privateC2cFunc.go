@@ -84,12 +84,12 @@ func (c *C2cDevice) connectByName(m *dto.Message) error {
 		log.Warningf("Incorrect device name %s != %s in session %d", c.device.Name, m.From, c.sessionID)
 		return NewC2cError(InvalidCredentials, "Incorrect client name")
 	}
-	toClient, err := c.storage.GetClientByName(m.To)
+	toClientID, err := c.storage.GetClientID(m.To)
 	if err != nil {
 		log.Warning(err.Error())
 		return NewC2cError(ClientNotFindError, "Undefined target client")
 	}
-	if err := connection.ConnectClients(toClient.ID, c.device.ID); err != nil {
+	if err := connection.ConnectClients(toClientID, c.device.ID); err != nil {
 		log.Warning(err.Error())
 		return Errorf(ClientNotFindError, "Can not create connection from %s with abonnent %s", m.From, m.To)
 	}
@@ -124,7 +124,7 @@ func (c *C2cDevice) initByID(m *dto.Message) error {
 		return err
 	}
 	if c.device.ID == 0 {
-		device, err := c.storage.GetClientByID(id)
+		device, err := c.storage.GetClient(id)
 		if err != nil {
 			log.Warning(err.Error())
 			return NewC2cError(ClientNotFindError, err.Error())
@@ -176,7 +176,12 @@ func (c *C2cDevice) initByName(m *dto.Message) error {
 		return err
 	}
 	if c.device.ID == 0 {
-		device, err := c.storage.GetClientByName(m.From)
+		id, err := c.storage.GetClientID(m.From)
+		if err != nil {
+			log.Warning(err.Error())
+			return NewC2cError(ClientNotFindError, err.Error())
+		}
+		device, err := c.storage.GetClient(id)
 		if err != nil {
 			log.Warning(err.Error())
 			return NewC2cError(ClientNotFindError, err.Error())
@@ -280,16 +285,13 @@ func (c *C2cDevice) generateNewDevice(m *dto.Message) error {
 
 // findID - вернет идентификатор клиента. На вход подается либо идентификатор либо имя
 func (c *C2cDevice) findID(arg string) uint64 {
-	var toID uint64
-	var err error
-	if toID, err = strconv.ParseUint(arg, 16, 64); err != nil {
-		if v, err := c.storage.GetClientByName(arg); err == nil { //  Может "кому" у нас имя, а нам надо ID
-			return v.ID
-		}
-		// Если "кому" - не ясно => вернем 0
-		return 0
+	if toID, err := strconv.ParseUint(arg, 16, 64); err == nil {
+		return toID
 	}
-	return toID
+	if toID, err := c.storage.GetClientID(arg); err == nil {
+		return toID
+	}
+	return 0
 }
 
 func (c *C2cDevice) sendNewMessage(msg *dto.Message) error {

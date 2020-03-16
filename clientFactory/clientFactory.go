@@ -17,7 +17,9 @@ func CreateClientLogic(p parser.Parser, sessionID uint32) client.ReadWriteCloser
 	}
 	switch p.GetParserType() {
 	case parser.C2cParserType:
-		return client.GetNewTraficCounterWrapper(s2sService.NewDecorator(p, c2cData.GetBoltDbInstance(), sessionID, uint32(m)))
+		db := c2cData.GetBoltDbInstance()
+		peerClient := s2sService.NewDecorator(p, db, sessionID, uint32(m))
+		return client.GetNewTraficCounterWrapper(db, peerClient)
 		//return c2cService.NewC2cDevice(c2cData.GetBoltDbInstance(), sessionID, uint32(m))
 	default:
 		return nil

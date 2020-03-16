@@ -1,41 +1,68 @@
 package client
 
 import (
-	cf "blabu/c2cService/configuration"
+	"blabu/c2cService/data/c2cData"
 	"blabu/c2cService/dto"
+	log "blabu/c2cService/logWrapper"
 	"errors"
 	"io"
 	"strconv"
 	"time"
-	log "blabu/c2cService/logWrapper"
 )
 
 type traficCounterWrapper struct {
-	receivedBytes       uint64
-	maxReceivedBytes    uint64
-	transmittedBytes    uint64
-	maxTransmittedBytes uint64
-	client              ReadWriteCloser
+	storage c2cData.DB
+	client  ReadWriteCloser
+	stat    dto.ClientStat
 }
 
 //GetNewTraficCounterWrapper - вернет обертку, которая реализует подсчет трафика принятых и отправленных байт
-func GetNewTraficCounterWrapper(cl ReadWriteCloser) ReadWriteCloser {
-	maxTransmittedBytes := cf.GetConfigValueOrDefault("MaxSessionTransmit", "0") // Не ограничено
-	maxReceivedBytes := cf.GetConfigValueOrDefault("MaxSessionReceive", "0")     // не ограничено
-	tr, _ := strconv.ParseUint(maxTransmittedBytes, 10, 64)
-	rc, _ := strconv.ParseUint(maxReceivedBytes, 10, 64)
+func GetNewTraficCounterWrapper(storage c2cData.DB, cl ReadWriteCloser) ReadWriteCloser {
 	return &traficCounterWrapper{
-		receivedBytes:       0,
-		transmittedBytes:    0,
-		maxTransmittedBytes: tr,
-		maxReceivedBytes:    rc,
-		client:              cl,
+		storage: storage,
+		client:  cl,
+		stat:    dto.ClientStat{},
 	}
 }
 
+func checkLimits(stat *dto.ClientStat) bool {
+	if stat.ID != 0 && stat.LimitExpiration.Before(time.Now()) {
+		stat.LimitExpiration = time.Now().Add(stat.TimePeriod)
+		stat.ReceiveBytes = 0
+		stat.TransmiteBytes = 0
+		return true
+	}
+	if stat.MaxReceivedBytes != 0 && stat.MaxTransmittedBytes != 0 {
+		return stat.ReceiveBytes < stat.MaxReceivedBytes && stat.TransmiteBytes < stat.MaxTransmittedBytes
+	}
+	return true
+}
+
+func initStat(from string, storage c2cData.DB) dto.ClientStat {
+	var e error
+	var stat dto.ClientStat
+	if stat.ID, e = strconv.ParseUint(from, 16, 64); e != nil {
+		if stat.ID, e = storage.GetClientID(from); e != nil {
+			stat.ID = 0
+			return stat
+		}
+	}
+	if stat, e = storage.GetStat(stat.ID); e != nil {
+		stat.ID = 0
+	}
+	return stat
+}
+
 func (c *traficCounterWrapper) Write(msg *dto.Message) error {
-	c.receivedBytes += uint64(len(msg.Content))
-	if c.maxReceivedBytes != 0 && c.receivedBytes > c.maxReceivedBytes {
+	if c.stat.ID == 0 {
+		rc := c.stat.ReceiveBytes
+		tr := c.stat.TransmiteBytes
+		c.stat = initStat(msg.From, c.storage)
+		c.stat.TransmiteBytes += tr
+		c.stat.ReceiveBytes += rc
+	}
+	c.stat.ReceiveBytes += uint64(len(msg.Content))
+	if !checkLimits(&c.stat) {
 		return errors.New("Overflow receive bytes limit")
 	}
 	return c.client.Write(msg)
@@ -43,9 +70,16 @@ func (c *traficCounterWrapper) Write(msg *dto.Message) error {
 
 func (c *traficCounterWrapper) Read(dt time.Duration, handler func(msg dto.Message, err error)) {
 	c.client.Read(dt, func(msg dto.Message, err error) {
+		if c.stat.ID == 0 {
+			rc := c.stat.ReceiveBytes
+			tr := c.stat.TransmiteBytes
+			c.stat = initStat(msg.From, c.storage)
+			c.stat.TransmiteBytes += tr
+			c.stat.ReceiveBytes += rc
+		}
 		if err == nil {
-			c.transmittedBytes += uint64(len(msg.Content))
-			if c.maxTransmittedBytes != 0 && c.transmittedBytes > c.maxTransmittedBytes {
+			c.stat.TransmiteBytes += uint64(len(msg.Content))
+			if !checkLimits(&c.stat) {
 				log.Error("Overflow transmite limit")
 				handler(dto.Message{}, io.EOF)
 				return
@@ -56,5 +90,6 @@ func (c *traficCounterWrapper) Read(dt time.Duration, handler func(msg dto.Messa
 }
 
 func (c *traficCounterWrapper) Close() error {
+	c.storage.UpdateStat(&c.stat)
 	return c.client.Close()
 }

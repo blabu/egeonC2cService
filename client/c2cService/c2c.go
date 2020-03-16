@@ -66,7 +66,7 @@ func Errorf(t uint16, format string, data ...interface{}) error {
 type C2cDevice struct {
 	sessionID    uint32
 	clientType   c2cData.ClientType
-	storage      c2cData.C2cDB
+	storage      c2cData.DB
 	device       dto.ClientDescriptor // Номер устройства
 	readChan     chan dto.Message
 	listenerList map[uint64]*chan dto.Message // Список каналов устройств слушающих отправляемые сообщения этого клиента
@@ -97,7 +97,7 @@ func (c *C2cDevice) GetListenerChan() *chan dto.Message {
 }
 
 // NewC2cDevice - Конструктор нового клеинта
-func NewC2cDevice(s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) client.ReadWriteCloser {
+func NewC2cDevice(db c2cData.DB, sessionID uint32, maxConnection uint32) client.ReadWriteCloser {
 	clTypeStr := cf.GetConfigValueOrDefault("clientType", "0")
 	clType, _ := strconv.ParseUint(clTypeStr, 10, 16)
 	if clType == 0 {
@@ -105,8 +105,8 @@ func NewC2cDevice(s c2cData.C2cDB, sessionID uint32, maxCONNECTION uint32) clien
 	}
 	var c = new(C2cDevice)
 	c.sessionID = sessionID
-	c.storage = s
-	c.readChan = make(chan dto.Message, maxCONNECTION) // Делаем его буферизированным, чтобы много узлов смогли отпраить ему сообщение
+	c.storage = db
+	c.readChan = make(chan dto.Message, maxConnection) // Делаем его буферизированным, чтобы много узлов смогли отпраить ему сообщение
 	c.listenerList = make(map[uint64]*chan dto.Message)
 	c.clientType = c2cData.ClientType(clType)
 	return c
