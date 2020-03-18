@@ -40,7 +40,7 @@ type DB interface {
 	C2cDB
 	ClientGenerator
 	C2cStat
-	AddNewLimitation(ID uint64, timePeriod time.Duration, maxTxBytes, maxRxBytes uint64)
+	ForEach(tableName string, callBack func(key []byte, value []byte)error)
 }
 
 type boltC2cDatabase struct {
@@ -50,10 +50,10 @@ type boltC2cDatabase struct {
 var database boltC2cDatabase
 
 const (
-	names       = "nameByID" // список имен с ключем по ID
-	clients     = "clients" // Непосредственно сами клиенты с ключем по ID
-	maxClientID = "maxClientID" // Максимально выданный в системе идентификатор
-	clientStat  = "clientStatistics" // Все отправленные сообщения от клиентов
+	Names       = "nameByID" // список имен с ключем по ID
+	Clients     = "clients" // Непосредственно сами клиенты с ключем по ID
+	MaxClientID = "maxClientID" // Максимально выданный в системе идентификатор
+	ClientStat  = "clientStatistics" // Все отправленные сообщения от клиентов
 )
 
 // GetBoltDbInstance - Вернет реализацию интерфейса C2cDB реализованную на базе boltDB
@@ -63,7 +63,7 @@ func GetBoltDbInstance() DB {
 
 // InitC2cDB - create bolt database
 func InitC2cDB() *bolt.DB {
-	res := cf.GetConfigValueOrDefault("c2cStore", "./c2c.db")
+	res := cf.GetConfigValueOrDefault("C2cStore", "./c2c.db")
 	var err error
 	database.clientStorage, err = bolt.Open(res, 0600, nil)
 	if err != nil {
@@ -72,28 +72,41 @@ func InitC2cDB() *bolt.DB {
 	}
 	// Create bucket if not exist
 	database.clientStorage.Update(func(tx *bolt.Tx) error {
-		database.getBucket(tx, names)
-		database.getBucket(tx, clients)
-		database.getBucket(tx, maxClientID)
-		database.getBucket(tx,clientStat)
+		database.getBucket(tx, Names)
+		database.getBucket(tx, Clients)
+		database.getBucket(tx, MaxClientID)
+		database.getBucket(tx,ClientStat)
 		return nil
 	})
 	return database.clientStorage
+}
+
+func (d *boltC2cDatabase) ForEach(tableName string, callBack func(key []byte, value []byte)error) {
+	d.clientStorage.View(
+		func(tx *bolt.Tx) error {
+			if buck,err := d.getBucket(tx, tableName); err == nil {
+				buck.ForEach(callBack)
+			}
+			return nil
+		})
 }
 
 func (d *boltC2cDatabase) GetStat(ID uint64) (dto.ClientStat, error) {
 	var res []byte
 	er := d.clientStorage.View(
 		func(tx *bolt.Tx)error {
-			buck, err := d.getBucket(tx, clientStat)
+			buck, err := d.getBucket(tx, ClientStat)
 			if err != nil {
 				return err
 			}
 			res = buck.Get(uint64ToBytes(ID))
+			if res == nil {
+				return fmt.Errorf("Undefine client %d in stat storage", ID)
+			}
 			return nil
 		})
 	if er != nil {
-		return dto.ClientStat{}, er
+		return dto.ClientStat{ID: ID}, er
 	}
 	var stCl dto.ClientStat
 	er = json.Unmarshal(res, &stCl)
@@ -103,11 +116,12 @@ func (d *boltC2cDatabase) GetStat(ID uint64) (dto.ClientStat, error) {
 func (d *boltC2cDatabase) UpdateStat(cl *dto.ClientStat) error {
 	data, err := json.Marshal(cl)
 	if err != nil {
+		log.Error(err.Error())
 		return err
 	}
 	return d.clientStorage.Update(
 		func(tx *bolt.Tx) error {
-			buck, err := d.getBucket(tx, clientStat)
+			buck, err := d.getBucket(tx, ClientStat)
 			if err != nil {
 				return err
 			}
@@ -115,37 +129,14 @@ func (d *boltC2cDatabase) UpdateStat(cl *dto.ClientStat) error {
 		})
 }
 
-func (d* boltC2cDatabase) AddNewLimitation(ID uint64, timePeriod time.Duration, maxTxBytes, maxRxBytes uint64) {
-	d.clientStorage.Update(
-		func(tx *bolt.Tx) error {
-			buck, err := d.getBucket(tx, clientStat)
-			if err != nil {
-				return err
-			}
-			var res dto.ClientStat
-			if err = json.Unmarshal(buck.Get(uint64ToBytes(ID)), &res); err != nil {
-				return err
-			}
-			res.TimePeriod = timePeriod
-			res.MaxReceivedBytes = maxRxBytes
-			res.MaxTransmittedBytes = maxTxBytes
-			res.LimitExpiration = time.Now().Add(res.TimePeriod)
-			if data, err := json.Marshal(res); err != nil {
-				return err
-			} else {
-				return buck.Put(uint64ToBytes(ID), data)
-			}
-		})
-}
-
 func (d *boltC2cDatabase) delClient(id []byte) error {
 	return d.clientStorage.Update(
 		func(tx *bolt.Tx) error {
-			Clients, e1 := d.getBucket(tx, clients)
+			Clients, e1 := d.getBucket(tx, Clients)
 			if e1 != nil {
 				return e1
 			}
-			Names, e2 := d.getBucket(tx, names)
+			Names, e2 := d.getBucket(tx, Names)
 			if e2 != nil {
 				return e2
 			}
@@ -160,7 +151,7 @@ func (d *boltC2cDatabase) getIdByName(name string) (uint64, error) {
 	var res []byte
 	er := d.clientStorage.View(
 		func(tx*bolt.Tx) error {
-			buck, err := d.getBucket(tx, names)
+			buck, err := d.getBucket(tx, Names)
 			if err != nil {
 				return err
 			}
@@ -182,7 +173,7 @@ func (d *boltC2cDatabase) getClient(id []byte) (*dto.ClientDescriptor, error) {
 	var result []byte
 	er := d.clientStorage.View(
 		func(tx *bolt.Tx) error {
-			buck, err := d.getBucket(tx, clients)
+			buck, err := d.getBucket(tx, Clients)
 			if err != nil {
 				return err
 			}
@@ -213,6 +204,7 @@ func (d *boltC2cDatabase) DelClient(ID uint64) error {
 }
 
 func (d *boltC2cDatabase) getMaxID(T ClientType) uint64 {
+	log.Tracef("Try find maxID device for %d", T)
 	tx, err := d.clientStorage.Begin(true)
 	if err != nil {
 		log.Error(err.Error())
@@ -223,7 +215,7 @@ func (d *boltC2cDatabase) getMaxID(T ClientType) uint64 {
 			tx.Rollback()
 		}
 	}()
-	buck, err := d.getBucket(tx, maxClientID)
+	buck, err := d.getBucket(tx, MaxClientID)
 	if err != nil {
 		log.Error(err.Error())
 		return 0
@@ -267,6 +259,7 @@ func (d *boltC2cDatabase) GenerateRandomClient(T ClientType, hash string) (*dto.
 
 // GenerateClient - Генерируем нового клиента по его имени и паролю
 func (d *boltC2cDatabase) GenerateClient(T ClientType, name, hash string) (*dto.ClientDescriptor, error) {
+	log.Tracef("Generate new client for type %d", T)
 	if _, er := d.getIdByName(name); er == nil {
 		return nil, fmt.Errorf("Client with name %s already exist", name)
 	}
@@ -292,11 +285,11 @@ func (d *boltC2cDatabase) SaveClient(cl *dto.ClientDescriptor) error {
 	}
 	er := d.clientStorage.Update(
 		func(tx *bolt.Tx) error {
-		Clients, er := d.getBucket(tx, clients)
+		Clients, er := d.getBucket(tx, Clients)
 		if er != nil {
 			return er
 		}
-		Names, er := d.getBucket(tx, names)
+		Names, er := d.getBucket(tx, Names)
 		if er != nil {
 			return er
 		}

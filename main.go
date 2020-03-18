@@ -53,7 +53,7 @@ func initLogger() {
 	logFilePath, err := cf.GetConfigValue("LogPath")
 	if err == nil {
 		var minutes uint32
-		saveDuration, err := cf.GetConfigValue("saveDuration")
+		saveDuration, err := cf.GetConfigValue("SaveDuration")
 		if err != nil {
 			minutes = 60 * 24 // Раз в сутки по умолчанию
 		} else {

@@ -98,7 +98,7 @@ func (c *C2cDevice) GetListenerChan() *chan dto.Message {
 
 // NewC2cDevice - Конструктор нового клеинта
 func NewC2cDevice(db c2cData.DB, sessionID uint32, maxConnection uint32) client.ReadWriteCloser {
-	clTypeStr := cf.GetConfigValueOrDefault("clientType", "0")
+	clTypeStr := cf.GetConfigValueOrDefault("ClientType", "0")
 	clType, _ := strconv.ParseUint(clTypeStr, 10, 16)
 	if clType == 0 {
 		log.Error("Clinet type for this server does not specified. Registartion is disabled")

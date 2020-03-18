@@ -25,7 +25,7 @@ func InitParser(receivedData []byte) (Parser, error) {
 	}
 	poz := bytes.IndexByte(receivedData, startSymb)
 	if poz < 0 {
-		log.Warning("Undefined start symbol")
+		log.Warning("Undefined start symbol in ", string(receivedData))
 		return nil, fmt.Errorf("Undefined start symbol in message BYTE_ARRAY: %v", receivedData)
 	}
 	receivedData = receivedData[poz:]

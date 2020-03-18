@@ -32,7 +32,6 @@ type ClientDescriptor struct {
 //ClientStat - client base statistics
 type ClientStat struct {
 	ID                  uint64        `json:"ID"`
-	Name                string        `json:"Name"`
 	LastActivity        time.Time     `json:"LastActivity"`
 	TransmiteBytes      uint64        `json:"Transmit"`
 	ReceiveBytes        uint64        `json:"Receive"`
@@ -40,4 +39,6 @@ type ClientStat struct {
 	MaxTransmittedBytes uint64        `json:"MaxTx"`
 	LimitExpiration     time.Time     `json:"LimitExpiration"`
 	TimePeriod          time.Duration `json:"Period"`
+	Balance             float64       `json:"Balance"`
+	Rate                float64       `json:"Rate"`
 }
