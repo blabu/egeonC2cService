@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-func updateLimits(stat *dto.ClientStat) error {
+func updateLimits(stat *dto.ClientLimits) error {
 	stat.LastActivity = time.Now()
 	if stat.Balance < 0.0 {
 		return errors.New("Not enough balance")
@@ -26,9 +26,9 @@ func updateLimits(stat *dto.ClientStat) error {
 	return nil
 }
 
-func initStat(from string, storage c2cData.DB) (dto.ClientStat, error) {
+func initStat(from string, storage c2cData.DB) (dto.ClientLimits, error) {
 	var e error
-	var stat dto.ClientStat
+	var stat dto.ClientLimits
 	if stat.ID, e = strconv.ParseUint(from, 16, 64); e != nil {
 		if stat.ID, e = storage.GetClientID(from); e != nil {
 			log.Warning("Undefine client when try init it ", from)

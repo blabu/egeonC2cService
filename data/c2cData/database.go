@@ -31,15 +31,15 @@ type C2cDB interface {
 }
 
 // C2cStat - Интерфейс для статистики по клиенту
-type C2cStat interface {
-	GetStat(ID uint64) (dto.ClientStat, error)
-	UpdateStat(cl *dto.ClientStat) error
+type C2cLimits interface {
+	GetStat(ID uint64) (dto.ClientLimits, error)
+	UpdateStat(cl *dto.ClientLimits) error
 }
 
 type DB interface {
 	C2cDB
 	ClientGenerator
-	C2cStat
+	C2cLimits
 	ForEach(tableName string, callBack func(key []byte, value []byte)error)
 }
 
@@ -53,7 +53,7 @@ const (
 	Names       = "nameByID" // список имен с ключем по ID
 	Clients     = "clients" // Непосредственно сами клиенты с ключем по ID
 	MaxClientID = "maxClientID" // Максимально выданный в системе идентификатор
-	ClientStat  = "clientStatistics" // Все отправленные сообщения от клиентов
+	ClientStat  = "clientLimits" // Все отправленные сообщения от клиентов
 )
 
 // GetBoltDbInstance - Вернет реализацию интерфейса C2cDB реализованную на базе boltDB
@@ -91,7 +91,7 @@ func (d *boltC2cDatabase) ForEach(tableName string, callBack func(key []byte, va
 		})
 }
 
-func (d *boltC2cDatabase) GetStat(ID uint64) (dto.ClientStat, error) {
+func (d *boltC2cDatabase) GetStat(ID uint64) (dto.ClientLimits, error) {
 	var res []byte
 	er := d.clientStorage.View(
 		func(tx *bolt.Tx)error {
@@ -106,14 +106,14 @@ func (d *boltC2cDatabase) GetStat(ID uint64) (dto.ClientStat, error) {
 			return nil
 		})
 	if er != nil {
-		return dto.ClientStat{ID: ID}, er
+		return dto.ClientLimits{ID: ID}, er
 	}
-	var stCl dto.ClientStat
+	var stCl dto.ClientLimits
 	er = json.Unmarshal(res, &stCl)
 	return stCl, er
 }
 
-func (d *boltC2cDatabase) UpdateStat(cl *dto.ClientStat) error {
+func (d *boltC2cDatabase) UpdateStat(cl *dto.ClientLimits) error {
 	data, err := json.Marshal(cl)
 	if err != nil {
 		log.Error(err.Error())

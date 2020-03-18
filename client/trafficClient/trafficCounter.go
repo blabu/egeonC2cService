@@ -12,8 +12,8 @@ import (
 type traficCounterWrapper struct {
 	storage  c2cData.DB
 	client   client.ReadWriteCloser
-	stat     dto.ClientStat
-	validate func(st *dto.ClientStat) error
+	stat     dto.ClientLimits
+	validate func(st *dto.ClientLimits) error
 }
 
 //GetNewTraficCounterWrapper - вернет обертку, которая реализует подсчет трафика принятых и отправленных байт
@@ -21,7 +21,7 @@ func GetNewTraficCounterWrapper(storage c2cData.DB, cl client.ReadWriteCloser) c
 	return &traficCounterWrapper{
 		storage:  storage,
 		client:   cl,
-		stat:     dto.ClientStat{},
+		stat:     dto.ClientLimits{},
 		validate: updateLimits,
 	}
 }
