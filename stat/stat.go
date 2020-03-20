@@ -2,6 +2,7 @@ package stat
 
 import (
 	"encoding/json"
+	"sync"
 	"sync/atomic"
 	"time"
 
@@ -13,12 +14,15 @@ const S_VERSION = "v2.2.1"
 
 // Statistics - базовые метрики работы сервера
 type Statistics struct {
-	MaxTimeForOneConnection time.Duration `json:"oneConnectionTimeout"`
-	MaxResponceTime         int64         `json:"maxResponce"`
-	TimeUP                  time.Time     `json:"timeUP"`
-	NowConnected            int32         `json:"nowConnected`
-	MaxCuncurentConnection  int32         `json:"maxConcurentConnection"`
-	AllConnection           int32         `json:"allConnection"`
+	ServerVersion           string           `json:"version"`
+	MaxTimeForOneConnection time.Duration    `json:"oneConnectionTimeout"`
+	MaxResponceTime         int64            `json:"maxResponce"`
+	TimeUP                  time.Time        `json:"timeUP"`
+	NowConnected            int32            `json:"nowConnected"`
+	MaxCuncurentConnection  int32            `json:"maxConcurentConnection"`
+	AllConnection           int32            `json:"allConnection"`
+	IPAddresses             map[string]AllIP `json:"allIP"`
+	rwM                     sync.RWMutex
 }
 
 // SetResponceTime - Передает в статистику максимальное значение времени ответа и команда на которую было потрачено столько времени
@@ -56,7 +60,9 @@ func (s *Statistics) SetConnectionTime(dt time.Duration) {
 func CreateStatistics() Statistics {
 	ipAddrInit()
 	return Statistics{
-		TimeUP: time.Now(),
+		ServerVersion: S_VERSION,
+		TimeUP:        time.Now(),
+		IPAddresses:   make(map[string]AllIP, 1),
 	}
 }
 

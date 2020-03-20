@@ -4,7 +4,7 @@ import (
 	cf "blabu/c2cService/configuration"
 	"blabu/c2cService/data/c2cData"
 
-	//http "blabu/c2cService/httpGateway"
+	http "blabu/c2cService/httpGateway"
 	"blabu/c2cService/server"
 	"blabu/c2cService/stat"
 	"crypto/tls"
@@ -84,7 +84,17 @@ func getSessionTimeout() time.Duration {
 	return timeout
 }
 
-func startTCPMainServer() net.Listener {
+func getUDPListener() (net.Listener, error) {
+	if portStr, err := cf.GetConfigValue("ServerUdpPort"); err == nil {
+		log.Info("Start UDP server on ", portStr)
+		listen, _ := NewUDPListener(4096, portStr)
+		return listen, nil
+	} else {
+		return nil, err
+	}
+}
+
+func getTCPListener() net.Listener {
 	port, err := cf.GetConfigValue("ServerTcpPort")
 	if err != nil {
 		log.Fatal("Undefined ServerTcpPort parameter")
@@ -99,32 +109,43 @@ func startTCPMainServer() net.Listener {
 	return listen
 }
 
-func startUDPServer(portStr string, timeout time.Duration, st *stat.Statistics) {
-	listen, err := NewUDPListener(4096, portStr)
-	if err != nil {
-		log.Warning(err.Error())
-		return
-	}
-	for {
-		Con, err := listen.Accept()
-		if err != nil {
-			log.Error(err.Error())
-			return
-		}
-		go server.StartNewSession(Con, timeout*time.Second, st)
+func getTLSListener() (net.Listener, error) {
+	if portTls, err := cf.GetConfigValue("ServerTlsPort"); err != nil {
+		return nil, err
+	} else if certPath, err := cf.GetConfigValue("CertificatePath"); err != nil {
+		return nil, err
+	} else if privateKeyPath, err := cf.GetConfigValue("PrivateKeyPath"); err != nil {
+		return nil, err
+	} else if certificate, err := tls.LoadX509KeyPair(certPath, privateKeyPath); err != nil {
+		return nil, err
+	} else if localSrv, err := net.Listen("tcp", portTls); err != nil {
+		return nil, err
+	} else {
+		conf := &tls.Config{Certificates: []tls.Certificate{certificate}}
+		server := tls.NewListener(localSrv, conf)
+		return server, nil
 	}
 }
 
-func startTlsServer(l net.Listener, timeout time.Duration, st *stat.Statistics) {
-	for {
-		Con, err := l.Accept()
-		if err != nil {
-			log.Error(err.Error())
-			return
+func startServer(listen net.Listener, timeout time.Duration, st *stat.Statistics) {
+	Con, err := listen.Accept() // Ждущая функция (Висим ждем соединения)
+	if err != nil {
+		if nerr, ok := err.(net.Error); ok && nerr.Temporary() { //check type of error is network error
+			log.Warningf("Temporary Accept() failure - %s", err)
+		} else {
+			log.Infof("Can not accept connection, %v", err)
 		}
-		log.Trace("New connection from ", Con.RemoteAddr().String())
-		go server.StartNewSession(Con, timeout*time.Second, st)
+		runtime.Gosched()
+		return
 	}
+	count := st.AddIPAddres(strings.Split(Con.RemoteAddr().String(), ":")[0])
+	maxConnectionForOneIP := getMaxConnectionValue()
+	if maxConnectionForOneIP != 0 && count > maxConnectionForOneIP { // Ограничение максимального кол-ва конектов с одного IP адреса
+		Con.Close()
+		return
+	}
+	log.Info("Create new connection from ", Con.RemoteAddr().String())
+	go server.StartNewSession(Con, timeout*time.Second, st)
 }
 
 func main() {
@@ -132,66 +153,52 @@ func main() {
 	signal.Notify(sigTerm, os.Interrupt, os.Kill, syscall.SIGQUIT)
 	initLogger()
 	cf.ShowAllConfigStore(os.Stderr)
-	maxConnectionForOneIP := getMaxConnectionValue()
 	timeout := getSessionTimeout()
 	defer c2cData.InitC2cDB().Close()
 	st := stat.CreateStatistics()
-	listen := startTCPMainServer()
 	isStoped := atomic.NewBool(false)
+	udpListener, err := getUDPListener()
+	if err != nil {
+		log.Error(err.Error())
+	} else {
+		go func() {
+			for !isStoped.Load() {
+				startServer(udpListener, timeout, &st)
+			}
+			log.Info("Finish upd service")
+		}()
+	}
+	tlsListener, err := getTLSListener()
+	if err != nil {
+		log.Error(err.Error())
+	} else {
+		go func() {
+			for !isStoped.Load() {
+				startServer(tlsListener, timeout, &st)
+			}
+			log.Info("Finish tls service")
+		}()
+	}
+	if addr, err := cf.GetConfigValue("GatewayAddr"); err == nil {
+		go http.RunGateway(addr, *confPath, &st) // Если не нужен http можно закоментировать. -5.3Mb
+	}
+	tcpListener := getTCPListener()
 	go func() {
-		<-sigTerm
-		isStoped.Store(true)
-		log.Info("Operation system kill server")
-		listen.Close()
+		for !isStoped.Load() {
+			startServer(tcpListener, timeout, &st)
+		}
+		log.Info("Finish tcp service")
 	}()
-	if portStr, err := cf.GetConfigValue("ServerUdpPort"); err == nil {
-		log.Info("Start UDP server on ", portStr)
-		go startUDPServer(portStr, timeout, &st)
+	<-sigTerm
+	isStoped.Store(true)
+	log.Info("Operation system kill server")
+	tcpListener.Close()
+	if tlsListener != nil {
+		log.Info("Try close tls connection")
+		tlsListener.Close()
 	}
-	if portTls, err := cf.GetConfigValue("ServerTlsPort"); err == nil {
-		if certPath, err := cf.GetConfigValue("CertificatePath"); err == nil {
-			if privateKeyPath, err := cf.GetConfigValue("PrivateKeyPath"); err == nil {
-				log.Info("Start tls server on ", portTls)
-				if certificate, err := tls.LoadX509KeyPair(certPath, privateKeyPath); err == nil {
-					if localSrv, err := net.Listen("tcp", portTls); err == nil {
-						conf := &tls.Config{Certificates: []tls.Certificate{certificate}}
-						server := tls.NewListener(localSrv, conf)
-						go startTlsServer(server, timeout, &st)
-					} else {
-						log.Error(err.Error())
-					}
-				} else {
-					log.Error(err.Error())
-				}
-			} else {
-				log.Error(err.Error())
-			}
-		} else {
-			log.Error(err.Error())
-		}
-	}
-	/*
-		if addr, err := cf.GetConfigValue("GatewayAddr"); err == nil {
-			go http.RunGateway(addr, *confPath, &st) // Если не нужен http можно закоментировать. -5.3Mb
-		}
-	*/
-	for !isStoped.Load() {
-		Con, err := listen.Accept() // Ждущая функция (Висим ждем соединения)
-		if err != nil {
-			if nerr, ok := err.(net.Error); ok && nerr.Temporary() { //check type of error is network error
-				log.Warningf("Temporary Accept() failure - %s", err)
-			} else {
-				log.Infof("Can not accept connection, %v", err)
-			}
-			runtime.Gosched()
-			continue
-		}
-		count := stat.AddIPAddres(strings.Split(Con.RemoteAddr().String(), ":")[0])
-		if maxConnectionForOneIP != 0 && count > maxConnectionForOneIP { // Ограничение максимального кол-ва конектов с одного IP адреса
-			Con.Close()
-			continue
-		}
-		log.Info("Create new connection from ", Con.RemoteAddr().String())
-		go server.StartNewSession(Con, timeout*time.Second, &st)
+	if udpListener != nil {
+		log.Info("Try close udp connection")
+		udpListener.Close()
 	}
 }

@@ -49,13 +49,6 @@ type boltC2cDatabase struct {
 
 var database boltC2cDatabase
 
-const (
-	Names       = "nameByID" // список имен с ключем по ID
-	Clients     = "clients" // Непосредственно сами клиенты с ключем по ID
-	MaxClientID = "maxClientID" // Максимально выданный в системе идентификатор
-	ClientStat  = "clientLimits" // Все отправленные сообщения от клиентов
-)
-
 // GetBoltDbInstance - Вернет реализацию интерфейса C2cDB реализованную на базе boltDB
 func GetBoltDbInstance() DB {
 	return &database
@@ -75,7 +68,8 @@ func InitC2cDB() *bolt.DB {
 		database.getBucket(tx, Names)
 		database.getBucket(tx, Clients)
 		database.getBucket(tx, MaxClientID)
-		database.getBucket(tx,ClientStat)
+		database.getBucket(tx,ClientLimits)
+		database.getBucket(tx,Permission)
 		return nil
 	})
 	return database.clientStorage
@@ -95,7 +89,7 @@ func (d *boltC2cDatabase) GetStat(ID uint64) (dto.ClientLimits, error) {
 	var res []byte
 	er := d.clientStorage.View(
 		func(tx *bolt.Tx)error {
-			buck, err := d.getBucket(tx, ClientStat)
+			buck, err := d.getBucket(tx, ClientLimits)
 			if err != nil {
 				return err
 			}
@@ -121,7 +115,7 @@ func (d *boltC2cDatabase) UpdateStat(cl *dto.ClientLimits) error {
 	}
 	return d.clientStorage.Update(
 		func(tx *bolt.Tx) error {
-			buck, err := d.getBucket(tx, ClientStat)
+			buck, err := d.getBucket(tx, ClientLimits)
 			if err != nil {
 				return err
 			}
@@ -157,7 +151,7 @@ func (d *boltC2cDatabase) getIdByName(name string) (uint64, error) {
 			}
 			res = buck.Get([]byte(name))
 			if res == nil || len(res) == 0 {
-				err := fmt.Errorf("Undefined client")
+				err := fmt.Errorf("Undefined client with name %s", name)
 				log.Warning(err.Error())
 				return err
 			}
@@ -179,7 +173,7 @@ func (d *boltC2cDatabase) getClient(id []byte) (*dto.ClientDescriptor, error) {
 			}
 			result = buck.Get(id)
 			if result == nil || len(result) == 0 {
-				err := fmt.Errorf("Undefined client")
+				err := fmt.Errorf("Undefined client with id %d", bytesToUint64(id))
 				log.Warning(err.Error())
 				return err
 			}
@@ -302,44 +296,4 @@ func (d *boltC2cDatabase) SaveClient(cl *dto.ClientDescriptor) error {
 		return nil
 	})
 	return er
-}
-
-func (d *boltC2cDatabase) getBucket(tx *bolt.Tx, bucketName string) (*bolt.Bucket, error) {
-	var buck *bolt.Bucket
-	if buck = tx.Bucket([]byte(bucketName)); buck == nil {
-		log.Warning("Can not find bucket for clients")
-		log.Trace("Try create client bucket")
-		var er error
-		if buck, er = tx.CreateBucket([]byte(bucketName)); er != nil {
-			log.Error(er.Error())
-			return nil, fmt.Errorf("Can not create bucket for clients")
-		}
-		log.Tracef("Bucket %s created", bucketName)
-	}
-	return buck, nil
-}
-
-func uint64ToBytes(val uint64) []byte {
-	res := make([]byte, 8)
-	binary.LittleEndian.PutUint64(res, val)
-	return res
-}
-
-func bytesToUint64(bytes []byte) uint64 {
-	if len(bytes) != 8 {
-		log.Errorf("Invalid uin64 type %v", bytes)
-		return 0
-	}
-	return binary.LittleEndian.Uint64(bytes)
-}
-
-func serialize(c *dto.ClientDescriptor) []byte {
-	res, _ := json.Marshal(c)
-	return res
-}
-
-func deserialize(dat []byte) *dto.ClientDescriptor {
-	var cl dto.ClientDescriptor
-	json.Unmarshal(dat, &cl)
-	return &cl
 }
