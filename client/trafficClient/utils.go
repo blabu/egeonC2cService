@@ -10,20 +10,20 @@ import (
 	"time"
 )
 
-func updateLimits(stat *dto.ClientLimits) error {
+func updateLimits(stat dto.ClientLimits) (dto.ClientLimits, error) {
 	stat.LastActivity = time.Now()
 	if stat.Balance < 0.0 {
-		return errors.New("Not enough balance")
+		return stat, errors.New("Not enough balance")
 	}
 	if (stat.LimitExpiration.Before(time.Now())) ||
-		(stat.MaxReceivedBytes > 0 && stat.MaxTransmittedBytes > 0 &&
-			stat.ReceiveBytes > stat.MaxReceivedBytes && stat.TransmiteBytes > stat.MaxTransmittedBytes) {
+		(stat.MaxReceivedBytes > 0 && stat.MaxTransmittedBytes > 0) &&
+			(stat.ReceiveBytes > stat.MaxReceivedBytes || stat.TransmiteBytes > stat.MaxTransmittedBytes) {
 		stat.Balance -= stat.Rate
 		stat.LimitExpiration = time.Now().Add(stat.TimePeriod)
 		stat.ReceiveBytes = 0
 		stat.TransmiteBytes = 0
 	}
-	return nil
+	return stat, nil
 }
 
 func initStat(from string, storage c2cData.DB) (dto.ClientLimits, error) {

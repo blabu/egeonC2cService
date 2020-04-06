@@ -1,7 +1,7 @@
 #!/bin/bash
 
-binURL=http://localhost:6060/upload/bin
-confURL=http://localhost:6060/upload/conf
+binURL=http://localhost:6060/api/v1/upload/bin
+confURL=http://localhost:6060/api/v1/upload/conf
 
 rm -rf ./test
 mkdir ./test

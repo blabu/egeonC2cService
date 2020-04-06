@@ -14,4 +14,5 @@ type ClientLimits struct {
 	TimePeriod          time.Duration `json:"Period"`
 	Balance             float64       `json:"Balance"`
 	Rate                float64       `json:"Rate"`
+	ModifiedDate        time.Time     `json:"Modified"`
 }

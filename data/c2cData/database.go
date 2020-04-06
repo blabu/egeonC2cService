@@ -34,6 +34,7 @@ type C2cDB interface {
 type C2cLimits interface {
 	GetStat(ID uint64) (dto.ClientLimits, error)
 	UpdateStat(cl *dto.ClientLimits) error
+	UpdateIfNotModified(cl *dto.ClientLimits) error
 }
 
 type DB interface {
@@ -85,6 +86,33 @@ func (d *boltC2cDatabase) ForEach(tableName string, callBack func(key []byte, va
 		})
 }
 
+func (d *boltC2cDatabase) UpdateIfNotModified(cl *dto.ClientLimits) error {
+	tx, e := d.clientStorage.Begin(true)
+	if e != nil {
+		return e
+	}
+	defer tx.Rollback()
+	buck, err := d.getBucket(tx, ClientLimits)
+	if err != nil {
+		return err
+	}
+	var oldClient dto.ClientLimits
+	err = json.Unmarshal(buck.Get(uint64ToBytes(cl.ID)), &oldClient)
+	if err != nil {
+		return err
+	}
+	if oldClient.ModifiedDate.After(cl.ModifiedDate) {
+		return fmt.Errorf("Client already modified")
+	}
+	cl.ModifiedDate = time.Now()
+	data, err := json.Marshal(cl)
+	if err != nil {
+		return err
+	}
+	buck.Put(uint64ToBytes(cl.ID), data)
+	return tx.Commit()
+}
+
 func (d *boltC2cDatabase) GetStat(ID uint64) (dto.ClientLimits, error) {
 	var res []byte
 	er := d.clientStorage.View(
@@ -108,6 +136,7 @@ func (d *boltC2cDatabase) GetStat(ID uint64) (dto.ClientLimits, error) {
 }
 
 func (d *boltC2cDatabase) UpdateStat(cl *dto.ClientLimits) error {
+	cl.ModifiedDate = time.Now()
 	data, err := json.Marshal(cl)
 	if err != nil {
 		log.Error(err.Error())
