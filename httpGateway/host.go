@@ -222,13 +222,13 @@ func limitsHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	limit, err := storage.GetStat(id)
-	if err != nil {
-		httpError{statusCode: http.StatusBadRequest, err: err}.ServeHTTP(w, r)
-		return
-	}
+	limit, findLimitError := storage.GetStat(id)
 	switch r.Method {
 	case http.MethodGet:
+		if findLimitError != nil {
+			httpError{statusCode: http.StatusBadRequest, err: findLimitError}.ServeHTTP(w, r)
+			return
+		}
 		if res, err := json.Marshal(limit); err != nil {
 			httpError{statusCode: http.StatusInternalServerError, err: errors.New("Can not get data from base")}.ServeHTTP(w, r)
 		} else {
@@ -247,6 +247,10 @@ func limitsHandler(w http.ResponseWriter, r *http.Request) {
 			maxRx := r.FormValue("maxRx")   // in bytes
 			maxTx := r.FormValue("maxTx")   // in bytes
 			period := r.FormValue("period") // in seconds
+			if findLimitError != nil {
+				limit.ID = id
+				limit.LastActivity = time.Now()
+			}
 			if len(balance) != 0 {
 				if b, e := strconv.ParseFloat(balance, 64); e == nil {
 					limit.Balance += b
@@ -270,6 +274,9 @@ func limitsHandler(w http.ResponseWriter, r *http.Request) {
 			if len(period) != 0 {
 				if p, e := strconv.ParseInt(period, 10, 64); e == nil {
 					limit.TimePeriod = time.Duration(p) * time.Second
+					if findLimitError != nil {
+						limit.LimitExpiration = limit.LastActivity.Add(limit.TimePeriod)
+					}
 				}
 			}
 			storage.UpdateStat(&limit)

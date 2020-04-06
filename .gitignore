@@ -1,4 +1,3 @@
-telemetriAPI
 *.exe
 *.conf
 logDeleteIt/*
@@ -9,3 +8,4 @@ log/*
 httpresource/node_modules
 httpresource/build
 node_modules
+c2cService
