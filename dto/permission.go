@@ -6,6 +6,7 @@ type Permission struct {
 }
 
 type ClientPermission struct {
+	Name string       `json:"name"`
 	Key  string       `json:"key"`
 	Perm []Permission `json:"perm"`
 }

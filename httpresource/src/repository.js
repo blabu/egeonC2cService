@@ -7,7 +7,7 @@ const ALL_CLIENTS = "clients"
 const CHECK_KEY = "checkKey"
 
 const formURL = (command, ...param) => {
-    const url = "https://localhost:6060"
+    const url = "https://195.60.229.164:3555"
     const requestParam = param.map(e=>`${e.key}=${e.value}`).join("&");
     return `${url}/api/v1/${command}?${requestParam}`
 }

@@ -1,11 +1,12 @@
 import React from 'react'
 import {AppBar, Toolbar, IconButton, Grid, Badge} from '@material-ui/core'
-import {VpnKey, AccountCircle, ExitToApp, Home as HomeIcon} from '@material-ui/icons'
+import {VpnKey, AccountCircle, ExitToApp, Home as HomeIcon, InfoOutlined} from '@material-ui/icons'
 import {BrowserRouter, Route, Switch, Link as RouterLink} from 'react-router-dom'
-import Keys from './paths/Keys.js'
-import User from './paths/User.js'
-import Quit from './paths/Quit.js'
-import Main from './paths/Main.js'
+import Keys from './paths/Keys'
+import User from './paths/User'
+import Quit from './paths/Quit'
+import Main from './paths/Main'
+import ServerInfo from './paths/ServerInfo'
 import './App.css';
 import {UserContext} from './context/UserState';
 
@@ -33,6 +34,10 @@ class Menu extends React.Component {
                       component={RouterLink} to="/keys">
                         <Badge badgeContent={1} color="secondary"><VpnKey fontSize="large"/></Badge>
                     </IconButton>
+                    <IconButton color="inherit"
+                      component={RouterLink} to="/info">
+                        <InfoOutlined fontSize="large"/>
+                    </IconButton>
                   </Grid>
                   <Grid item xs={8} sm={6} md={2}
                         container
@@ -58,6 +63,9 @@ class Menu extends React.Component {
               </Route>
               <Route path="/keys">
                 <Keys/>
+              </Route>
+              <Route path="/info">
+                <ServerInfo/>
               </Route>
               <Route path="/user">
                 <User/>

@@ -1,12 +1,17 @@
-import React, {Fragment} from 'react'
-import {Typography} from '@material-ui/core'
+import React from 'react'
+import {Grid, Typography, Paper} from '@material-ui/core'
 import { UserContext } from '../context/UserState';
 
 export default function User(props) {
     const context = React.useContext(UserContext);
     return (
-        <Fragment>
-            <Typography variant="h6">Hello your key is {context.state.key}</Typography>
-        </Fragment>
+        <Grid container direction="row" spacing={4}>
+            <Grid item xs={2}>
+                <Paper>
+                    <Typography variant="h6">Hello, {context.state.name}</Typography>
+                    <Typography variant="h6">Your key is {context.state.key}</Typography>
+                </Paper>
+            </Grid>
+        </Grid>
     )
 }

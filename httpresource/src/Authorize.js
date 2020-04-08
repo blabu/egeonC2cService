@@ -14,7 +14,7 @@ class Authorize extends React.Component {
     componentDidMount() {
         console.log("Current context is ", this.context);
         if (localStorage.getItem("isRemember")) {
-            this.setKey(localStorage.getItem("key"));
+            this.setKey(localStorage.getItem("key"), localStorage.getItem("name"));
         }
     }
 
@@ -25,7 +25,7 @@ class Authorize extends React.Component {
         ResolveAfter(1000, this.insertedKey)
         .then((data)=>{
             this.setState({isLoad: false, isError: false})
-            this.setKey(data);
+            this.setKey(data.key, data.name);
         })
     }
 
@@ -40,14 +40,17 @@ class Authorize extends React.Component {
                     console.log(answer.error)
                     throw answer.error;
                 }
-                this.setKey(this.insertedKey);
+                this.setKey(answer.key, answer.name);
                 if (this.state.isRemember) {
-                    localStorage.setItem("key", this.insertedKey);
+                    localStorage.setItem("name", answer.name);
+                    localStorage.setItem("key", answer.key);
                     localStorage.setItem("isRemember", true);
                 } else {
+                    localStorage.setItem("name", "");
                     localStorage.setItem("key", "");
                     localStorage.setItem("isRemember", false);
                 }
+                this.setState({ ...this.state, isLoad: false });
             })
             .catch(err => {
                 console.log(err);
@@ -64,32 +67,39 @@ class Authorize extends React.Component {
         this.setState({...this.state, isRemember : event.target.checked});
     }
 
-    setKey(newKey) {
-        this.context.updateState(true, newKey);
+    setKey(newKey, name) {
+        this.context.updateState(true, newKey, name);
     }
 
     render() {
         if (!this.state.isLoad) {
             return (
-                <form className="authForm" 
-                      onSubmit={(event) => { event.preventDefault(); this.handleOnSubmit(event) }}>
+                <div className="authForm">
+                <form onSubmit={(event) => { event.preventDefault(); this.handleOnSubmit(event) }}>
+                    <div></div>
+                    <div>
                     <TextField
                         autoFocus={true}
-                        color={this.state.isError ? "secondary" : "primary"}
-                        label={this.state.isError ? "Insert valid key" : "Key"}
+                        label={this.state.isError ? "Error" : "Key"}
                         variant="outlined"
+                        error={this.state.isError}
+                        helperText={this.state.isError ? "Incorrect key!":"Insert a valid key please!"}
                         onChange={this.keyChanges.bind(this)} />
                     <Switch
                         onChange={this.handleChange.bind(this)}
                         checked={this.state.isRemember}
                         name={"isRemember"}
                         color="primary" />
+                    </div>
+                    <div>
                     <Button
                         variant="contained"
                         color="primary"
                         onClick={this.handleOnSubmit.bind(this)}>OK
                     </Button>
+                    </div>
                 </form>
+                </div>
             );
         }
         return <div className="authForm"><CircularProgress/></div>

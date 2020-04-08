@@ -8,7 +8,6 @@ import (
 	"blabu/c2cService/stat"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -38,32 +37,47 @@ func (h httpError) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func checkKey(key, path string) (dto.Permission, error) {
+func getClientPermission(key string) (*dto.ClientPermission, error) {
 	if rootKey, err := cf.GetConfigValue("RootKey"); err == nil {
 		if rootKey == key {
-			return dto.Permission{
-				URL:        path,
-				IsWritable: true,
+			return &dto.ClientPermission{
+				Name: "root",
+				Key:  rootKey,
+				Perm: []dto.Permission{
+					dto.Permission{
+						URL:        "{any}",
+						IsWritable: true,
+					}},
 			}, nil
 		}
 	}
 	db := c2cData.GetBoltDbInstance()
 	if Perm, ok := db.(c2cData.IPerm); !ok {
-		return dto.Permission{}, errors.New("Can not find permission")
+		return &dto.ClientPermission{}, errors.New("Can not find permission")
 	} else {
-		p, err := Perm.GetPermission(key)
-		if err != nil {
-			return dto.Permission{}, err
-		}
-		url := strings.TrimPrefix(path, apiLevel)
-		for _, v := range p.Perm {
-			if v.URL == url {
-				return v, nil
-			}
-			log.Tracef("Url %s not equal requested %s", v.URL, url)
-		}
-		return dto.Permission{}, errors.New("Operation not permitted")
+		return Perm.GetPermission(key)
 	}
+}
+
+func checkKey(key, path string) (dto.Permission, error) {
+	p, err := getClientPermission(key)
+	if err != nil {
+		return dto.Permission{}, err
+	}
+	if len(p.Perm) > 0 && p.Perm[0].URL == "{any}" && p.Name == "root" {
+		return dto.Permission{
+			URL:        path,
+			IsWritable: true,
+		}, nil
+	}
+	url := strings.TrimPrefix(path, apiLevel)
+	for _, v := range p.Perm {
+		if v.URL == url {
+			return v, nil
+		}
+		log.Tracef("Url %s not equal requested %s", v.URL, url)
+	}
+	return dto.Permission{}, errors.New("Operation not permitted")
 }
 
 func getFileUploadHandler(filePath string) http.HandlerFunc {
@@ -296,7 +310,7 @@ in post body required:
 token - key
 url - path:isWritable or path
 Query example
-curl -i -cacert ./cert.pem --insecure -H "application/x-www-form-urlencoded" -X POST "https://localhost:6060/api/v1/perm?key=123456" -d "token=qwertyu&url=info:true&url=limits:true&url=perm:true"
+curl -i -cacert ./cert.pem --insecure -H "application/x-www-form-urlencoded" -X POST "https://localhost:6060/api/v1/perm?key=123456" -d "token=qwertyu&name=someName&url=info:true&url=limits:true&url=perm:true"
 */
 func addPerm(w http.ResponseWriter, r *http.Request) {
 	key := r.URL.Query().Get("key")
@@ -315,7 +329,8 @@ func addPerm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	newToken := r.FormValue("token")
-	if urls, ok := r.Form["url"]; ok && len(newToken) > 5 {
+	name := r.FormValue("name")
+	if urls, ok := r.Form["url"]; ok && len(newToken) > 5 && len(name) > 0 {
 		var allPerm []dto.Permission
 		for _, v := range urls {
 			pair := strings.Split(v, ":")
@@ -327,6 +342,7 @@ func addPerm(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		cl := dto.ClientPermission{
+			Name: name,
 			Key:  newToken,
 			Perm: allPerm,
 		}
@@ -347,16 +363,6 @@ func addPerm(w http.ResponseWriter, r *http.Request) {
 	httpError{statusCode: http.StatusBadRequest, err: errors.New("Incorrect body in post request")}.ServeHTTP(w, r)
 }
 
-func optionsHandler(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Allow", http.MethodGet)
-	w.Header().Add("Allow", http.MethodPost)
-	w.Header().Add("Allow", http.MethodOptions)
-	w.Header().Add("Access-Control-Allow-Methods", http.MethodGet)
-	w.Header().Add("Access-Control-Allow-Methods", http.MethodPost)
-	w.Header().Add("Access-Control-Allow-Origin", "*")
-	w.WriteHeader(http.StatusOK)
-}
-
 /*
 HTTP Gateway is http server.
 can send some request to another peer over http protocol
@@ -366,7 +372,6 @@ RunGateway start handle base http url
 func RunGateway(address, confPath string, s *stat.Statistics) error {
 	log.Info("Start http gateway on ", address)
 	r := mux.NewRouter()
-	r.Methods(http.MethodOptions).HandlerFunc(optionsHandler)
 	r.Methods(http.MethodGet).Path(uploadBinPath).HandlerFunc(getFileUploadHandler(os.Args[0]))
 	r.Methods(http.MethodGet).Path(uploadConfPath).HandlerFunc(getFileUploadHandler(confPath))
 	r.Methods(http.MethodGet).Path(internalStatus).HandlerFunc(getServerStatus(s))
@@ -374,14 +379,18 @@ func RunGateway(address, confPath string, s *stat.Statistics) error {
 	r.Methods(http.MethodPost).Path(client).HandlerFunc(insertClient)
 	r.Methods(http.MethodGet).Path(client).HandlerFunc(getClient)
 	r.Methods(http.MethodGet).Path(checkKeyURL).HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		p, err := checkKey(r.URL.Query().Get("key"), r.URL.Query().Get("path"))
+		p, err := getClientPermission(r.URL.Query().Get("key"))
 		if err != nil {
 			httpError{http.StatusForbidden, err}.ServeHTTP(w, r)
 		} else {
-			w.Header().Add("Access-Control-Allow-Origin", "*")
-			w.Header().Add("Content-Type", "application/json")
-			w.WriteHeader(http.StatusOK)
-			w.Write([]byte(fmt.Sprintf(`{"url":"%s","isWrite":%v}`, p.URL, p.IsWritable)))
+			if d, e := json.Marshal(p); e == nil {
+				w.Header().Add("Access-Control-Allow-Origin", "*")
+				w.Header().Add("Content-Type", "application/json")
+				w.WriteHeader(http.StatusOK)
+				w.Write(d)
+			} else {
+				httpError{http.StatusInternalServerError, errors.New("")}.ServeHTTP(w, r)
+			}
 		}
 	})
 	r.Path(limits).HandlerFunc(limitsHandler)
@@ -392,6 +401,7 @@ func RunGateway(address, confPath string, s *stat.Statistics) error {
 		log.Info("Path to static resource ", http.Dir(pathToWeb))
 		r.Methods(http.MethodGet).PathPrefix("/").Handler(http.StripPrefix("", http.FileServer(http.Dir(pathToWeb))))
 	}
+	mux.CORSMethodMiddleware(r)
 	gateway := http.Server{
 		Handler:     r,
 		Addr:        address,
