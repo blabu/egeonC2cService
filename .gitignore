@@ -7,5 +7,6 @@ log/*
 *.pem
 httpresource/node_modules
 httpresource/build
+httpresource/maps
 node_modules
 c2cService

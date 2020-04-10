@@ -11,6 +11,14 @@ h1 {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#logoAuth {
+    width: 100px;
+    height: 100px;
+    margin-bottom: .2rem;
+    position: relative;
+    left: 25%;
+  }
+  
 div {
     margin: .3rem;
 }

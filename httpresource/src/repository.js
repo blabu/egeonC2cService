@@ -1,15 +1,18 @@
 import axios from 'axios';
 
 
-const STAT = "info"
-const CLIENT = "client"
-const ALL_CLIENTS = "clients"
-const CHECK_KEY = "checkKey"
+const STAT = "/api/v1/info"
+const CLIENT = "/api/v1/client"
+const ALL_CLIENTS = "/api/v1/clients"
+const CHECK_KEY = "/api/v1/checkKey"
+const PERM = "/api/v1/perm"
+const MARKER = "/loc.png"
+const SERVER_ADDR = "" // "https://195.60.229.164:3555"
 
 const formURL = (command, ...param) => {
-    const url = "https://195.60.229.164:3555"
+    const url = SERVER_ADDR;
     const requestParam = param.map(e=>`${e.key}=${e.value}`).join("&");
-    return `${url}/api/v1/${command}?${requestParam}`
+    return `${url}${command}?${requestParam}`
 }
 
 function ResolveAfter(timeout, ...resolveParam) {
@@ -74,4 +77,39 @@ function PostAxios(command, postData, ...param) {
     })
 }
 
-export {GetAxios as Get, PostAxios as Post, ResolveAfter, STAT, CLIENT, ALL_CLIENTS, CHECK_KEY};
+async function Request(url, method="GET", data=null) {
+    const headers = {};
+    let body;
+    if(data) {
+        headers["Content-Type"] = "application/json";
+        body = JSON.stringify(data);
+    }
+    try {
+        const resp = await fetch(url, {
+            method,
+            headers,
+            body,
+        });
+        return await resp.json();
+    } catch(e) {
+        console.warn(e);
+    }
+}
+
+export {
+    Request,
+    GetAxios,
+    PostAxios,
+    GetFetch,
+    PostFetch,
+    GetAxios as Get, 
+    PostAxios as Post, 
+    ResolveAfter, 
+    STAT, 
+    CLIENT, 
+    ALL_CLIENTS, 
+    CHECK_KEY, 
+    MARKER, 
+    PERM, 
+    SERVER_ADDR
+};

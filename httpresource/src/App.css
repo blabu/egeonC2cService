@@ -1,6 +1,8 @@
 body {
   margin: 0px;
   padding: 0px;
+  height: 100%;
+  width: 100%;
 }
 
 .App {
@@ -11,4 +13,12 @@ body {
   background-color: black !important;
   padding: .4rem;
   display: flex !important;
+}
+
+div#loader {
+  display: block;
+  position: absolute;
+  z-index: 10;
+  left: 45%;
+  top: 35%;
 }

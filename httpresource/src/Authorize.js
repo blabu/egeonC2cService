@@ -1,8 +1,10 @@
 import React from 'react'
-import { Button, Switch, TextField, CircularProgress } from '@material-ui/core'
-import "./Auth.css"
+import { Button, Switch, TextField } from '@material-ui/core'
+import Loader from './Loader'
+import './Auth.css'
 import { ResolveAfter, Get, CHECK_KEY } from './repository'
 import {UserContext} from './context/UserState'
+import Logo from '../public/icon_light.png'
 
 class Authorize extends React.Component {
     state = {
@@ -40,6 +42,7 @@ class Authorize extends React.Component {
                     console.log(answer.error)
                     throw answer.error;
                 }
+                this.setState({ ...this.state, isLoad: false });
                 this.setKey(answer.key, answer.name);
                 if (this.state.isRemember) {
                     localStorage.setItem("name", answer.name);
@@ -50,7 +53,6 @@ class Authorize extends React.Component {
                     localStorage.setItem("key", "");
                     localStorage.setItem("isRemember", false);
                 }
-                this.setState({ ...this.state, isLoad: false });
             })
             .catch(err => {
                 console.log(err);
@@ -76,7 +78,7 @@ class Authorize extends React.Component {
             return (
                 <div className="authForm">
                 <form onSubmit={(event) => { event.preventDefault(); this.handleOnSubmit(event) }}>
-                    <div></div>
+                    <img id="logoAuth" src={Logo} alt=""/>
                     <div>
                     <TextField
                         autoFocus={true}
@@ -102,7 +104,7 @@ class Authorize extends React.Component {
                 </div>
             );
         }
-        return <div className="authForm"><CircularProgress/></div>
+        return <Loader/>
     }
 }
 

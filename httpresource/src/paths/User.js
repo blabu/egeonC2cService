@@ -10,6 +10,7 @@ export default function User(props) {
                 <Paper>
                     <Typography variant="h6">Hello, {context.state.name}</Typography>
                     <Typography variant="h6">Your key is {context.state.key}</Typography>
+                    
                 </Paper>
             </Grid>
         </Grid>

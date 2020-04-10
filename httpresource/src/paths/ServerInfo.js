@@ -70,6 +70,9 @@ class ServerStat extends React.Component {
                                             </li>))
                                     }</ul>
                             </li>
+                            <li>
+                                Last update time: {(new Date()).toLocaleString('ru-Ru')}
+                            </li>
                         </ul>
                     </div>
                     </Paper>
