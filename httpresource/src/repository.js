@@ -7,7 +7,7 @@ const ALL_CLIENTS = "/api/v1/clients"
 const CHECK_KEY = "/api/v1/checkKey"
 const PERM = "/api/v1/perm"
 const MARKER = "/loc.png"
-const SERVER_ADDR = "" // "https://195.60.229.164:3555"
+const SERVER_ADDR = "localhost:6060" // "https://195.60.229.164:3555"
 
 const formURL = (command, ...param) => {
     const url = SERVER_ADDR;

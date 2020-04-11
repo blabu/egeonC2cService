@@ -6,6 +6,7 @@ import (
 	log "blabu/c2cService/logWrapper"
 	"encoding/json"
 	"errors"
+	"io"
 	"net/http"
 	"strconv"
 	"time"
@@ -75,21 +76,26 @@ func getClient(w http.ResponseWriter, r *http.Request) {
 key parameter is required
 in post for need name and pass fields
 Example:
-curl -i -cacert ./cert.pem --insecure -X POST https://localhost:6060/api/v1/client?key=123456 -d "name=userName&pass=securePass"
+curl -i -cacert ./cert.pem --insecure -X POST https://localhost:6060/api/v1/client?key=a1s2d3f4g5h6 -d "{\"name\":\"someUser2000\", \"pass\":\"securePass2000\"}"
 */
 func insertClient(w http.ResponseWriter, r *http.Request) {
+	type user struct {
+		Name string `json:"name"`
+		Pass string `json:"pass"`
+	}
 	key := r.URL.Query().Get("key")
 	if perm, err := checkKey(key, client); err == nil && perm.IsWritable {
 		clType, _ := strconv.ParseUint(cf.GetConfigValueOrDefault("ClientType", "1"), 10, 16)
-		err = r.ParseForm()
-		if err != nil {
+		var u user
+		tempData := make([]byte, r.ContentLength)
+		io.ReadFull(r.Body, tempData)
+		log.Trace(string(tempData))
+		if err = json.Unmarshal(tempData, &u); err != nil {
 			httpError{statusCode: http.StatusBadRequest, err: errors.New("Can not parse parameters")}.ServeHTTP(w, r)
 			return
 		}
-		name := r.FormValue("name")
-		pass := r.FormValue("pass")
 		storage := c2cData.GetBoltDbInstance()
-		cl, err := storage.GenerateClient(c2cData.ClientType(clType), name, pass)
+		cl, err := storage.GenerateClient(c2cData.ClientType(clType), u.Name, u.Pass)
 		if err != nil {
 			httpError{statusCode: http.StatusBadRequest, err: err}.ServeHTTP(w, r)
 		}
@@ -106,6 +112,22 @@ func insertClient(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func getLimits(w http.ResponseWriter, r *http.Request) {
+	_, limit, findLimitError := getClientLimit(r)
+	if findLimitError != nil {
+		httpError{statusCode: http.StatusBadRequest, err: findLimitError}.ServeHTTP(w, r)
+		return
+	}
+	if res, err := json.Marshal(limit); err != nil {
+		httpError{statusCode: http.StatusInternalServerError, err: errors.New("Can not get data from base")}.ServeHTTP(w, r)
+	} else {
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		w.Write(res)
+	}
+}
+
 /*
 Set limits for client
 request param:
@@ -118,90 +140,51 @@ maxRx
 maxTx
 period in seconds
 Example
-curl -i --insecure -X POST "https://localhost:6060/api/v1/limits?key=qwertyu&name=userName" -d "balance=1000&rate=100&period=3600"
-curl -i --insecure -X POST "https://localhost:6060/api/v1/limits?key=qwertyu&name=blabu" -d "balance=-20.3"
+curl -i --insecure -X PUT "https://localhost:6060/api/v1/limits?key=qwertyu&name=userName" -d "{\"balance\":1000,\"rate\":100, \"period\":3600}"
+curl -i --insecure -X PUT "https://localhost:6060/api/v1/limits?key=qwertyu&name=blabu" -d "balance=-20.3"
 */
-func limitsHandler(w http.ResponseWriter, r *http.Request) {
-	key := r.URL.Query().Get("key")
-	perm, err := checkKey(key, limits)
-	if err != nil {
-		httpError{statusCode: http.StatusMethodNotAllowed, err: errors.New("Operation not permitted")}.ServeHTTP(w, r)
-		return
+func putLimitsHandler(w http.ResponseWriter, r *http.Request) {
+	type tempLimitStruct struct {
+		Balance float64 `json:"balance"`
+		Rate    float64 `json:"rate"`
+		MaxRx   uint64  `json:"maxRx"`  // in bytes
+		MaxTx   uint64  `json:"maxTx"`  // in bytes
+		Period  int32   `json:"period"` // in seconds
 	}
-	storage := c2cData.GetBoltDbInstance()
-	var id uint64
-	idStr := r.URL.Query().Get("id")
-	if len(idStr) == 0 {
-		name := r.URL.Query().Get("name")
-		if id, err = storage.GetClientID(name); err != nil {
-			httpError{statusCode: http.StatusBadRequest, err: err}.ServeHTTP(w, r)
+	IsWritable, limit, findLimitError := getClientLimit(r)
+	if IsWritable {
+		var newLimit tempLimitStruct
+		tempData := make([]byte, r.ContentLength)
+		io.ReadFull(r.Body, tempData)
+		if err := json.Unmarshal(tempData, &newLimit); err != nil {
+			httpError{statusCode: http.StatusBadRequest, err: errors.New("Can not find param in request body")}.ServeHTTP(w, r)
 			return
 		}
-	}
-	limit, findLimitError := storage.GetStat(id)
-	switch r.Method {
-	case http.MethodGet:
 		if findLimitError != nil {
-			httpError{statusCode: http.StatusBadRequest, err: findLimitError}.ServeHTTP(w, r)
-			return
+			limit.LastActivity = time.Now()
 		}
-		if res, err := json.Marshal(limit); err != nil {
-			httpError{statusCode: http.StatusInternalServerError, err: errors.New("Can not get data from base")}.ServeHTTP(w, r)
-		} else {
-			w.Header().Add("Access-Control-Allow-Origin", "*")
-			w.Header().Add("Content-Type", "application/json")
-			w.WriteHeader(http.StatusCreated)
-			w.Write(res)
+		limit.Balance += newLimit.Balance
+		if newLimit.Rate != 0 {
+			limit.Rate = newLimit.Rate
 		}
-	case http.MethodPost:
-		if perm.IsWritable {
-			if err := r.ParseForm(); err != nil {
-				httpError{statusCode: http.StatusBadRequest, err: errors.New("Can not parse form")}.ServeHTTP(w, r)
-			}
-			balance := r.FormValue("balance")
-			rate := r.FormValue("rate")
-			maxRx := r.FormValue("maxRx")   // in bytes
-			maxTx := r.FormValue("maxTx")   // in bytes
-			period := r.FormValue("period") // in seconds
+		if newLimit.MaxRx != 0 {
+			limit.MaxReceivedBytes = newLimit.MaxRx
+		}
+		if newLimit.MaxTx != 0 {
+			limit.MaxTransmittedBytes = newLimit.MaxTx
+		}
+		if newLimit.Period != 0 {
+			limit.TimePeriod = time.Duration(newLimit.Period) * time.Second
 			if findLimitError != nil {
-				limit.ID = id
-				limit.LastActivity = time.Now()
+				limit.LimitExpiration = limit.LastActivity.Add(limit.TimePeriod)
 			}
-			if len(balance) != 0 {
-				if b, e := strconv.ParseFloat(balance, 64); e == nil {
-					limit.Balance += b
-				}
-			}
-			if len(rate) != 0 {
-				if r, e := strconv.ParseFloat(rate, 64); e == nil {
-					limit.Rate = r
-				}
-			}
-			if len(maxRx) != 0 {
-				if m, e := strconv.ParseUint(maxRx, 10, 64); e == nil {
-					limit.MaxReceivedBytes = m
-				}
-			}
-			if len(maxTx) != 0 {
-				if m, e := strconv.ParseUint(maxTx, 10, 64); e == nil {
-					limit.MaxTransmittedBytes = m
-				}
-			}
-			if len(period) != 0 {
-				if p, e := strconv.ParseInt(period, 10, 64); e == nil {
-					limit.TimePeriod = time.Duration(p) * time.Second
-					if findLimitError != nil {
-						limit.LimitExpiration = limit.LastActivity.Add(limit.TimePeriod)
-					}
-				}
-			}
-			storage.UpdateStat(&limit)
-			w.Header().Add("Content-Type", "application/json")
-			w.WriteHeader(http.StatusCreated)
-			d, _ := json.Marshal(limit)
-			w.Write(d)
-		} else {
-			httpError{statusCode: http.StatusForbidden, err: errors.New("Operation not permitted")}.ServeHTTP(w, r)
 		}
+		c2cData.GetBoltDbInstance().UpdateStat(&limit)
+		w.Header().Add("Content-Type", "application/json")
+		w.WriteHeader(http.StatusCreated)
+		d, _ := json.Marshal(limit)
+		w.Write(d)
+	} else {
+		httpError{statusCode: http.StatusForbidden, err: errors.New("Operation not permitted")}.ServeHTTP(w, r)
 	}
 }

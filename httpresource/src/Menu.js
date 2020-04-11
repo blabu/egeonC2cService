@@ -22,7 +22,7 @@ class Menu extends React.Component {
             <AppBar position="static" className="header">
               <Toolbar direction="row">
                 <Grid container spacing={3}>
-                  <Grid item xs={4} sm={6} md={10}
+                  <Grid item sm={10}
                       container
                       direction="row"
                       justify="flex-start"
@@ -44,7 +44,7 @@ class Menu extends React.Component {
                         <MapOutlined fontSize="large"/>
                     </IconButton>
                   </Grid>
-                  <Grid item xs={8} sm={6} md={2}
+                  <Grid item sm={2}
                         container
                         direction="row"
                         justify="flex-end"

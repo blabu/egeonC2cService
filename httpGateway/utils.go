@@ -7,8 +7,10 @@ import (
 	log "blabu/c2cService/logWrapper"
 	"errors"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -101,4 +103,27 @@ func writeToFile(data []byte, pathToFile string) error {
 	f.Write(data)
 	f.Close()
 	return nil
+}
+
+func getClientLimit(r *http.Request) (bool, dto.ClientLimits, error) {
+	key := r.URL.Query().Get("key")
+	perm, err := checkKey(key, limits)
+	if err != nil {
+		return false, dto.ClientLimits{}, errors.New("Operation not permitted")
+	}
+	storage := c2cData.GetBoltDbInstance()
+	var id uint64
+	idStr := r.URL.Query().Get("id")
+	if len(idStr) == 0 {
+		name := r.URL.Query().Get("name")
+		if id, err = storage.GetClientID(name); err != nil {
+			return perm.IsWritable, dto.ClientLimits{}, err
+		}
+	} else {
+		if id, err = strconv.ParseUint(idStr, 10, 64); err != nil {
+			return perm.IsWritable, dto.ClientLimits{}, err
+		}
+	}
+	l, e := storage.GetStat(id)
+	return perm.IsWritable, l, e
 }

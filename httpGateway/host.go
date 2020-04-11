@@ -8,6 +8,7 @@ import (
 	"blabu/c2cService/stat"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -113,7 +114,6 @@ can upload server by wget command
 RunGateway start handle base http url
 */
 func RunGateway(address, confPath string, s *stat.Statistics) error {
-	log.Info("Start http gateway on ", address)
 	r := mux.NewRouter()
 	r.Methods(http.MethodGet).Path(uploadBinPath).HandlerFunc(getFileUploadHandler(os.Args[0]))
 	r.Methods(http.MethodGet).Path(uploadConfPath).HandlerFunc(getFileUploadHandler(confPath))
@@ -136,11 +136,26 @@ func RunGateway(address, confPath string, s *stat.Statistics) error {
 			}
 		}
 	})
-	r.Path(limits).HandlerFunc(limitsHandler)
+	r.Methods(http.MethodGet).Path(limits).HandlerFunc(getLimits)
+	r.Methods(http.MethodPut, http.MethodPost).Path(limits).HandlerFunc(putLimitsHandler)
 	r.Methods(http.MethodPost).Path(perm).HandlerFunc(addPerm)
-	mux.CORSMethodMiddleware(r)
-	r.MethodNotAllowedHandler = httpError{err: errors.New("Method not allowed. Sorry"), statusCode: http.StatusMethodNotAllowed}
-	r.NotFoundHandler = httpError{err: errors.New("Method not exist. Sorry"), statusCode: http.StatusNotExtended}
+	r.Use(mux.CORSMethodMiddleware(r))
+	maxRequestSize, err := strconv.ParseInt(cf.GetConfigValueOrDefault("MaxPacketSize", "128"), 10, 32)
+	if err != nil {
+		maxRequestSize = 128 * 1024 // 128 KB
+	} else {
+		maxRequestSize *= 1024 // n KB
+	}
+	r.Use(
+		func(next http.Handler) http.Handler {
+			return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+				if r.ContentLength < 0 || r.ContentLength > maxRequestSize {
+					httpError{statusCode: http.StatusRequestEntityTooLarge, err: fmt.Errorf("Request more than %d", maxRequestSize)}.ServeHTTP(w, r)
+					return
+				}
+				next.ServeHTTP(w, r)
+			})
+		})
 	if pathToWeb, err := cf.GetConfigValue("PathToWeb"); err == nil {
 		var expire time.Duration
 		if expireDuration, err := strconv.ParseInt(cf.GetConfigValueOrDefault("ExpireMapCache", "0"), 10, 32); err != nil {
@@ -154,6 +169,8 @@ func RunGateway(address, confPath string, s *stat.Statistics) error {
 
 		r.Methods(http.MethodGet).PathPrefix("/").Handler(http.StripPrefix("", http.FileServer(http.Dir(pathToWeb+"build/"))))
 	}
+	r.MethodNotAllowedHandler = httpError{err: errors.New("Method not allowed. Sorry"), statusCode: http.StatusMethodNotAllowed}
+	r.NotFoundHandler = httpError{err: errors.New("Method not exist. Sorry"), statusCode: http.StatusNotExtended}
 	gateway := http.Server{
 		Handler:     r,
 		Addr:        address,
@@ -162,9 +179,9 @@ func RunGateway(address, confPath string, s *stat.Statistics) error {
 	cert, err := cf.GetConfigValue("CertificatePath")
 	key, e := cf.GetConfigValue("PrivateKeyPath")
 	if err == nil && e == nil {
-		log.Info("Start https server")
+		log.Info("Start https gateway on ", address)
 		return gateway.ListenAndServeTLS(cert, key)
-	} else {
-		return gateway.ListenAndServe()
 	}
+	log.Info("Start http gateway on ", address)
+	return gateway.ListenAndServe()
 }

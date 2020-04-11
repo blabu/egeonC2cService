@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"strconv"
 	"time"
+	"errors"
 
 	"github.com/boltdb/bolt"
 )
@@ -102,7 +103,7 @@ func (d *boltC2cDatabase) UpdateIfNotModified(cl *dto.ClientLimits) error {
 		return err
 	}
 	if oldClient.ModifiedDate.After(cl.ModifiedDate) {
-		return fmt.Errorf("Client already modified")
+		return errors.New("Client already modified")
 	}
 	cl.ModifiedDate = time.Now()
 	data, err := json.Marshal(cl)
@@ -267,7 +268,7 @@ func (d *boltC2cDatabase) getMaxID(T ClientType) uint64 {
 // GenerateRandomClient - Генерируем нового клиента, имя которого будет совпадать с его идентификационным номером
 func (d *boltC2cDatabase) GenerateRandomClient(T ClientType, hash string) (*dto.ClientDescriptor, error) {
 	if len(hash) < 2 {
-		return nil, fmt.Errorf("hash password is to small")
+		return nil, errors.New("hash password is to small")
 	}
 	max := d.getMaxID(T)
 	if max != 0 {
@@ -295,14 +296,17 @@ func (d *boltC2cDatabase) GenerateClient(T ClientType, name, hash string) (*dto.
 			SecretKey: hash,
 		}, nil
 	}
-	return nil, fmt.Errorf("Can not generate new client undefined maxID")
+	return nil, errors.New("Can not generate new client undefined maxID")
 }
 
 //SaveClient - Сохраняем нового клиента на диск.
 func (d *boltC2cDatabase) SaveClient(cl *dto.ClientDescriptor) error {
+	if cl == nil {
+		return errors.New("Incorrect client data")
+	}
 	cl.RegisterDate = time.Now()
 	if cl.ID == 0 {
-		er := fmt.Errorf("Can not save client with id = 0")
+		er := errors.New("Can not save client with id = 0")
 		log.Error(er)
 		return er
 	}
