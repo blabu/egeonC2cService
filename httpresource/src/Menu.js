@@ -1,12 +1,13 @@
 import React from 'react'
 import {AppBar, Toolbar, IconButton, Grid, Badge} from '@material-ui/core'
-import {VpnKey, AccountCircle, ExitToApp, Home as HomeIcon, InfoOutlined, MapOutlined} from '@material-ui/icons'
+import {VpnKey, AccountCircle, ExitToApp, Home as HomeIcon, InfoOutlined, MapOutlined, PanToolOutlined} from '@material-ui/icons'
 import {BrowserRouter, Route, Switch, Link as RouterLink} from 'react-router-dom'
 import Keys from './paths/Keys'
 import User from './paths/User'
 import Quit from './paths/Quit'
 import Main from './paths/Main'
 import Map  from './paths/Map'
+import Desk  from './paths/Desk'
 import ServerInfo from './paths/ServerInfo'
 import './App.css';
 import {UserContext} from './context/UserState';
@@ -43,6 +44,10 @@ class Menu extends React.Component {
                       component={RouterLink} to="/map">
                         <MapOutlined fontSize="large"/>
                     </IconButton>
+                    <IconButton color="inherit"
+                      component={RouterLink} to="/desc">
+                        <PanToolOutlined fontSize="large"/>
+                    </IconButton>
                   </Grid>
                   <Grid item sm={2}
                         container
@@ -74,6 +79,9 @@ class Menu extends React.Component {
               </Route>
               <Route path="/map">
                 <Map position={[50.448051, 30.521734]}/>
+              </Route>
+              <Route path="/desc">
+                <Desk/>
               </Route>
               <Route path="/user">
                 <User/>

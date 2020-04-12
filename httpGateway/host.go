@@ -118,9 +118,9 @@ func RunGateway(address, confPath string, s *stat.Statistics) error {
 	r.Methods(http.MethodGet).Path(uploadBinPath).HandlerFunc(getFileUploadHandler(os.Args[0]))
 	r.Methods(http.MethodGet).Path(uploadConfPath).HandlerFunc(getFileUploadHandler(confPath))
 	r.Methods(http.MethodGet).Path(internalStatus).HandlerFunc(getServerStatus(s))
-	r.Methods(http.MethodGet).Path(clients).HandlerFunc(getClients)
+	r.Methods(http.MethodGet).Path(client + "/{id}").HandlerFunc(getClient)
 	r.Methods(http.MethodPost).Path(client).HandlerFunc(insertClient)
-	r.Methods(http.MethodGet).Path(client).HandlerFunc(getClient)
+	r.Methods(http.MethodGet).Path(client).HandlerFunc(getClients)
 	r.Methods(http.MethodGet).Path(checkKeyURL).HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		p, err := getClientPermission(r.URL.Query().Get("key"))
 		if err != nil {

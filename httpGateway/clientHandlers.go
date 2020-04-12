@@ -10,12 +10,14 @@ import (
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/gorilla/mux"
 )
 
 func getClients(w http.ResponseWriter, r *http.Request) {
 	v := r.URL.Query()
 	key := v.Get("key")
-	if _, err := checkKey(key, clients); err == nil {
+	if _, err := checkKey(key, client); err == nil {
 		db := c2cData.GetBoltDbInstance()
 		w.Header().Add("Access-Control-Allow-Origin", "*")
 		w.Header().Add("Content-Type", "application/json")
@@ -44,24 +46,25 @@ func getClient(w http.ResponseWriter, r *http.Request) {
 	var id uint64
 	var err error
 	storage := c2cData.GetBoltDbInstance()
-	idStr := r.URL.Query().Get("id")
-	nameStr := r.URL.Query().Get("name")
+	idStr, ok := mux.Vars(r)["id"]
+	if !ok {
+		httpError{statusCode: http.StatusBadGateway, err: errors.New("Undefined client id or name")}.ServeHTTP(w, r)
+		return
+	}
 	if len(idStr) == 0 {
-		id, err = storage.GetClientID(nameStr)
-		if err != nil {
-			httpError{statusCode: http.StatusBadRequest, err: err}.ServeHTTP(w, r)
-			return
-		}
-	} else {
-		id, err = strconv.ParseUint(idStr, 10, 64)
-		if err != nil {
-			httpError{statusCode: http.StatusBadRequest, err: err}.ServeHTTP(w, r)
+		httpError{statusCode: http.StatusBadGateway, err: errors.New("empty client identifier")}.ServeHTTP(w, r)
+		return
+	}
+	id, err = strconv.ParseUint(idStr, 10, 64)
+	if err != nil {
+		if id, err = c2cData.GetBoltDbInstance().GetClientID(idStr); err != nil {
+			httpError{statusCode: http.StatusNotFound, err: err}.ServeHTTP(w, r)
 			return
 		}
 	}
 	cl, err := storage.GetClient(id)
 	if err != nil {
-		httpError{statusCode: http.StatusBadRequest, err: err}.ServeHTTP(w, r)
+		httpError{statusCode: http.StatusNotFound, err: err}.ServeHTTP(w, r)
 		return
 	}
 	log.Infof("client finded %v", *cl)
