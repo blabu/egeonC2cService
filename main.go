@@ -37,6 +37,10 @@ func init() {
 	sigTerm = make(chan os.Signal)
 }
 
+func init() {
+	log.Info("You can run more than one init even in one source file")
+}
+
 func getMaxConnectionValue() uint32 {
 	maxConnectStr, err := cf.GetConfigValue("MaxConnectionFromIP")
 	if err != nil {

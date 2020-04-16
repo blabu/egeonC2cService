@@ -1,0 +1,57 @@
+/*
+Useful language stuff
+Can use it in future
+1. Embeded (inheritance in golang)
+type first struct {
+	count int
+}
+
+func (f *first) Add(n int) {
+	println("first count Add")
+	f.count += n
+}
+
+func (f *first) Sub(n int) {
+	println("first count Sub")
+	f.count -= n
+}
+// Define new struct that extends previously struct first
+type second struct {
+	first
+}
+// Define new method for second struct
+func (s *second) Mul(n int) {
+	println("second count Mul")
+	s.count *= n
+}
+
+// And rewrite some methods from first struct
+func (s *second) Sub(n int) {
+	println("second count Sub")
+	s.count += n
+}
+
+
+
+2. type assertion and grouping
+type (
+	String = string
+	Second = second
+	First = first
+)
+
+
+3. switch by types
+func typeOf(i interface{}) {
+	switch n := i.(type) {
+	case nil:
+		println("nil")
+	case int:
+		println("int")
+	case string:
+		println(n)
+	default:
+		println("Undefine type ", n);
+	}
+}
+*/

@@ -1,4 +1,5 @@
 import React from 'react'
+import Icon from '../../public/icon_light.png'
 import '../App.css'
 
 
@@ -65,7 +66,7 @@ export default class Desk extends React.Component {
         return (
         <div style={{width: "100%", height: "100rem"}}>
             <MovableItem x={150} y={200}><p>Hello world</p></MovableItem>
-            <MovableItem x={750} y={660}/>
+            <MovableItem x={750} y={660}><img src={Icon} alt="icon"/></MovableItem>
             <MovableItem x={450} y={450}/>
         </div>);
     }

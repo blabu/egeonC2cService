@@ -29,10 +29,9 @@ div.movableItem {
   cursor: move;
   z-index: 9;
   text-align: center;
-  background-color: #2196F3;
-  color: #fff;
   display: block;
-  border: 1px solid grey;
-  max-width: 100px;
+  max-width: 400px;
   box-shadow: grey, 1px, 1px
 }
+
+
