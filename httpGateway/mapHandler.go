@@ -29,7 +29,7 @@ func getMapBoxHandler(baseDir, apiTemplateURL, accessToken string, expireSinceNo
 			httpError{statusCode: http.StatusNotFound, err: errors.New("tile not found")}.ServeHTTP(w, r)
 			return
 		}
-		pathToFile := fmt.Sprintf(baseDir+"/%s/%s/%s", p1, p2, filename)
+		pathToFile := fmt.Sprintf("%s/%s/%s/%s", baseDir, p1, p2, filename)
 		var data []byte
 		var err error
 		if expireSinceNow > 0 {

@@ -1,6 +1,7 @@
 /*
 Useful language stuff
 Can use it in future
+
 1. Embeded (inheritance in golang)
 type first struct {
 	count int
@@ -31,15 +32,12 @@ func (s *second) Sub(n int) {
 	s.count += n
 }
 
-
-
 2. type assertion and grouping
 type (
 	String = string
 	Second = second
 	First = first
 )
-
 
 3. switch by types
 func typeOf(i interface{}) {

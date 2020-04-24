@@ -132,7 +132,11 @@ func (c *C2cDevice) initByID(m *dto.Message) error {
 		c.device = *device
 	}
 	if c.device.ID == id {
-		temp := sha256.Sum256([]byte(string(m.From) + credentials[0] + c.device.SecretKey))
+		var credBuilder strings.Builder
+		credBuilder.WriteString(m.From)
+		credBuilder.WriteString(credentials[0])
+		credBuilder.WriteString(c.device.SecretKey)
+		temp := sha256.Sum256([]byte(credBuilder.String()))
 		origin := base64.StdEncoding.EncodeToString(temp[:])
 		if origin != credentials[1] {
 			log.Warningf("Incorrect signature %s != %s in session %d", origin, credentials[1], c.sessionID)
@@ -189,11 +193,14 @@ func (c *C2cDevice) initByName(m *dto.Message) error {
 		c.device = *device
 	}
 	if c.device.Name == m.From {
-		t := m.From + credentials[0] + c.device.SecretKey
-		temp := sha256.Sum256([]byte(t))
+		var cred strings.Builder
+		cred.WriteString(m.From)
+		cred.WriteString(credentials[0])
+		cred.WriteString(c.device.SecretKey)
+		temp := sha256.Sum256([]byte(cred.String()))
 		origin := base64.StdEncoding.EncodeToString(temp[:])
 		if origin != credentials[1] {
-			log.Errorf("Origin credentials: %s", t)
+			log.Errorf("Origin credentials: %s", cred.String())
 			log.Errorf("SHA256: %x", temp)
 			log.Errorf("Incorrect signature %s != %s in session %d", origin, credentials[1], c.sessionID)
 			c.device.ID = 0

@@ -2,6 +2,7 @@ package c2cService
 
 import (
 	"strconv"
+	"strings"
 	"sync"
 )
 
@@ -15,9 +16,11 @@ func init() {
 // CheckSaltByUserName Функция возвращает сколько раз использовалась одна и та же соль
 // при авторизации конкретного пользователя
 func CheckSaltByUserName(name, salt string) int {
-	s := name + salt
+	var s strings.Builder
+	s.WriteString(name)
+	s.WriteString(salt)
 	saltMtx.RLock()
-	cnt, ok := saltCache[s]
+	cnt, ok := saltCache[s.String()]
 	saltMtx.RUnlock()
 	if !ok {
 		cnt = 1
@@ -25,7 +28,7 @@ func CheckSaltByUserName(name, salt string) int {
 		cnt++
 	}
 	saltMtx.Lock()
-	saltCache[s] = cnt
+	saltCache[s.String()] = cnt
 	saltMtx.Unlock()
 	return cnt
 }
@@ -33,9 +36,11 @@ func CheckSaltByUserName(name, salt string) int {
 // CheckSaltByID Функция возвращает сколько раз использовалась одна и та же соль
 // при авторизации конкретного пользователя
 func CheckSaltByID(ID uint64, salt string) int {
-	s := strconv.FormatUint(ID, 16) + salt
+	var s strings.Builder
+	s.WriteString(strconv.FormatUint(ID, 16))
+	s.WriteString(salt)
 	saltMtx.RLock()
-	cnt, ok := saltCache[s]
+	cnt, ok := saltCache[s.String()]
 	saltMtx.RUnlock()
 	if !ok {
 		cnt = 1
@@ -43,7 +48,7 @@ func CheckSaltByID(ID uint64, salt string) int {
 		cnt++
 	}
 	saltMtx.Lock()
-	saltCache[s] = cnt
+	saltCache[s.String()] = cnt
 	saltMtx.Unlock()
 	return cnt
 }
