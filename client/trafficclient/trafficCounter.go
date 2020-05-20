@@ -44,9 +44,9 @@ func (c *traficCounterWrapper) Write(msg *dto.Message) error {
 	return c.client.Write(msg)
 }
 
-func (c *traficCounterWrapper) Read(dt time.Duration, handler func(msg dto.Message, err error)) {
+func (c *traficCounterWrapper) Read(dt time.Duration, handler func(msg dto.Message, err error) error) {
 	var er error
-	c.client.Read(dt, func(msg dto.Message, err error) {
+	c.client.Read(dt, func(msg dto.Message, err error) error {
 		if c.stat.ID == 0 {
 			rc := c.stat.ReceiveBytes
 			tr := c.stat.TransmiteBytes
@@ -57,12 +57,14 @@ func (c *traficCounterWrapper) Read(dt time.Duration, handler func(msg dto.Messa
 		} else if err == nil {
 			if c.stat, er = c.validate(c.stat); er != nil {
 				log.Error(er.Error())
-				handler(dto.Message{}, io.EOF)
-				return
+				return handler(dto.Message{}, io.EOF)
 			}
 		}
-		handler(msg, err)
-		c.stat.ReceiveBytes += uint64(len(msg.Content))
+		er = handler(msg, err)
+		if er == nil {
+			c.stat.ReceiveBytes += uint64(len(msg.Content))
+		}
+		return er
 	})
 }
 

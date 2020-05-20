@@ -50,18 +50,18 @@ func (s *bidirectMainLogic) Write(data []byte) (int, error) {
 }
 
 //Read - читает из бизнес логики и передает данные обработчику handler
-func (s *bidirectMainLogic) Read(handler func([]byte, error)) {
+func (s *bidirectMainLogic) Read(handler func([]byte, error) error) {
 	if s.c == nil {
 		handler(nil, errors.New("Parser or client is nil"))
 		return
 	}
-	s.c.Read(s.dt, func(msg dto.Message, err error) {
+	s.c.Read(s.dt, func(msg dto.Message, err error) error {
 		if err != nil {
 			if err == io.EOF { // Читать больше нечего
 				log.Info(err.Error())
 				handler(nil, io.EOF)
 			}
-			return
+			return nil
 		}
 		log.Trace("Received data from client logic fine")
 		handler(s.p.FormMessage(msg))

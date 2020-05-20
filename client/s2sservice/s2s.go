@@ -184,22 +184,21 @@ func (s *C2cDecorate) clientRead(clientReadChan chan<- dto.Message, kill <-chan 
 		case <-delegateFinish:
 			return
 		default:
-			s.client.Read(dt, func(msg dto.Message, err error) {
+			s.client.Read(dt, func(msg dto.Message, err error) error {
 				if err == io.EOF {
 					log.Trace(err.Error())
 					delegateFinish <- true
-					return
-				}
-				if err == nil {
+				} else if err == nil {
 					clientReadChan <- msg
 				}
+				return err
 			})
 		}
 	}
 }
 
 //Read - читаем ответ бизнес логики return io.EOF if client never answer
-func (s *C2cDecorate) Read(dt time.Duration, handler func(msg dto.Message, err error)) {
+func (s *C2cDecorate) Read(dt time.Duration, handler func(msg dto.Message, err error) error) {
 	timer := time.NewTimer(dt)
 	kill := make(chan bool, 1)
 	clientReadChan := make(chan dto.Message)

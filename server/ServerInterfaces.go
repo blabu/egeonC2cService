@@ -24,7 +24,7 @@ type Session interface {
 
 // ClientReader - базовый интерфейс для чтения из логики (вывод данных наружу)
 type ClientReader interface {
-	Read(handler func([]byte, error))
+	Read(handler func([]byte, error) error)
 }
 
 // MainLogicIO - основоной интерфейс логики взаимодействия сервера с логикой приложения

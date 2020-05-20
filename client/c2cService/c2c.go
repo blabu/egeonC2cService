@@ -156,7 +156,7 @@ func (c *C2cDevice) Write(msg *dto.Message) error {
 // 1. Приготовлен ответ
 // 2. Истекло время ожидания ответа
 // 3. Произшла ошибка чтения
-func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err error)) {
+func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err error) error) {
 	t := time.NewTimer(dt)
 	for {
 		select {

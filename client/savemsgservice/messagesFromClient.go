@@ -4,6 +4,7 @@ import (
 	"blabu/c2cService/client"
 	"blabu/c2cService/data/c2cdata"
 	"blabu/c2cService/dto"
+	"fmt"
 	"strconv"
 	"time"
 
@@ -35,40 +36,50 @@ func (s *saveMsgClient) Write(msg *dto.Message) error {
 		if er != nil {
 			toID, err = s.db.GetClientID(msg.To)
 		}
-		id, e := s.db.Add(toID, dto.UnSendedMsg{
-			Proto:   msg.Proto,
-			Command: msg.Command,
-			From:    msg.From,
-			Content: msg.Content,
-		})
-		if e == nil {
-			msg.ID = id
+		if toID != 0 {
+			id, e := s.db.Add(toID, dto.UnSendedMsg{
+				Proto:   msg.Proto,
+				Command: msg.Command,
+				From:    msg.From,
+				Content: msg.Content,
+			})
+			if e == nil {
+				msg.ID = id
+			}
+			//TODO error handling
+			log.Infof("Message %d from %s to %x is saved", msg.ID, msg.From, toID)
+			return nil
 		}
-		//TODO return err!!!!
+		return fmt.Errorf("Undefine client ID in %s", msg.To)
 	}
 	return err
 }
 
-func (s *saveMsgClient) Read(dt time.Duration, handler func(msg dto.Message, err error)) {
+func (s *saveMsgClient) Read(dt time.Duration, handler func(msg dto.Message, err error) error) {
 	s.client.Read(dt,
-		func(msg dto.Message, err error) {
-			handler(msg, err)
-			userID := s.client.GetID()
-			for m, e := s.db.GetNext(userID); e == nil && userID != 0; m, e = s.db.GetNext(userID) {
-				log.Tracef("Try send to %x from %s unordered message %d", userID, m.From, m.ID)
-				handler(dto.Message{
-					ID:      m.ID,
-					From:    m.From,
-					To:      strconv.FormatUint(userID, 16),
-					Command: m.Command,
-					Proto:   m.Proto,
-					Content: m.Content,
-					Jmp:     1,
-				}, nil)
-				s.db.IsSended(userID, m.ID)
-				userID = s.client.GetID()
+		func(msg dto.Message, err error) error {
+			clientError := handler(msg, err)
+			if clientError == nil {
+				userID := s.client.GetID()
+				for m, e := s.db.GetNext(userID); e == nil && userID != 0; m, e = s.db.GetNext(userID) {
+					log.Tracef("Try send to %x from %s unordered message %d", userID, m.From, m.ID)
+					err := handler(dto.Message{
+						ID:      m.ID,
+						From:    m.From,
+						To:      strconv.FormatUint(userID, 16),
+						Command: m.Command,
+						Proto:   m.Proto,
+						Content: m.Content,
+						Jmp:     1,
+					}, nil)
+					if err != nil {
+						return err
+					}
+					s.db.IsSended(userID, m.ID)
+					userID = s.client.GetID()
+				}
 			}
-
+			return clientError
 		})
 }
 
