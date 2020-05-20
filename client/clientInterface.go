@@ -22,6 +22,9 @@ type ListenerInterface interface {
 
 //ReadWriteCloser - создает интерфейс работы с клиентом
 type ReadWriteCloser interface {
+	// GetID - идентификатор клиента
+	GetID() uint64
+
 	// Write - Передаем данные полученные из сети бизнес логике
 	Write(msg *dto.Message) error
 

@@ -117,7 +117,7 @@ func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
 			return index, fmt.Errorf("Icorrect message size, it must be a number")
 		}
 		if s > c2c.maxPackageSize {
-			err := fmt.Errorf("Income package is too big. Overflow internal buffer")
+			err := fmt.Errorf("Income package is too big %d. Overflow internal buffer %d", s, c2c.maxPackageSize)
 			log.Error(err.Error())
 			return index, err
 		}

@@ -2,7 +2,7 @@ package httpGateway
 
 import (
 	cf "blabu/c2cService/configuration"
-	"blabu/c2cService/data/c2cData"
+	c2cData "blabu/c2cService/data/c2cdata"
 	"blabu/c2cService/dto"
 	log "blabu/c2cService/logWrapper"
 	"errors"

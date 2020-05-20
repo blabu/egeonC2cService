@@ -2,7 +2,7 @@ package httpGateway
 
 import (
 	cf "blabu/c2cService/configuration"
-	"blabu/c2cService/data/c2cData"
+	c2cData "blabu/c2cService/data/c2cdata"
 	log "blabu/c2cService/logWrapper"
 	"encoding/json"
 	"errors"
@@ -28,7 +28,9 @@ func getClients(w http.ResponseWriter, r *http.Request) {
 			res = append(res, ',')
 			return nil
 		})
+		log.Debug(string(res))
 		res = res[:len(res)-1]
+		log.Debug(string(res))
 		w.Write([]byte("["))
 		w.Write(res)
 		w.Write([]byte("]"))

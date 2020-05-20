@@ -2,10 +2,11 @@ package clientFactory
 
 import (
 	"blabu/c2cService/client"
-	"blabu/c2cService/client/s2sService"
-	"blabu/c2cService/client/trafficClient"
+	"blabu/c2cService/client/c2cService"
+	"blabu/c2cService/client/savemsgservice"
+	"blabu/c2cService/client/trafficclient"
 	conf "blabu/c2cService/configuration"
-	"blabu/c2cService/data/c2cData"
+	c2cData "blabu/c2cService/data/c2cdata"
 	"blabu/c2cService/parser"
 	"strconv"
 )
@@ -19,9 +20,10 @@ func CreateClientLogic(p parser.Parser, sessionID uint32) client.ReadWriteCloser
 	switch p.GetParserType() {
 	case parser.C2cParserType:
 		db := c2cData.GetBoltDbInstance()
-		peerClient := s2sService.NewDecorator(p, db, sessionID, uint32(m))
-		return trafficClient.GetNewTraficCounterWrapper(db, peerClient)
-		//return c2cService.NewC2cDevice(c2cData.GetBoltDbInstance(), sessionID, uint32(m))
+		client := c2cService.NewC2cDevice(db, sessionID, uint32(m))
+		// peerClient := s2sservice.NewDecorator(p, db, uint32(m), client)
+		msgClient := savemsgservice.NewDecorator(db, client)
+		return trafficclient.GetNewTraficCounterWrapper(db, msgClient)
 	default:
 		return nil
 	}

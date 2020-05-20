@@ -2,8 +2,7 @@ package main
 
 import (
 	cf "blabu/c2cService/configuration"
-	"blabu/c2cService/data/c2cData"
-
+	c2cData "blabu/c2cService/data/c2cdata"
 	http "blabu/c2cService/httpGateway"
 	"blabu/c2cService/server"
 	"blabu/c2cService/stat"
@@ -90,7 +89,7 @@ func getSessionTimeout() time.Duration {
 
 func getUDPListener() (net.Listener, error) {
 	if portStr, err := cf.GetConfigValue("ServerUdpPort"); err == nil {
-		log.Info("Start UDP server on ", portStr)
+		log.Info("Start UDP server at ", portStr)
 		listen, _ := NewUDPListener(4096, portStr)
 		return listen, nil
 	} else {
@@ -109,12 +108,12 @@ func getTCPListener() net.Listener {
 		log.Fatalf("Can not run listener at port %s %v", port, err)
 		return nil
 	}
-	log.Infof("Start listening at port %s", port)
+	log.Info("Start TCP server at ", port)
 	return listen
 }
 
 func getTLSListener() (net.Listener, error) {
-	if portTls, err := cf.GetConfigValue("ServerTlsPort"); err != nil {
+	if portTLS, err := cf.GetConfigValue("ServerTlsPort"); err != nil {
 		return nil, err
 	} else if certPath, err := cf.GetConfigValue("CertificatePath"); err != nil {
 		return nil, err
@@ -122,11 +121,12 @@ func getTLSListener() (net.Listener, error) {
 		return nil, err
 	} else if certificate, err := tls.LoadX509KeyPair(certPath, privateKeyPath); err != nil {
 		return nil, err
-	} else if localSrv, err := net.Listen("tcp", portTls); err != nil {
+	} else if localSrv, err := net.Listen("tcp", portTLS); err != nil {
 		return nil, err
 	} else {
 		conf := &tls.Config{Certificates: []tls.Certificate{certificate}}
 		server := tls.NewListener(localSrv, conf)
+		log.Info("Start TLS server at ", portTLS)
 		return server, nil
 	}
 }
