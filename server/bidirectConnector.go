@@ -92,21 +92,20 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 	stopConnectionFromNet := make(chan bool)
 	defer close(stopConnectionFromNet)
 
-	go c.logic.Read(func(data []byte, err error) { // Read from logic and write to Internet
+	go c.logic.Read(func(data []byte, err error) error { // Read from logic and write to Internet
 		if err == nil && data != nil {
 			c.updateWatchDogTimer()
 			Connect.SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * 10 * time.Millisecond))
-			Connect.Write(data)
-			return
-		}
-		if err != nil {
+			_, err := Connect.Write(data)
+			return err
+		} else if err != nil {
 			if err == io.EOF {
 				log.Info(err.Error())
 				Connect.Close()
-				return
+				return nil
 			}
 			log.Error(err.Error()) //TODO Обработка других ошибок
-			return
+			return nil
 		}
 		log.Warning("Data to transmit is nil or error occurs")
 		return

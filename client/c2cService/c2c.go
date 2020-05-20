@@ -3,7 +3,7 @@ package c2cService
 import (
 	"blabu/c2cService/client"
 	cf "blabu/c2cService/configuration"
-	"blabu/c2cService/data/c2cData"
+	c2cData "blabu/c2cService/data/c2cdata"
 	"blabu/c2cService/dto"
 	log "blabu/c2cService/logWrapper"
 	"fmt"
@@ -79,7 +79,7 @@ func (c *C2cDevice) AddListener(from uint64, ch *chan dto.Message) {
 		c.listenerMtx.Lock()
 		c.listenerList[from] = ch
 		c.listenerMtx.Unlock()
-		log.Tracef("Add channel from client %d to %s", from, c.device.Name)
+		log.Tracef("Add channel from client %x to %x name %s", from, c.device.ID, c.device.Name)
 	}
 }
 
@@ -88,7 +88,7 @@ func (c *C2cDevice) DelListener(from uint64) {
 	c.listenerMtx.Lock()
 	delete(c.listenerList, from)
 	c.listenerMtx.Unlock()
-	log.Tracef("Delete channel from client %d for %s", from, c.device.Name)
+	log.Tracef("Delete channel from client %x for %s", from, c.device.Name)
 }
 
 // GetListenerChan - Необходим для подключения одного клиента к другому в кеше клиентов
@@ -118,33 +118,33 @@ func (c *C2cDevice) Write(msg *dto.Message) error {
 		return Errorf(NilMessageError, "Message is nil in session %d", c.sessionID)
 	}
 	switch msg.Command {
-	case errorCOMMAND:
+	case client.ErrorCOMMAND:
 		return c.errorHandler(msg)
-	case pingCOMMAND:
+	case client.PingCOMMAND:
 		return c.ping(msg)
-	case connectByIDCOMMAND: // Content[0] - from ID, Content[1] - to ID
+	case client.ConnectByIDCOMMAND: // Content[0] - from ID, Content[1] - to ID
 		return c.connectByID(msg)
-	case connectByNameCOMMAND: // Content[0] - from name, Content[1] - to name
+	case client.ConnectByNameCOMMAND: // Content[0] - from name, Content[1] - to name
 		return c.connectByName(msg)
-	case initByIDCOMMAND: // Content[0] - from ID, Content[1] - to (server always "0")
+	case client.InitByIDCOMMAND: // Content[0] - from ID, Content[1] - to (server always "0")
 		return c.initByID(msg)
-	case initByNameCOMMAND: // Content[0] - from name, Content[1] - to (server always "0")
+	case client.InitByNameCOMMAND: // Content[0] - from name, Content[1] - to (server always "0")
 		return c.initByName(msg)
-	case registerCOMMAND:
+	case client.RegisterCOMMAND:
 		if c.clientType != 0 {
 			return c.registerNewDevice(msg) // Content[0] - from name, Content[1] - to (server always "0") , Content[2] - BASE64(SHA256(name+password))
 		}
 		return NewC2cError(UnsupportedCommandError, "Registartion is disabled for this server")
-	case generateCOMMAND:
+	case client.GenerateCOMMAND:
 		if c.clientType != 0 {
 			return c.generateNewDevice(msg) // Content[0] - is empty, Content[1] - to (server always "0"), Content[2] - BASE64 string password hash
 		}
 		return NewC2cError(UnsupportedCommandError, "Generate new device is disabled for this server")
-	case dataCOMMAND:
+	case client.DataCOMMAND:
 		return c.sendNewMessage(msg)
-	case destroyConCOMMAND: // Разорвать соединения без отключения от сервера
+	case client.DestroyConCOMMAND: // Разорвать соединения без отключения от сервера
 		return c.destroyConnection(msg) //Content[0] - from: local ID or Name, Content[1] - destroy connection from who.
-	case propertiesCOMMAND:
+	case client.PropertiesCOMMAND:
 		return c.setProperies(msg) //Content[0] - from: local ID or Name, Content[1] - to
 	default:
 		return Errorf(UnsupportedCommandError, "Unsupported command %d in session %d", msg.Command, c.sessionID)
@@ -156,14 +156,14 @@ func (c *C2cDevice) Write(msg *dto.Message) error {
 // 1. Приготовлен ответ
 // 2. Истекло время ожидания ответа
 // 3. Произшла ошибка чтения
-func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err error)) {
+func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err error) error) {
 	t := time.NewTimer(dt)
 	for {
 		select {
 		case m, ok := <-c.readChan:
 			if !ok {
 				t.Stop()
-				log.Tracef("Read channel is closed for device %d name %s for session %d", c.device.ID, c.device.Name, c.sessionID)
+				log.Tracef("Read channel is closed for device %x name %s for session %d", c.device.ID, c.device.Name, c.sessionID)
 				handler(dto.Message{}, io.EOF)
 				return
 			}
@@ -181,12 +181,18 @@ func (c *C2cDevice) Close() error {
 	c.destroyConnection(&dto.Message{
 		From:    c.device.Name,
 		To:      "0",
-		Command: destroyConCOMMAND,
+		Command: client.DestroyConCOMMAND,
 		Jmp:     1, // TODO set Jmp obviously is a bad practice
 		Proto:   1, // TODO set Proto obviously is a bad practice
 	})
 	connection.DelClientFromCashe(c.device.ID)
 	close(c.readChan)
 	log.Infof("Close client %s with id %d in session %d", c.device.Name, c.device.ID, c.sessionID)
+	c.device.ID = 0
 	return nil
+}
+
+// GetID - возвращет идентификатор текущего клиента
+func (c *C2cDevice) GetID() uint64 {
+	return c.device.ID
 }

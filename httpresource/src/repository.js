@@ -1,13 +1,12 @@
 import axios from 'axios';
 
-
 const STAT = "/api/v1/info"
 const CLIENT = "/api/v1/client"
 const ALL_CLIENTS = "/api/v1/clients"
 const CHECK_KEY = "/api/v1/checkKey"
 const PERM = "/api/v1/perm"
 const MARKER = "/loc.png"
-const SERVER_ADDR = "localhost:3000" // "https://195.60.229.164:3555"
+const SERVER_ADDR = "" // "https://195.60.229.164:3555"
 
 const formURL = (command, ...param) => {
     const url = SERVER_ADDR;

@@ -22,11 +22,14 @@ type ListenerInterface interface {
 
 //ReadWriteCloser - создает интерфейс работы с клиентом
 type ReadWriteCloser interface {
+	// GetID - идентификатор клиента
+	GetID() uint64
+
 	// Write - Передаем данные полученные из сети бизнес логике
 	Write(msg *dto.Message) error
 
 	//Read - читаем ответ бизнес логики return io.EOF if client never answer
-	Read(dt time.Duration, handler func(msg dto.Message, err error))
+	Read(dt time.Duration, handler func(msg dto.Message, err error) error)
 
 	// Close - информирует бизнес логику про разрыв соединения
 	io.Closer

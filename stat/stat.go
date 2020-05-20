@@ -56,7 +56,7 @@ func (s *Statistics) SetConnectionTime(dt time.Duration) {
 	}
 }
 
-// CreateStatistics - создает объект со статистикой
+// CreateStatistics - создает объект со статистикой (Синглтон)
 func CreateStatistics() Statistics {
 	ipAddrInit()
 	return Statistics{
