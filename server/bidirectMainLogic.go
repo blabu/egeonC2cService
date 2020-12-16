@@ -51,22 +51,23 @@ func (s *bidirectMainLogic) Write(data []byte) (int, error) {
 	return len(data), s.c.Write(&m)
 }
 
-//Read - читает из бизнес логики и передает данные обработчику handler
-func (s *bidirectMainLogic) Read(handler func([]byte, error) error) {
+//Read - читает из системы и передает данные обработчику handler
+func (s *bidirectMainLogic) Read(handler ReadHandler) {
 	if s.c == nil {
 		handler(nil, errors.New("Parser or client is nil"))
 		return
 	}
-	s.c.Read(s.dt, func(msg dto.Message, err error) error {
-		if err != nil {
-			if err == io.EOF { // Читать больше нечего
-				log.Info(err.Error())
-				handler(nil, io.EOF)
+	s.c.Read(s.dt, func(msg dto.Message, systemError error) error {
+		if systemError != nil {
+			if systemError == io.EOF { // Читать больше нечего
+				handler(nil, io.EOF) // Закрываем соединение
 			}
+			// Здесь если произошел таймоут
+			log.Info(systemError.Error())
 			return nil
 		}
 		log.Trace("Received data from client logic fine")
-		return handler(s.p.FormMessage(msg))
+		return handler(s.p.FormMessage(msg)) //Передаем данные для отправки в интернет
 	})
 }
 

@@ -47,16 +47,16 @@ func (c *BidirectSession) readHandler(
 			return
 		default:
 			c.updateWatchDogTimer()
-			n, err := p.IsFullReceiveMsg(c.netReq)
+			leftBytes, err := p.IsFullReceiveMsg(c.netReq)
 			if err != nil {
 				log.Warning(err.Error())
 				return
 			}
-			if uint64(n+len(c.netReq)) > maxPacketSize {
-				log.Errorf("Message %s is to big %d and max %d", string(c.netReq), n+len(c.netReq), maxPacketSize)
+			if uint64(leftBytes+len(c.netReq)) > maxPacketSize {
+				log.Errorf("Message %s is to big %d and max %d", string(c.netReq), leftBytes+len(c.netReq), maxPacketSize)
 				return
 			}
-			if n == 0 {
+			if leftBytes == 0 { // Если все байты получены
 				if _, err := c.logic.Write(c.netReq); err != nil {
 					log.Warning(err.Error())
 					return // TODO Выполнять обработку ошибок
@@ -71,48 +71,46 @@ func (c *BidirectSession) readHandler(
 				c.netReq = c.netReq[:numb]
 				continue
 			}
-			log.Tracef("Try read last %d bytes", n)
-			temp := make([]byte, n)
+			log.Tracef("Try read last %d bytes", leftBytes)
+			temp := make([]byte, leftBytes)
 			(*Connect).SetReadDeadline(time.Now().Add(c.Duration))
-			n, err = io.ReadFull(bufferdReader, temp) // Читаем!!!
+			leftBytes, err = io.ReadFull(bufferdReader, temp) // Читаем остальное!!!
 			if err != nil {
 				log.Infof("Error when try read from conection: %v", err)
 				return
 			}
-			c.netReq = append(c.netReq, temp[:n]...) // Добавляем к сообщению прочтенное
+			c.netReq = append(c.netReq, temp[:leftBytes]...) // Добавляем к сообщению прочтенное
 		}
 	}
 }
 
 // Run - is a function that manage new connection.
-// Инициализирует парсер по первому сообщению.
 // Инициализирует и запускает клиентскую логику.
 // Контролирует с помощью парсера полноту сообщения и передает это сообщение клиентской логики
 // If connection is finished or some error net.Connection
 func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
-	stopConnectionFromNet := make(chan bool)
-	defer close(stopConnectionFromNet)
-
-	go c.logic.Read(func(data []byte, err error) error { // Read from logic and write to Internet
-		if err == nil && data != nil {
+	go c.logic.Read(func(data []byte, systemError error) error { //Читаем из системы пишем в интернет
+		if data == nil {
+			return errors.New("Data to transmit is nil")
+		}
+		if systemError == nil {
 			c.updateWatchDogTimer()
 			Connect.SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * 10 * time.Millisecond))
 			_, err := Connect.Write(data)
 			return err
-		} else if err != nil {
-			if err == io.EOF {
-				log.Info(err.Error())
-				Connect.Close()
-				return nil
-			}
-			log.Error(err.Error()) //TODO Обработка других ошибок
+		} else if systemError == io.EOF { //Если ошибка из системы это конец потока. Закрываем соединение
+			log.Info("Close connection by read operation")
+			Connect.Close()
 			return nil
 		}
-		return errors.New("Data to transmit is nil or error occurs")
+		return nil
 	})
 
+	stopConnectionFromNet := make(chan bool)
+	defer close(stopConnectionFromNet)
 	stopConnectionFromClient := make(chan bool) // Канал для остановки логики работ с соединением
-	go c.readHandler(&Connect, stopConnectionFromNet, stopConnectionFromClient, p)
+
+	go c.readHandler(&Connect, stopConnectionFromNet, stopConnectionFromClient, p) //Читаем данные из интернета, отправляем в систему
 	select {
 	case <-c.Tm.C:
 		log.Info("Timeout close connector")

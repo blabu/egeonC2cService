@@ -169,10 +169,13 @@ func (c *C2cDevice) Read(dt time.Duration, handler dto.ReadHandler) {
 				handler(dto.Message{}, io.EOF)
 				return
 			}
-			handler(m, nil)
+			if err := handler(m, nil); err != nil {
+				return
+			}
 		case <-t.C:
-			err := Errorf(ReadTimeoutError, "Read timeout in session %d Read is continue", c.sessionID)
-			handler(dto.Message{}, err)
+			if err := handler(dto.Message{}, Errorf(ReadTimeoutError, "Read timeout in session %d Read is continue", c.sessionID)); err != nil {
+				return
+			}
 			t.Reset(dt)
 		}
 	}

@@ -21,9 +21,11 @@ type Session interface {
 	Run(Connect net.Conn)
 }
 
+type ReadHandler func([]byte, error) error
+
 // ClientReader - базовый интерфейс для чтения из логики (вывод данных наружу)
 type ClientReader interface {
-	Read(handler func([]byte, error) error)
+	Read(ReadHandler)
 }
 
 // MainLogicIO - основоной интерфейс логики взаимодействия сервера с логикой приложения
