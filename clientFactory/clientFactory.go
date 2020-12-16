@@ -5,10 +5,10 @@ import (
 
 	"github.com/blabu/egeonC2cService/client"
 	"github.com/blabu/egeonC2cService/client/c2cService"
+	"github.com/blabu/egeonC2cService/client/savemsgservice"
 	conf "github.com/blabu/egeonC2cService/configuration"
 	c2cData "github.com/blabu/egeonC2cService/data/c2cdata"
 	"github.com/blabu/egeonC2cService/parser"
-	"github.com/blabu/egeonC2cService/savemsgservice"
 )
 
 //CreateClientLogic - create client for c2c or s2s communication

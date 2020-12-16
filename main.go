@@ -1,9 +1,6 @@
 package main
 
 import (
-	cf "blabu/c2cService/configuration"
-	c2cData "blabu/c2cService/data/c2cdata"
-	"blabu/c2cService/server"
 	"crypto/tls"
 	"flag"
 	"net"
@@ -15,10 +12,15 @@ import (
 	"syscall"
 	"time"
 
+	cf "github.com/blabu/egeonC2cService/configuration"
+	c2cData "github.com/blabu/egeonC2cService/data/c2cdata"
+	"github.com/blabu/egeonC2cService/server"
+
 	"go.uber.org/atomic"
 
-	log "blabu/c2cService/logWrapper"
 	lg "log"
+
+	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 
 var confPath = flag.String("conf", "./config.conf", "Set path to config file")
