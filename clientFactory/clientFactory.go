@@ -1,14 +1,15 @@
 package clientFactory
 
 import (
-	"blabu/c2cService/client"
-	"blabu/c2cService/client/c2cService"
-	"blabu/c2cService/client/savemsgservice"
-	"blabu/c2cService/client/trafficclient"
-	conf "blabu/c2cService/configuration"
 	c2cData "blabu/c2cService/data/c2cdata"
 	"blabu/c2cService/parser"
 	"strconv"
+
+	"github.com/blabu/egeonC2cService//client/trafficclient"
+	"github.com/blabu/egeonC2cService/client"
+	"github.com/blabu/egeonC2cService/client/c2cService"
+	conf "github.com/blabu/egeonC2cService/configuration"
+	"github.com/blabu/egeonC2cService/savemsgservice"
 )
 
 //CreateClientLogic - create client for c2c or s2s communication
@@ -21,7 +22,6 @@ func CreateClientLogic(p parser.Parser, sessionID uint32) client.ReadWriteCloser
 	case parser.C2cParserType:
 		db := c2cData.GetBoltDbInstance()
 		client := c2cService.NewC2cDevice(db, sessionID, uint32(m))
-		// peerClient := s2sservice.NewDecorator(p, db, uint32(m), client)
 		msgClient := savemsgservice.NewDecorator(db, client)
 		return trafficclient.GetNewTraficCounterWrapper(db, msgClient)
 	default:

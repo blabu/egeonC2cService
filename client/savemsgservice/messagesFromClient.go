@@ -1,14 +1,15 @@
 package savemsgservice
 
 import (
-	"blabu/c2cService/client"
-	"blabu/c2cService/data/c2cdata"
-	"blabu/c2cService/dto"
 	"fmt"
 	"strconv"
 	"time"
 
-	log "blabu/c2cService/logWrapper"
+	"github.com/blabu/egeonC2cService/c2cService/client"
+	"github.com/blabu/egeonC2cService/data/c2cdata"
+	"github.com/blabu/egeonC2cService/dto"
+
+	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 
 type saveMsgClient struct {
