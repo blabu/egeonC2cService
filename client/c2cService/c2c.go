@@ -3,7 +3,6 @@ package c2cService
 import (
 	"fmt"
 	"io"
-	"strconv"
 	"sync"
 	"time"
 
@@ -100,8 +99,7 @@ func (c *C2cDevice) GetListenerChan() *chan dto.Message {
 
 // NewC2cDevice - Конструктор нового клеинта
 func NewC2cDevice(db data.DB, sessionID uint32, maxConnection uint32) client.ReadWriteCloser {
-	clTypeStr := cf.GetConfigValueOrDefault("ClientType", "0")
-	clType, _ := strconv.ParseUint(clTypeStr, 10, 16)
+	clType := cf.Config.ClientType
 	if clType == 0 {
 		log.Error("Clinet type for this server does not specified. Registartion is disabled")
 	}

@@ -1,0 +1,10 @@
+INFO : 2020/12/16 23:33:32.197787 database.go:52: Init database finished fine
+ERROR: 2020/12/16 23:33:32.197911 main.go:103: Undefine tls port for server
+INFO : 2020/12/16 23:33:32.198158 main.go:56: Start TCP server at :3555
+INFO : 2020/12/16 23:33:59.282785 main.go:121: Operation system kill server
+INFO : 2020/12/16 23:33:59.283251 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/16 23:33:59.283542 main.go:117: Finish tcp service
+INFO : 2020/12/16 23:34:12.034496 database.go:52: Init database finished fine
+ERROR: 2020/12/16 23:34:12.034733 main.go:103: read ./: is a directory
+INFO : 2020/12/16 23:34:12.035179 main.go:56: Start TCP server at :3555
+INFO : 2020/12/16 23:34:36.830034 main.go:121: Operation system kill server

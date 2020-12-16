@@ -5,13 +5,14 @@ import (
 	"errors"
 	"fmt"
 	"strconv"
+	"unsafe"
 
 	cf "github.com/blabu/egeonC2cService/configuration"
 	"github.com/blabu/egeonC2cService/data"
 	"github.com/blabu/egeonC2cService/dto"
 	log "github.com/blabu/egeonC2cService/logWrapper"
 
-	bolt "github.com/etcd-io/bbolt"
+	bolt "go.etcd.io/bbolt"
 )
 
 type boltC2cDatabase struct {
@@ -29,7 +30,10 @@ func GetBoltDbInstance() data.DB {
 
 // InitC2cDB - create bolt database
 func InitC2cDB() *bolt.DB {
-	res := cf.GetConfigValueOrDefault("C2cStore", "./c2c.db")
+	res := cf.Config.C2cStore
+	if len(res) == 0 {
+		res = "./c2c.db"
+	}
 	var err error
 	database.db, err = bolt.Open(res, 0600, nil)
 	if err != nil {
@@ -41,14 +45,10 @@ func InitC2cDB() *bolt.DB {
 		getBucket(tx, Names)
 		getBucket(tx, Clients)
 		getBucket(tx, MaxClientID)
-		getBucket(tx, ClientLimits)
-		getBucket(tx, Permission)
 		return nil
 	})
 	database.clientStorage = database.db
-	database.limitStorage = database.db
 	database.messageStorage = database.db
-	database.permStorage = database.db
 	log.Info("Init database finished fine")
 	return database.db
 }
@@ -63,7 +63,7 @@ func (d *boltC2cDatabase) ForEach(tableName string, callBack func(key []byte, va
 		})
 }
 
-func (d *boltC2cDatabase) getMaxID(T ClientType) uint64 {
+func (d *boltC2cDatabase) getMaxID(T data.ClientType) uint64 {
 	log.Tracef("Try find maxID device for %d", T)
 	tx, err := d.db.Begin(true)
 	if err != nil {
@@ -80,9 +80,9 @@ func (d *boltC2cDatabase) getMaxID(T ClientType) uint64 {
 		log.Error(err.Error())
 		return 0
 	}
-	maxID := uint64(T)<<(64-sizeOfClientsType) | 1
+	maxID := uint64(T)<<(64-unsafe.Sizeof(T)) | 1
 	buf := make([]byte, 2)
-	binary.LittleEndian.PutUint16(buf, T)
+	binary.LittleEndian.PutUint16(buf, uint16(T))
 	if bID := buck.Get(buf); bID != nil {
 		mxID := bytesToUint64(bID)
 		if mxID >= maxID {
@@ -102,7 +102,7 @@ func (d *boltC2cDatabase) getMaxID(T ClientType) uint64 {
 }
 
 // GenerateRandomClient - Генерируем нового клиента, имя которого будет совпадать с его идентификационным номером
-func (d *boltC2cDatabase) GenerateRandomClient(T ClientType, hash string) (*dto.ClientDescriptor, error) {
+func (d *boltC2cDatabase) GenerateRandomClient(T data.ClientType, hash string) (*dto.ClientDescriptor, error) {
 	if len(hash) < 2 {
 		return nil, errors.New("hash password is to small")
 	}
@@ -118,7 +118,7 @@ func (d *boltC2cDatabase) GenerateRandomClient(T ClientType, hash string) (*dto.
 }
 
 // GenerateClient - Генерируем нового клиента по его имени и паролю
-func (d *boltC2cDatabase) GenerateClient(T ClientType, name, hash string) (*dto.ClientDescriptor, error) {
+func (d *boltC2cDatabase) GenerateClient(T data.ClientType, name, hash string) (*dto.ClientDescriptor, error) {
 	log.Tracef("Generate new client for type %d", T)
 	if _, er := d.getIdByName(name); er == nil {
 		return nil, fmt.Errorf("Client with name %s already exist", name)

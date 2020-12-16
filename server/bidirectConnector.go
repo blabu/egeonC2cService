@@ -1,6 +1,7 @@
 package server
 
 import (
+	"errors"
 	"io"
 
 	"github.com/blabu/egeonC2cService/parser"
@@ -10,7 +11,6 @@ import (
 
 	"bufio"
 	"net"
-	"strconv"
 	"time"
 )
 
@@ -38,8 +38,7 @@ func (c *BidirectSession) readHandler(
 	p parser.Parser) {
 
 	defer close(stopConnectionFromClient)
-	maxPacketSize, _ := strconv.ParseUint(conf.GetConfigValueOrDefault("MaxPacketSize", "512"), 10, 32)
-	maxPacketSize *= 1024
+	maxPacketSize := uint64(conf.Config.MaxPacketSize) * 1024
 	bufferdReader := bufio.NewReader(*Connect)
 	for {
 		select {
@@ -109,8 +108,7 @@ func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
 			log.Error(err.Error()) //TODO Обработка других ошибок
 			return nil
 		}
-		log.Warning("Data to transmit is nil or error occurs")
-		return
+		return errors.New("Data to transmit is nil or error occurs")
 	})
 
 	stopConnectionFromClient := make(chan bool) // Канал для остановки логики работ с соединением

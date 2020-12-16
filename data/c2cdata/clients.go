@@ -7,7 +7,7 @@ import (
 
 	"github.com/blabu/egeonC2cService/dto"
 	log "github.com/blabu/egeonC2cService/logWrapper"
-	bolt "github.com/etcd-io/bbolt"
+	bolt "go.etcd.io/bbolt"
 )
 
 type ClientImpl struct {

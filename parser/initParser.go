@@ -3,7 +3,6 @@ package parser
 import (
 	"bytes"
 	"fmt"
-	"strconv"
 
 	conf "github.com/blabu/egeonC2cService/configuration"
 	log "github.com/blabu/egeonC2cService/logWrapper"
@@ -34,7 +33,6 @@ func InitParser(receivedData []byte) (Parser, error) {
 	}
 	log.Trace("Create c2c parser")
 	p := new(C2cParser)
-	maxPackageSize, _ := strconv.ParseUint(conf.GetConfigValueOrDefault("MaxPacketSize", "512"), 10, 32)
-	p.maxPackageSize = maxPackageSize * 1024
+	p.maxPackageSize = uint64(conf.Config.MaxPacketSize) * 1024
 	return p, nil
 }

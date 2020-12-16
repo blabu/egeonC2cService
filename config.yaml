@@ -1,0 +1,11 @@
+ServerTCPPort : :3555
+ServerTLSPort : :3554
+CertificatePath : ./
+PrivateKeyPath :  ./ 
+MaxQueuePacketSize : 128
+SessionTimeOut : 300
+MaxPacketSize : 1024
+C2cStore: ./c2c.db
+LogPath : ./
+SaveDuration : 10
+ClientType : 4096
