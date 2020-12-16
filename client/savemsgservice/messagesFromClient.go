@@ -27,12 +27,15 @@ func NewDecorator(db data.DB, client client.ReadWriteCloser) client.ReadWriteClo
 // SaveMsgFilter - return true if message need save
 func (s *saveMsgClient) SaveMsgFilter(msg *dto.Message) bool {
 	return s.client.GetID() != 0 && len(msg.Content) > 0 &&
-		(msg.Command == client.DataCOMMAND || msg.Command == client.PropertiesCOMMAND)
+		(msg.Command == client.SaveDataCOMMAND || msg.Command == client.PropertiesCOMMAND)
 }
 
+// Write - пытаемся отправить сообщение клиенту.
+// Если не получается, но клиент существует,
+// а сообщение не пустое и важное (узнаем по команде), сохранием его в базе
 func (s *saveMsgClient) Write(msg *dto.Message) error {
 	err := s.client.Write(msg)
-	if err != nil && s.SaveMsgFilter(msg) {
+	if err != nil && s.SaveMsgFilter(msg) { // Если
 		toID, er := strconv.ParseUint(msg.To, 10, 64)
 		if er != nil {
 			toID, err = s.db.GetClientID(msg.To)
@@ -56,7 +59,7 @@ func (s *saveMsgClient) Write(msg *dto.Message) error {
 	return err
 }
 
-func (s *saveMsgClient) Read(dt time.Duration, handler func(msg dto.Message, err error) error) {
+func (s *saveMsgClient) Read(dt time.Duration, handler dto.ReadHandler) {
 	s.client.Read(dt,
 		func(msg dto.Message, err error) error {
 			clientError := handler(msg, err)

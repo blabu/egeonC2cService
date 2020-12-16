@@ -30,7 +30,7 @@ type ReadWriteCloser interface {
 	Write(msg *dto.Message) error
 
 	//Read - читаем ответ бизнес логики return io.EOF if client never answer
-	Read(dt time.Duration, handler func(msg dto.Message, err error) error)
+	Read(dt time.Duration, handler dto.ReadHandler)
 
 	// Close - информирует бизнес логику про разрыв соединения
 	io.Closer

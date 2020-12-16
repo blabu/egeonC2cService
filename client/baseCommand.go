@@ -17,4 +17,5 @@ const (
 	DataCOMMAND          uint16 = 9
 	DestroyConCOMMAND    uint16 = 10
 	PropertiesCOMMAND    uint16 = 11
+	SaveDataCOMMAND      uint16 = 12
 )

@@ -141,6 +141,8 @@ func (c *C2cDevice) Write(msg *dto.Message) error {
 		}
 		return NewC2cError(UnsupportedCommandError, "Generate new device is disabled for this server")
 	case client.DataCOMMAND:
+		fallthrough
+	case client.SaveDataCOMMAND:
 		return c.sendNewMessage(msg)
 	case client.DestroyConCOMMAND: // Разорвать соединения без отключения от сервера
 		return c.destroyConnection(msg) //Content[0] - from: local ID or Name, Content[1] - destroy connection from who.
@@ -156,7 +158,7 @@ func (c *C2cDevice) Write(msg *dto.Message) error {
 // 1. Приготовлен ответ
 // 2. Истекло время ожидания ответа
 // 3. Произшла ошибка чтения
-func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err error) error) {
+func (c *C2cDevice) Read(dt time.Duration, handler dto.ReadHandler) {
 	t := time.NewTimer(dt)
 	for {
 		select {
@@ -176,7 +178,7 @@ func (c *C2cDevice) Read(dt time.Duration, handler func(msg dto.Message, err err
 	}
 }
 
-// Close - информирует бизнес логику про разрыв соединения
+// Close - информирует про разрыв соединения и закрываем канал
 func (c *C2cDevice) Close() error {
 	c.destroyConnection(&dto.Message{
 		From:    c.device.Name,
