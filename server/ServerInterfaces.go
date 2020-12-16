@@ -1,7 +1,6 @@
 package server
 
 import (
-	"blabu/c2cService/stat"
 	"io"
 	"net"
 )
@@ -19,7 +18,7 @@ Session - основной интерфйес для создания соеди
 */
 type Session interface {
 	//Run - функция управления сеансом с пользователем
-	Run(Connect net.Conn, stat *stat.Statistics)
+	Run(Connect net.Conn)
 }
 
 // ClientReader - базовый интерфейс для чтения из логики (вывод данных наружу)

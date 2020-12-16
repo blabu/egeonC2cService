@@ -1,9 +1,10 @@
 package client
 
 import (
-	log "blabu/c2cService/logWrapper"
 	"fmt"
 	"sync"
+
+	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 
 const maxCONNECTION = 16 /*Максимальное кол-во коннектов к одному клиенту*/

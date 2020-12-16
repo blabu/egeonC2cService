@@ -7,9 +7,10 @@ Package client - Содержит всю бизнес логику систем�
 package client
 
 import (
-	"blabu/c2cService/dto"
 	"io"
 	"time"
+
+	"github.com/blabu/egeonC2cService/dto"
 )
 
 //ListenerInterface - интерфейс, который позволяет реализовать систему подписки

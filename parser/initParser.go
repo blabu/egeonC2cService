@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strconv"
 
-	conf "blabu/c2cService/configuration"
-	log "blabu/c2cService/logWrapper"
+	conf "github.com/blabu/egeonC2cService/configuration"
+	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 
 const (

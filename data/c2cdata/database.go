@@ -1,49 +1,29 @@
 package c2cdata
 
 import (
-	cf "blabu/c2cService/configuration"
-	"blabu/c2cService/dto"
-	log "blabu/c2cService/logWrapper"
 	"encoding/binary"
 	"errors"
 	"fmt"
 	"strconv"
 
+	cf "github.com/blabu/egeonC2cService/configuration"
+	"github.com/blabu/egeonC2cService/data"
+	"github.com/blabu/egeonC2cService/dto"
+	log "github.com/blabu/egeonC2cService/logWrapper"
+
 	bolt "github.com/etcd-io/bbolt"
-	// "github.com/boltdb/bolt"
 )
-
-type ClientType = uint16
-
-const sizeOfClientsType = 16
-
-//ClientGenerator - Функции генерации
-type IClientGenerator interface {
-	GenerateRandomClient(T ClientType, hash string) (*dto.ClientDescriptor, error)
-	GenerateClient(T ClientType, name, hash string) (*dto.ClientDescriptor, error)
-}
-
-type DB interface {
-	IClientGenerator
-	IClient
-	IC2cLimits
-	IMessage
-	IPerm
-	ForEach(tableName string, callBack func(key []byte, value []byte) error)
-}
 
 type boltC2cDatabase struct {
 	db *bolt.DB
 	ClientImpl
-	C2cLimitsImpl
 	Messages
-	PermImpl
 }
 
 var database boltC2cDatabase
 
-// GetBoltDbInstance - Вернет реализацию интерфейса C2cDB реализованную на базе boltDB
-func GetBoltDbInstance() DB {
+// GetBoltDbInstance - Вернет реализацию интерфейса DB реализованную на базе boltDB
+func GetBoltDbInstance() data.DB {
 	return &database
 }
 

@@ -5,19 +5,19 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/blabu/egeonC2cService/c2cService/client"
-	"github.com/blabu/egeonC2cService/data/c2cdata"
+	"github.com/blabu/egeonC2cService/client"
+	"github.com/blabu/egeonC2cService/data"
 	"github.com/blabu/egeonC2cService/dto"
 
 	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 
 type saveMsgClient struct {
-	db     c2cdata.DB
+	db     data.DB
 	client client.ReadWriteCloser
 }
 
-func NewDecorator(db c2cdata.DB, client client.ReadWriteCloser) client.ReadWriteCloser {
+func NewDecorator(db data.DB, client client.ReadWriteCloser) client.ReadWriteCloser {
 	return &saveMsgClient{
 		db:     db,
 		client: client,

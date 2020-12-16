@@ -1,22 +1,14 @@
 package c2cdata
 
 import (
-	"blabu/c2cService/dto"
-	log "blabu/c2cService/logWrapper"
 	"errors"
 	"fmt"
 	"time"
 
+	"github.com/blabu/egeonC2cService/dto"
+	log "github.com/blabu/egeonC2cService/logWrapper"
 	bolt "github.com/etcd-io/bbolt"
 )
-
-//IClient - БАЗОВЫЙ интерфейс для клиент-клиент взаимодействия (Сделан для тестов)
-type IClient interface {
-	GetClient(ID uint64) (*dto.ClientDescriptor, error)
-	DelClient(ID uint64) error
-	GetClientID(name string) (uint64, error)
-	SaveClient(cl *dto.ClientDescriptor) error
-}
 
 type ClientImpl struct {
 	clientStorage *bolt.DB

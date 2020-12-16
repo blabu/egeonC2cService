@@ -1,16 +1,18 @@
 package c2cService
 
 import (
-	"blabu/c2cService/client"
-	cf "blabu/c2cService/configuration"
-	c2cData "blabu/c2cService/data/c2cdata"
-	"blabu/c2cService/dto"
-	log "blabu/c2cService/logWrapper"
 	"fmt"
 	"io"
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/blabu/egeonC2cService/data"
+	"github.com/blabu/egeonC2cService/dto"
+	log "github.com/blabu/egeonC2cService/logWrapper"
+
+	"github.com/blabu/egeonC2cService/client"
+	cf "github.com/blabu/egeonC2cService/configuration"
 )
 
 var connection client.ConnectionCache
@@ -65,8 +67,8 @@ func Errorf(t uint16, format string, data ...interface{}) error {
 // и интерфейс ClientListenerInterface для добавления его в кеш
 type C2cDevice struct {
 	sessionID    uint32
-	clientType   c2cData.ClientType
-	storage      c2cData.DB
+	clientType   data.ClientType
+	storage      data.DB
 	device       dto.ClientDescriptor // Номер устройства
 	readChan     chan dto.Message
 	listenerList map[uint64]*chan dto.Message // Список каналов устройств слушающих отправляемые сообщения этого клиента
@@ -97,7 +99,7 @@ func (c *C2cDevice) GetListenerChan() *chan dto.Message {
 }
 
 // NewC2cDevice - Конструктор нового клеинта
-func NewC2cDevice(db c2cData.DB, sessionID uint32, maxConnection uint32) client.ReadWriteCloser {
+func NewC2cDevice(db data.DB, sessionID uint32, maxConnection uint32) client.ReadWriteCloser {
 	clTypeStr := cf.GetConfigValueOrDefault("ClientType", "0")
 	clType, _ := strconv.ParseUint(clTypeStr, 10, 16)
 	if clType == 0 {
@@ -108,7 +110,7 @@ func NewC2cDevice(db c2cData.DB, sessionID uint32, maxConnection uint32) client.
 	c.storage = db
 	c.readChan = make(chan dto.Message, maxConnection) // Делаем его буферизированным, чтобы много узлов смогли отпраить ему сообщение
 	c.listenerList = make(map[uint64]*chan dto.Message)
-	c.clientType = c2cData.ClientType(clType)
+	c.clientType = data.ClientType(clType)
 	return c
 }
 

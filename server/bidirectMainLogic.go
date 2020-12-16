@@ -1,16 +1,18 @@
 package server
 
 import (
-	"blabu/c2cService/client"
-	"blabu/c2cService/clientFactory"
-	"blabu/c2cService/dto"
-	log "blabu/c2cService/logWrapper"
-	"blabu/c2cService/parser"
 	"errors"
 	"fmt"
 	"io"
 	"sync/atomic"
 	"time"
+
+	log "github.com/blabu/egeonC2cService/logWrapper"
+
+	"github.com/blabu/egeonC2cService/client"
+	"github.com/blabu/egeonC2cService/clientFactory"
+	"github.com/blabu/egeonC2cService/dto"
+	"github.com/blabu/egeonC2cService/parser"
 )
 
 // bidirectMainLogic - двунаправленная реализация MainLogicIO для независимого чтения и записи информации

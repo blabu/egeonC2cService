@@ -1,12 +1,14 @@
 package parser
 
 import (
-	"blabu/c2cService/dto"
-	log "blabu/c2cService/logWrapper"
 	"bytes"
 	"encoding/binary"
 	"fmt"
 	"strconv"
+
+	"github.com/blabu/egeonC2cService/dto"
+
+	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 
 /*

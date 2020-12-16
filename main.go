@@ -3,9 +3,7 @@ package main
 import (
 	cf "blabu/c2cService/configuration"
 	c2cData "blabu/c2cService/data/c2cdata"
-	http "blabu/c2cService/httpGateway"
 	"blabu/c2cService/server"
-	"blabu/c2cService/stat"
 	"crypto/tls"
 	"flag"
 	"net"
@@ -34,10 +32,6 @@ func init() {
 		log.Fatal("Undefined Configuration file")
 	}
 	sigTerm = make(chan os.Signal)
-}
-
-func init() {
-	log.Info("You can run more than one init even in one source file")
 }
 
 func getMaxConnectionValue() uint32 {
@@ -87,16 +81,6 @@ func getSessionTimeout() time.Duration {
 	return timeout
 }
 
-func getUDPListener() (net.Listener, error) {
-	if portStr, err := cf.GetConfigValue("ServerUdpPort"); err == nil {
-		log.Info("Start UDP server at ", portStr)
-		listen, _ := NewUDPListener(4096, portStr)
-		return listen, nil
-	} else {
-		return nil, err
-	}
-}
-
 func getTCPListener() net.Listener {
 	port, err := cf.GetConfigValue("ServerTcpPort")
 	if err != nil {
@@ -131,7 +115,7 @@ func getTLSListener() (net.Listener, error) {
 	}
 }
 
-func startServer(listen net.Listener, timeout time.Duration, st *stat.Statistics) {
+func startServer(listen net.Listener, timeout time.Duration) {
 	Con, err := listen.Accept() // Ждущая функция (Висим ждем соединения)
 	if err != nil {
 		if nerr, ok := err.(net.Error); ok && nerr.Temporary() { //check type of error is network error
@@ -149,7 +133,7 @@ func startServer(listen net.Listener, timeout time.Duration, st *stat.Statistics
 		return
 	}
 	log.Info("Create new connection from ", Con.RemoteAddr().String())
-	go server.StartNewSession(Con, timeout*time.Second, st)
+	go server.StartNewSession(Con, timeout*time.Second)
 }
 
 func main() {
@@ -159,37 +143,22 @@ func main() {
 	cf.ShowAllConfigStore(os.Stderr)
 	timeout := getSessionTimeout()
 	defer c2cData.InitC2cDB().Close()
-	st := stat.CreateStatistics()
 	isStoped := atomic.NewBool(false)
-	udpListener, err := getUDPListener()
-	if err != nil {
-		log.Error(err.Error())
-	} else {
-		go func() {
-			for !isStoped.Load() {
-				startServer(udpListener, timeout, &st)
-			}
-			log.Info("Finish upd service")
-		}()
-	}
 	tlsListener, err := getTLSListener()
 	if err != nil {
 		log.Error(err.Error())
 	} else {
 		go func() {
 			for !isStoped.Load() {
-				startServer(tlsListener, timeout, &st)
+				startServer(tlsListener, timeout)
 			}
 			log.Info("Finish tls service")
 		}()
 	}
-	if addr, err := cf.GetConfigValue("GatewayAddr"); err == nil {
-		go http.RunGateway(addr, *confPath, &st) // Если не нужен http можно закоментировать. -5.3Mb
-	}
 	tcpListener := getTCPListener()
 	go func() {
 		for !isStoped.Load() {
-			startServer(tcpListener, timeout, &st)
+			startServer(tcpListener, timeout)
 		}
 		log.Info("Finish tcp service")
 	}()
@@ -200,9 +169,5 @@ func main() {
 	if tlsListener != nil {
 		log.Info("Try close tls connection")
 		tlsListener.Close()
-	}
-	if udpListener != nil {
-		log.Info("Try close udp connection")
-		udpListener.Close()
 	}
 }

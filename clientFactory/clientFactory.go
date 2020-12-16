@@ -1,14 +1,13 @@
 package clientFactory
 
 import (
-	c2cData "blabu/c2cService/data/c2cdata"
-	"blabu/c2cService/parser"
 	"strconv"
 
-	"github.com/blabu/egeonC2cService//client/trafficclient"
 	"github.com/blabu/egeonC2cService/client"
 	"github.com/blabu/egeonC2cService/client/c2cService"
 	conf "github.com/blabu/egeonC2cService/configuration"
+	c2cData "github.com/blabu/egeonC2cService/data/c2cdata"
+	"github.com/blabu/egeonC2cService/parser"
 	"github.com/blabu/egeonC2cService/savemsgservice"
 )
 
@@ -22,8 +21,7 @@ func CreateClientLogic(p parser.Parser, sessionID uint32) client.ReadWriteCloser
 	case parser.C2cParserType:
 		db := c2cData.GetBoltDbInstance()
 		client := c2cService.NewC2cDevice(db, sessionID, uint32(m))
-		msgClient := savemsgservice.NewDecorator(db, client)
-		return trafficclient.GetNewTraficCounterWrapper(db, msgClient)
+		return savemsgservice.NewDecorator(db, client)
 	default:
 		return nil
 	}

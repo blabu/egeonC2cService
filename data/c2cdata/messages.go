@@ -1,19 +1,14 @@
 package c2cdata
 
 import (
-	"blabu/c2cService/dto"
 	"encoding/json"
 	"errors"
 	"fmt"
 
+	"github.com/blabu/egeonC2cService/dto"
+
 	bolt "github.com/etcd-io/bbolt"
 )
-
-type IMessage interface {
-	IsSended(userID uint64, messageID uint64)
-	Add(userID uint64, msg dto.UnSendedMsg) (uint64, error)
-	GetNext(userID uint64) (dto.UnSendedMsg, error)
-}
 
 type Messages struct {
 	messageStorage *bolt.DB

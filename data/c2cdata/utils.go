@@ -1,14 +1,13 @@
 package c2cdata
 
 import (
-	"blabu/c2cService/dto"
-	log "blabu/c2cService/logWrapper"
 	"encoding/binary"
 	"encoding/json"
 	"errors"
 	"fmt"
 
-	// "github.com/boltdb/bolt"
+	"github.com/blabu/egeonC2cService/dto"
+	log "github.com/blabu/egeonC2cService/logWrapper"
 	bolt "github.com/etcd-io/bbolt"
 )
 

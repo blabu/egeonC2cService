@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"blabu/c2cService/dto"
+	"github.com/blabu/egeonC2cService/dto"
 )
 
 // Parser - Основной интерфейс для парсинга сообщений (определяет базовый функционал всего приложения)

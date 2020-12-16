@@ -8,5 +8,4 @@ type ClientDescriptor struct {
 	Name         string    `json:"Name"` /*Начинается ОБЯЗАТЕЛЬНО с буквы латинского алфавита*/
 	SecretKey    string    `json:"Key"`
 	RegisterDate time.Time `json:"Registered"`
-	AllowedUsers []string  `json:"Allowed"` /*Список разрешений для пользователя*/
 }

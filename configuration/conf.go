@@ -14,7 +14,7 @@ import (
 	"strings"
 	"sync"
 
-	log "blabu/c2cService/logWrapper"
+	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 
 const (

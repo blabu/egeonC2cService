@@ -1,10 +1,12 @@
 package server
 
 import (
-	conf "blabu/c2cService/configuration"
-	log "blabu/c2cService/logWrapper"
-	"blabu/c2cService/parser"
 	"io"
+
+	"github.com/blabu/egeonC2cService/parser"
+
+	conf "github.com/blabu/egeonC2cService/configuration"
+	log "github.com/blabu/egeonC2cService/logWrapper"
 
 	"bufio"
 	"net"

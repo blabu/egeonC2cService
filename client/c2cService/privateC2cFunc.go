@@ -1,15 +1,16 @@
 package c2cService
 
 import (
-	"blabu/c2cService/client"
-	"blabu/c2cService/dto"
-	log "blabu/c2cService/logWrapper"
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/blabu/egeonC2cService/client"
+	"github.com/blabu/egeonC2cService/dto"
+	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 
 /*
