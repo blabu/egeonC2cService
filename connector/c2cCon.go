@@ -54,6 +54,7 @@ type IConnection interface {
 	Close() error
 }
 
+//NewC2cConnection - create new c2c connection register or init than
 func NewC2cConnection(conn net.Conn, cnf ConfConnection) (IConnection, error) {
 	p := parser.CreateEmptyParser(cnf.СhunkSize)
 	res := &Connection{
