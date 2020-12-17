@@ -12,4 +12,5 @@ type Parser interface {
 	FormMessage(msg dto.Message) ([]byte, error)
 	ParseMessage(data []byte) (dto.Message, error)
 	IsFullReceiveMsg(data []byte) (int, error)
+	GetMinimumDataSize() int // Минимально возможный осмысленный пакет в рамках протокола
 }

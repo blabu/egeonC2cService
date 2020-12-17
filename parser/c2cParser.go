@@ -30,7 +30,6 @@ const headerParamSize = 6
 var endHeader = []byte("###")
 var beginHeader = []byte("$V")
 var delim = []byte(";")
-var minHeaderLen = len(beginHeader) + headerParamSize*len(delim) + len(endHeader)
 
 type header struct {
 	protocolVer uint64 // Версия протокола
@@ -49,6 +48,14 @@ type header struct {
 type C2cParser struct {
 	maxPackageSize uint64
 	head           header
+}
+
+//CreateEmptyParser - создает интерфейс парсера с ограничением максимального размера сообщения maxSize
+// Кусок принятого сообщения нужен для создания других видов парсера в будущем
+func CreateEmptyParser(maxSize uint64) Parser {
+	c2c := new(C2cParser)
+	c2c.maxPackageSize = maxSize
+	return c2c
 }
 
 //FormMessage - from - Content[0], to - Content[1], data - Content[2]
@@ -73,7 +80,7 @@ func (c2c *C2cParser) FormMessage(msg dto.Message) ([]byte, error) {
 
 // return position for start header or/and error if not find header or parsing error
 func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
-	if data == nil || len(data) < minHeaderLen {
+	if data == nil || len(data) < c2c.GetMinimumDataSize() {
 		return 0, errors.New("Input is empty, nothing to be parsed")
 	}
 	index := bytes.IndexByte(data, '$')
@@ -160,4 +167,9 @@ func (c2c *C2cParser) IsFullReceiveMsg(data []byte) (int, error) {
 		return 0, nil
 	}
 	return c2c.head.contentSize + c2c.head.headerSize - len(data), nil
+}
+
+//GetMinimumDataSize - вернт минимальный валидный пакет в рамках протокола c2c
+func (c2c *C2cParser) GetMinimumDataSize() int {
+	return len(beginHeader) + headerParamSize*len(delim) + len(endHeader)
 }
