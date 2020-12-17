@@ -86,7 +86,7 @@ func NewC2cConnection(conn net.Conn, cnf ConfConnection) (IConnection, error) {
 			}
 		}
 	}()
-	return res, err
+	return res, nil
 }
 
 func (c *Connection) Write(to string, command uint16, data []byte) error {
@@ -157,10 +157,10 @@ func (c *Connection) init() error {
 	}
 	_, cmd, data := c.Read()
 	if data == nil || cmd != dto.InitByNameCOMMAND {
-		return errors.New("Can not init. Errors while read")
+		return fmt.Errorf("Can not init command %d. Errors while read", cmd)
 	}
 	if bytes.Index(data, []byte("INIT OK")) < 0 {
-		return fmt.Errorf("Bad init %s", data)
+		return fmt.Errorf("Bad init, receive %s", data)
 	}
 	return nil
 }

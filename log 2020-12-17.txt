@@ -4,3 +4,37 @@ INFO : 2020/12/17 22:07:02.665199 main.go:56: Start TCP server at :3555
 INFO : 2020/12/17 22:13:50.644032 main.go:121: Operation system kill server
 INFO : 2020/12/17 22:13:50.644320 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
 INFO : 2020/12/17 22:13:50.644378 main.go:117: Finish tcp service
+INFO : 2020/12/17 22:29:35.256505 database.go:52: Init database finished fine
+ERROR: 2020/12/17 22:29:35.256663 main.go:103: read ./: is a directory
+INFO : 2020/12/17 22:29:35.256841 main.go:56: Start TCP server at :3555
+INFO : 2020/12/17 22:29:37.190956 main.go:90: Create new connection from 127.0.0.1:33692
+INFO : 2020/12/17 22:29:37.191537 database.go:122: Generate new client for type 4096
+WARN : 2020/12/17 22:29:37.191584 clients.go:49: Undefined client with name Vasya
+INFO : 2020/12/17 22:29:37.191604 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/17 22:29:37.208289 database.go:127: New ID is 1
+INFO : 2020/12/17 22:29:37.213502 privateC2cFunc.go:262: Registered new client Vasya with ID 1
+INFO : 2020/12/17 22:29:37.213777 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/17 22:29:37.214882 bidirectConnector.go:68: Error when try read from conection: EOF
+INFO : 2020/12/17 22:29:37.214931 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/17 22:29:37.214949 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/17 22:29:37.214962 privateC2cFunc.go:341: Close all connection for client Vasya: 1 in session 1
+INFO : 2020/12/17 22:29:37.214976 c2c.go:190: Close client Vasya with id 1 in session 1
+INFO : 2020/12/17 22:29:37.215035 c2c.go:166: Read channel is closed for device 0 name Vasya for session 1
+INFO : 2020/12/17 22:29:37.215048 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/17 22:29:37.215056 bidirectMain.go:64: EOF
+INFO : 2020/12/17 22:30:27.798799 main.go:121: Operation system kill server
+INFO : 2020/12/17 22:30:27.799209 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/17 22:30:27.799362 main.go:117: Finish tcp service
+INFO : 2020/12/17 22:30:48.793908 database.go:52: Init database finished fine
+ERROR: 2020/12/17 22:30:48.793997 main.go:103: read ./: is a directory
+INFO : 2020/12/17 22:30:48.794125 main.go:56: Start TCP server at :3555
+INFO : 2020/12/17 22:31:05.548155 main.go:90: Create new connection from 127.0.0.1:33696
+INFO : 2020/12/17 22:31:05.549327 privateC2cFunc.go:226: Client Vasya init by name ok
+INFO : 2020/12/17 22:31:05.549480 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/17 22:31:05.551277 bidirectConnector.go:68: Error when try read from conection: EOF
+INFO : 2020/12/17 22:31:05.551331 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/17 22:31:05.551353 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/17 22:31:05.551369 privateC2cFunc.go:341: Close all connection for client Vasya: 1 in session 1
+INFO : 2020/12/17 22:31:05.551386 c2c.go:190: Close client Vasya with id 1 in session 1
+INFO : 2020/12/17 22:32:26.083658 main.go:121: Operation system kill server
+INFO : 2020/12/17 22:32:26.084142 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
