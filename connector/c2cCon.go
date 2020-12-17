@@ -171,10 +171,10 @@ func (c *Connection) connect(name string) error {
 	}
 	_, cmd, data := c.Read()
 	if data == nil || cmd != dto.ConnectByNameCOMMAND {
-		return errors.New("Can not connect. Errors while read")
+		return fmt.Errorf("Can not connect command %d. Errors while read", cmd)
 	}
 	if bytes.Index(data, []byte("CONNECT OK")) < 0 {
-		return fmt.Errorf("Bad connection error")
+		return fmt.Errorf("Bad connection error, receive %s", data)
 	}
 	return nil
 }
