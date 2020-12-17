@@ -1,9 +1,9 @@
 package savemsgservice
 
 import (
+	"context"
 	"fmt"
 	"strconv"
-	"time"
 
 	"github.com/blabu/egeonC2cService/client"
 	"github.com/blabu/egeonC2cService/data"
@@ -59,28 +59,29 @@ func (s *saveMsgClient) Write(msg *dto.Message) error {
 	return err
 }
 
-func (s *saveMsgClient) Read(dt time.Duration, handler dto.ReadHandler) {
-	s.client.Read(dt,
+func (s *saveMsgClient) Read(ctx context.Context, handler dto.ClientReadHandler) {
+	s.client.Read(ctx,
 		func(msg dto.Message, err error) error {
 			clientError := handler(msg, err)
 			if clientError == nil {
 				userID := s.client.GetID()
-				for m, e := s.db.GetNext(userID); e == nil && userID != 0; m, e = s.db.GetNext(userID) {
-					log.Tracef("Try send to %x from %s unordered message %d", userID, m.From, m.ID)
-					err := handler(dto.Message{
-						ID:      m.ID,
-						From:    m.From,
-						To:      strconv.FormatUint(userID, 16),
-						Command: m.Command,
-						Proto:   m.Proto,
-						Content: m.Content,
-						Jmp:     1,
-					}, nil)
-					if err != nil {
-						return err
+				if userID > 0 {
+					for m, e := s.db.GetNext(userID); e == nil; m, e = s.db.GetNext(userID) {
+						log.Tracef("Try send to %x from %s unordered message %d", userID, m.From, m.ID)
+						err := handler(dto.Message{
+							ID:      m.ID,
+							From:    m.From,
+							To:      strconv.FormatUint(userID, 16),
+							Command: m.Command,
+							Proto:   m.Proto,
+							Content: m.Content,
+							Jmp:     1,
+						}, nil)
+						if err != nil {
+							return err
+						}
+						s.db.IsSended(userID, m.ID)
 					}
-					s.db.IsSended(userID, m.ID)
-					userID = s.client.GetID()
 				}
 			}
 			return clientError

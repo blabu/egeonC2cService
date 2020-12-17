@@ -1,7 +1,7 @@
 package server
 
 import (
-	"errors"
+	"context"
 	"io"
 
 	"github.com/blabu/egeonC2cService/parser"
@@ -89,19 +89,17 @@ func (c *BidirectSession) readHandler(
 // Контролирует с помощью парсера полноту сообщения и передает это сообщение клиентской логики
 // If connection is finished or some error net.Connection
 func (c *BidirectSession) Run(Connect net.Conn, p parser.Parser) {
-	go c.logic.Read(func(data []byte, systemError error) error { //Читаем из системы пишем в интернет
-		if data == nil {
-			return errors.New("Data to transmit is nil")
-		}
-		if systemError == nil {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	go c.logic.Read(ctx, func(data []byte, systemError error) error { //Читаем из системы пишем в интернет
+		if data != nil && systemError == nil {
 			c.updateWatchDogTimer()
 			Connect.SetWriteDeadline(time.Now().Add(time.Duration(len(data)) * 10 * time.Millisecond))
 			_, err := Connect.Write(data)
 			return err
 		} else if systemError == io.EOF { //Если ошибка из системы это конец потока. Закрываем соединение
 			log.Info("Close connection by read operation")
-			Connect.Close()
-			return nil
+			return Connect.Close()
 		}
 		return nil
 	})

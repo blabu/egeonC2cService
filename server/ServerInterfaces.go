@@ -1,8 +1,11 @@
 package server
 
 import (
+	"context"
 	"io"
 	"net"
+
+	"github.com/blabu/egeonC2cService/dto"
 )
 
 var lastSessionID uint32
@@ -21,11 +24,9 @@ type Session interface {
 	Run(Connect net.Conn)
 }
 
-type ReadHandler func([]byte, error) error
-
 // ClientReader - базовый интерфейс для чтения из логики (вывод данных наружу)
 type ClientReader interface {
-	Read(ReadHandler)
+	Read(context.Context, dto.ServerReadHandler)
 }
 
 // MainLogicIO - основоной интерфейс логики взаимодействия сервера с логикой приложения

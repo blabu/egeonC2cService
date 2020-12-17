@@ -1,6 +1,7 @@
 package server
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -21,7 +22,6 @@ import (
 // 2. запись в клиента метод Write()
 type bidirectMainLogic struct {
 	sessionID uint32
-	dt        time.Duration
 	p         parser.Parser
 	c         client.ReadWriteCloser
 }
@@ -32,7 +32,6 @@ func CreateReadWriteMainLogic(p parser.Parser, readTimeout time.Duration) MainLo
 	sesID := atomic.AddUint32(&lastSessionID, 1)
 	return &bidirectMainLogic{
 		sessionID: sesID,
-		dt:        readTimeout,
 		p:         p,
 		c:         clientFactory.CreateClientLogic(p, sesID),
 	}
@@ -52,19 +51,18 @@ func (s *bidirectMainLogic) Write(data []byte) (int, error) {
 }
 
 //Read - читает из системы и передает данные обработчику handler
-func (s *bidirectMainLogic) Read(handler ReadHandler) {
+func (s *bidirectMainLogic) Read(ctx context.Context, handler dto.ServerReadHandler) {
 	if s.c == nil {
 		handler(nil, errors.New("Parser or client is nil"))
 		return
 	}
-	s.c.Read(s.dt, func(msg dto.Message, systemError error) error {
+	s.c.Read(ctx, func(msg dto.Message, systemError error) error {
 		if systemError != nil {
 			if systemError == io.EOF { // Читать больше нечего
 				handler(nil, io.EOF) // Закрываем соединение
 			}
-			// Здесь если произошел таймоут
 			log.Info(systemError.Error())
-			return nil
+			return systemError
 		}
 		log.Trace("Received data from client logic fine")
 		return handler(s.p.FormMessage(msg)) //Передаем данные для отправки в интернет

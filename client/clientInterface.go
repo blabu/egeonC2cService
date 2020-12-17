@@ -7,8 +7,8 @@ Package client - Содержит всю бизнес логику систем�
 package client
 
 import (
+	"context"
 	"io"
-	"time"
 
 	"github.com/blabu/egeonC2cService/dto"
 )
@@ -30,7 +30,7 @@ type ReadWriteCloser interface {
 	Write(msg *dto.Message) error
 
 	//Read - читаем ответ бизнес логики return io.EOF if client never answer
-	Read(dt time.Duration, handler dto.ReadHandler)
+	Read(ctx context.Context, handler dto.ClientReadHandler)
 
 	// Close - информирует бизнес логику про разрыв соединения
 	io.Closer

@@ -1,10 +1,10 @@
 package c2cService
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"sync"
-	"time"
 
 	"github.com/blabu/egeonC2cService/data"
 	"github.com/blabu/egeonC2cService/dto"
@@ -158,25 +158,20 @@ func (c *C2cDevice) Write(msg *dto.Message) error {
 // 1. Приготовлен ответ
 // 2. Истекло время ожидания ответа
 // 3. Произшла ошибка чтения
-func (c *C2cDevice) Read(dt time.Duration, handler dto.ReadHandler) {
-	t := time.NewTimer(dt)
+func (c *C2cDevice) Read(ctx context.Context, handler dto.ClientReadHandler) {
 	for {
 		select {
 		case m, ok := <-c.readChan:
 			if !ok {
-				t.Stop()
 				log.Tracef("Read channel is closed for device %x name %s for session %d", c.device.ID, c.device.Name, c.sessionID)
 				handler(dto.Message{}, io.EOF)
-				return
+				break
 			}
 			if err := handler(m, nil); err != nil {
-				return
+				break
 			}
-		case <-t.C:
-			if err := handler(dto.Message{}, Errorf(ReadTimeoutError, "Read timeout in session %d Read is continue", c.sessionID)); err != nil {
-				return
-			}
-			t.Reset(dt)
+		case <-ctx.Done():
+			break
 		}
 	}
 }
