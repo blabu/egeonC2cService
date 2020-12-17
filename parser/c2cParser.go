@@ -27,8 +27,8 @@ import (
 
 const headerParamSize = 6
 
-var endHeader = []byte("###")
 var beginHeader = []byte("$V")
+var endHeader = []byte("###")
 var delim = []byte(";")
 
 type header struct {
@@ -171,5 +171,5 @@ func (c2c *C2cParser) IsFullReceiveMsg(data []byte) (int, error) {
 
 //GetMinimumDataSize - вернт минимальный валидный пакет в рамках протокола c2c
 func (c2c *C2cParser) GetMinimumDataSize() int {
-	return len(beginHeader) + headerParamSize*len(delim) + len(endHeader)
+	return len(beginHeader) + headerParamSize*(len(delim)+1) + len(endHeader)
 }
