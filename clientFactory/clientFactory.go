@@ -12,12 +12,7 @@ import (
 //CreateClientLogic - create client for c2c or s2s communication
 func CreateClientLogic(p parser.Parser, sessionID uint32) client.ReadWriteCloser {
 	m := cf.Config.MaxQueuePacketSize
-	switch p.GetParserType() {
-	case parser.C2cParserType:
-		db := c2cData.GetBoltDbInstance()
-		client := c2cService.NewC2cDevice(db, sessionID, m)
-		return savemsgservice.NewDecorator(db, client)
-	default:
-		return nil
-	}
+	db := c2cData.GetBoltDbInstance()
+	client := c2cService.NewC2cDevice(db, sessionID, m)
+	return savemsgservice.NewDecorator(db, client)
 }
