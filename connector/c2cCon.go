@@ -1,4 +1,4 @@
-package connectorC2c
+package connector
 
 import (
 	"bufio"
@@ -29,44 +29,67 @@ func randStringRunes(n int) string {
 	return string(b)
 }
 
-type C2cConnection struct {
-	chunkSize   uint64
-	user        string
-	pass        string
-	conn        net.Conn
-	receiveBuff []byte
-	p           parser.Parser
+//ConfConnection - конфигурация соединения
+type ConfConnection struct {
+	User      string
+	Pass      string
+	СhunkSize uint64
+	IsNew     bool // true - будет сделана попытка регистрации пользователя
 }
 
-type IC2cConnection interface {
+//Connection - структура реализующая интерфейс IConnection
+type Connection struct {
+	conn        net.Conn
+	cnf         ConfConnection
+	p           parser.Parser
+	stop        chan bool
+	receiveBuff []byte
+}
+
+//IConnection - интерфейс работы с соединением
+type IConnection interface {
 	Read() (from string, command uint16, data []byte)
 	Write(to string, command uint16, data []byte) error
-	Connect(name string) error
-	Register() error
-	Init() error
-	Ping() error
 	Close() error
 }
 
-func NewC2cConnection(user, pass string, conn net.Conn, maxSize uint64) (IC2cConnection, error) {
-	p := parser.CreateEmptyParser(maxSize)
-	res := &C2cConnection{
-		chunkSize:   maxSize,
-		user:        user,
-		pass:        pass,
+func NewC2cConnection(conn net.Conn, cnf ConfConnection) (IConnection, error) {
+	p := parser.CreateEmptyParser(cnf.СhunkSize)
+	res := &Connection{
 		conn:        conn,
+		cnf:         cnf,
 		p:           p,
-		receiveBuff: make([]byte, p.GetMinimumDataSize(), maxSize),
+		stop:        make(chan bool),
+		receiveBuff: make([]byte, p.GetMinimumDataSize(), cnf.СhunkSize),
 	}
-	return res, nil
+	if cnf.IsNew {
+		err := res.register()
+		if err != nil {
+			return nil, err
+		}
+	}
+	err := res.init()
+	if err != nil {
+		return nil, err
+	}
+	go func() {
+		dt := time.NewTimer()
+		select {
+		case <-res.stop:
+			return
+		case 
+		}
+		res.ping()
+	}()
+	return res, err
 }
 
-func (c *C2cConnection) Write(to string, command uint16, data []byte) error {
+func (c *Connection) Write(to string, command uint16, data []byte) error {
 	buf, err := c.p.FormMessage(dto.Message{
 		Command: command,
 		Proto:   proto,
 		Jmp:     3,
-		From:    c.user,
+		From:    c.cnf.User,
 		To:      to,
 		Content: data,
 	})
@@ -77,7 +100,7 @@ func (c *C2cConnection) Write(to string, command uint16, data []byte) error {
 	return err
 }
 
-func (c *C2cConnection) Read() (from string, command uint16, data []byte) {
+func (c *Connection) Read() (from string, command uint16, data []byte) {
 	reader := bufio.NewReader(c.conn)
 	n, err := reader.Read(c.receiveBuff)
 	if err != nil {
@@ -105,8 +128,8 @@ func (c *C2cConnection) Read() (from string, command uint16, data []byte) {
 	return m.From, m.Command, m.Content
 }
 
-func (c *C2cConnection) Register() error {
-	sign := sha256.Sum256([]byte(c.user + c.pass))
+func (c *Connection) register() error {
+	sign := sha256.Sum256([]byte(c.cnf.User + c.cnf.Pass))
 	signature := base64.StdEncoding.EncodeToString(sign[:])
 	if err := c.Write("0", dto.RegisterCOMMAND, []byte(signature)); err != nil {
 		return err
@@ -118,11 +141,11 @@ func (c *C2cConnection) Register() error {
 	return nil
 }
 
-func (c *C2cConnection) Init() error {
-	temp := sha256.Sum256([]byte(c.user + c.pass))
+func (c *Connection) init() error {
+	temp := sha256.Sum256([]byte(c.cnf.User + c.cnf.Pass))
 	credentials := base64.StdEncoding.EncodeToString(temp[:])
 	salt := randStringRunes(32)
-	resSign := sha256.Sum256([]byte(c.user + salt + credentials))
+	resSign := sha256.Sum256([]byte(c.cnf.User + salt + credentials))
 	signature := base64.StdEncoding.EncodeToString(resSign[:])
 	if err := c.Write("0", dto.InitByNameCOMMAND, []byte(salt+";"+signature)); err != nil {
 		return err
@@ -137,7 +160,7 @@ func (c *C2cConnection) Init() error {
 	return nil
 }
 
-func (c *C2cConnection) Connect(name string) error {
+func (c *Connection) connect(name string) error {
 	if err := c.Write(name, dto.ConnectByNameCOMMAND, nil); err != nil {
 		return err
 	}
@@ -151,11 +174,12 @@ func (c *C2cConnection) Connect(name string) error {
 	return nil
 }
 
-func (c *C2cConnection) Ping() error {
+func (c *Connection) ping() error {
 	err := c.Write("0", dto.PingCOMMAND, nil)
 	return err
 }
 
-func (c *C2cConnection) Close() error {
+func (c *Connection) Close() error {
+	close(c.stop)
 	return c.conn.Close()
 }
