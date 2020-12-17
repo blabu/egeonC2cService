@@ -19,7 +19,7 @@ func StartNewSession(conn net.Conn, dT time.Duration) {
 				Duration: dT,
 				Tm:       time.NewTimer(dT),
 				netReq:   req,
-				logic:    CreateReadWriteMainLogic(p, dT),
+				logic:    CreatePanicCoverLogic(CreateReadWriteMainLogic(p, dT)),
 			}
 			s.Run(conn, p)
 			s.logic.Close()

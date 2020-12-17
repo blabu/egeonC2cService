@@ -165,13 +165,13 @@ func (c *C2cDevice) Read(ctx context.Context, handler dto.ClientReadHandler) {
 			if !ok {
 				log.Tracef("Read channel is closed for device %x name %s for session %d", c.device.ID, c.device.Name, c.sessionID)
 				handler(dto.Message{}, io.EOF)
-				break
+				return
 			}
 			if err := handler(m, nil); err != nil {
-				break
+				return
 			}
 		case <-ctx.Done():
-			break
+			return
 		}
 	}
 }
