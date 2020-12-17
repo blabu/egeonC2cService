@@ -116,9 +116,9 @@ func (c *Connection) Read() (from string, command uint16, data []byte, err error
 	if err != nil {
 		return "", 0, nil, err
 	}
-	if restSize != 0 {
+	if restSize > 0 {
 		resp := make([]byte, restSize)
-		c.conn.SetReadDeadline(time.Now().Add(time.Duration(restSize) * 10 * time.Millisecond))
+		c.conn.SetReadDeadline(time.Now().Add(time.Duration(restSize) * 20 * time.Millisecond))
 		_, err := io.ReadFull(reader, resp)
 		if err != nil {
 			return "", 0, nil, err
