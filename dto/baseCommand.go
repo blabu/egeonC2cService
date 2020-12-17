@@ -1,4 +1,4 @@
-package client
+package dto
 
 /*
 Набор поддерживаемых команд

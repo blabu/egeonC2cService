@@ -27,7 +27,7 @@ func NewDecorator(db data.DB, client client.ReadWriteCloser) client.ReadWriteClo
 // SaveMsgFilter - return true if message need save
 func (s *saveMsgClient) SaveMsgFilter(msg *dto.Message) bool {
 	return s.client.GetID() != 0 && len(msg.Content) > 0 &&
-		(msg.Command == client.SaveDataCOMMAND || msg.Command == client.PropertiesCOMMAND)
+		(msg.Command == dto.SaveDataCOMMAND || msg.Command == dto.PropertiesCOMMAND)
 }
 
 // Write - пытаемся отправить сообщение клиенту.

@@ -118,35 +118,35 @@ func (c *C2cDevice) Write(msg *dto.Message) error {
 		return Errorf(NilMessageError, "Message is nil in session %d", c.sessionID)
 	}
 	switch msg.Command {
-	case client.ErrorCOMMAND:
+	case dto.ErrorCOMMAND:
 		return c.errorHandler(msg)
-	case client.PingCOMMAND:
+	case dto.PingCOMMAND:
 		return c.ping(msg)
-	case client.ConnectByIDCOMMAND: // Content[0] - from ID, Content[1] - to ID
+	case dto.ConnectByIDCOMMAND: // Content[0] - from ID, Content[1] - to ID
 		return c.connectByID(msg)
-	case client.ConnectByNameCOMMAND: // Content[0] - from name, Content[1] - to name
+	case dto.ConnectByNameCOMMAND: // Content[0] - from name, Content[1] - to name
 		return c.connectByName(msg)
-	case client.InitByIDCOMMAND: // Content[0] - from ID, Content[1] - to (server always "0")
+	case dto.InitByIDCOMMAND: // Content[0] - from ID, Content[1] - to (server always "0")
 		return c.initByID(msg)
-	case client.InitByNameCOMMAND: // Content[0] - from name, Content[1] - to (server always "0")
+	case dto.InitByNameCOMMAND: // Content[0] - from name, Content[1] - to (server always "0")
 		return c.initByName(msg)
-	case client.RegisterCOMMAND:
+	case dto.RegisterCOMMAND:
 		if c.clientType != 0 {
 			return c.registerNewDevice(msg) // Content[0] - from name, Content[1] - to (server always "0") , Content[2] - BASE64(SHA256(name+password))
 		}
 		return NewC2cError(UnsupportedCommandError, "Registartion is disabled for this server")
-	case client.GenerateCOMMAND:
+	case dto.GenerateCOMMAND:
 		if c.clientType != 0 {
 			return c.generateNewDevice(msg) // Content[0] - is empty, Content[1] - to (server always "0"), Content[2] - BASE64 string password hash
 		}
 		return NewC2cError(UnsupportedCommandError, "Generate new device is disabled for this server")
-	case client.DataCOMMAND:
+	case dto.DataCOMMAND:
 		fallthrough
-	case client.SaveDataCOMMAND:
+	case dto.SaveDataCOMMAND:
 		return c.sendNewMessage(msg)
-	case client.DestroyConCOMMAND: // Разорвать соединения без отключения от сервера
+	case dto.DestroyConCOMMAND: // Разорвать соединения без отключения от сервера
 		return c.destroyConnection(msg) //Content[0] - from: local ID or Name, Content[1] - destroy connection from who.
-	case client.PropertiesCOMMAND:
+	case dto.PropertiesCOMMAND:
 		return c.setProperies(msg) //Content[0] - from: local ID or Name, Content[1] - to
 	default:
 		return Errorf(UnsupportedCommandError, "Unsupported command %d in session %d", msg.Command, c.sessionID)
@@ -181,7 +181,7 @@ func (c *C2cDevice) Close() error {
 	c.destroyConnection(&dto.Message{
 		From:    c.device.Name,
 		To:      "0",
-		Command: client.DestroyConCOMMAND,
+		Command: dto.DestroyConCOMMAND,
 		Jmp:     1, // TODO set Jmp obviously is a bad practice
 		Proto:   1, // TODO set Proto obviously is a bad practice
 	})

@@ -8,15 +8,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/blabu/egeonC2cService/client"
 	"github.com/blabu/egeonC2cService/dto"
 	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 
-/*
-Приватные функции для клиент-клиент взаимодействия
-Предполагается что параметры всех функций проверены на nil и размер
-*/
+// Приватные функции для клиент-клиент взаимодействия
+// Предполагается что параметры всех функций проверены на nil и размер
 
 const answerInitByNameOk string = "INIT OK"
 const answerConnectByNameOk string = "CONNECT OK"
@@ -30,7 +27,7 @@ func (c *C2cDevice) ping(m *dto.Message) error {
 	if c.device.ID != 0 {
 		currTimeStr := strconv.FormatInt(time.Now().Unix(), 16)
 		c.readChan <- dto.Message{
-			Command: client.PingCOMMAND,
+			Command: dto.PingCOMMAND,
 			Proto:   m.Proto,
 			Jmp:     m.Jmp,
 			From:    "0",
@@ -67,7 +64,7 @@ func (c *C2cDevice) connectByID(m *dto.Message) error {
 		return Errorf(ClientNotFindError, "Can not create connection from %d whith abonnent %d", from, to)
 	}
 	c.readChan <- dto.Message{
-		Command: client.ConnectByIDCOMMAND,
+		Command: dto.ConnectByIDCOMMAND,
 		Jmp:     m.Jmp,
 		Proto:   m.Proto,
 		From:    m.To,
@@ -96,7 +93,7 @@ func (c *C2cDevice) connectByName(m *dto.Message) error {
 		return Errorf(ClientNotFindError, "Can not create connection from %s with abonnent %s", m.From, m.To)
 	}
 	c.readChan <- dto.Message{
-		Command: client.ConnectByNameCOMMAND,
+		Command: dto.ConnectByNameCOMMAND,
 		Jmp:     m.Jmp,
 		Proto:   m.Proto,
 		From:    m.To,
@@ -148,7 +145,7 @@ func (c *C2cDevice) initByID(m *dto.Message) error {
 		}
 		if er := connection.AddClientToCache(c.device.ID, c); er == nil {
 			c.readChan <- dto.Message{
-				Command: client.InitByIDCOMMAND,
+				Command: dto.InitByIDCOMMAND,
 				Jmp:     m.Jmp,
 				Proto:   m.Proto,
 				From:    "0",
@@ -219,7 +216,7 @@ func (c *C2cDevice) initByName(m *dto.Message) error {
 			return er
 		}
 		c.readChan <- dto.Message{
-			Command: client.InitByNameCOMMAND,
+			Command: dto.InitByNameCOMMAND,
 			Jmp:     m.Jmp,
 			Proto:   m.Proto,
 			From:    "0",
@@ -255,7 +252,7 @@ func (c *C2cDevice) registerNewDevice(m *dto.Message) error {
 	c.device = *dev
 	thisID := strconv.FormatUint(dev.ID, 16)
 	c.readChan <- dto.Message{
-		Command: client.RegisterCOMMAND,
+		Command: dto.RegisterCOMMAND,
 		Jmp:     m.Jmp,
 		Proto:   m.Proto,
 		From:    "0",
@@ -280,7 +277,7 @@ func (c *C2cDevice) generateNewDevice(m *dto.Message) error {
 		}
 		c.device = *dev
 		c.readChan <- dto.Message{
-			Command: client.GenerateCOMMAND,
+			Command: dto.GenerateCOMMAND,
 			Jmp:     m.Jmp,
 			Proto:   m.Proto,
 			From:    "0",
