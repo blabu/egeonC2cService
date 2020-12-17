@@ -24,6 +24,7 @@ type ConfigFile struct {
 	LogPath            string `yaml:"LogPath"`            // Путь куда сохранять логи
 	ClientType         uint16 `yaml:"ClientType"`         // Тип клиента должен быть больше 0
 	SaveDuration       uint16 `yaml:"SaveDuration"`       // Промежуток времени для сохранения логов
+	MaxPeerConnection  uint16 `yaml:"MaxPeerConnection"`  // Максимальное количество подключенных к одному пиру клиентов
 }
 
 //Config - глобальная структура со всеми конфигурациями сервера

@@ -4,10 +4,9 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/blabu/egeonC2cService/configuration"
 	log "github.com/blabu/egeonC2cService/logWrapper"
 )
-
-const maxCONNECTION = 16 /*Максимальное кол-во коннектов к одному клиенту*/
 
 // Структура клиента (для хранения его в онлайн кеше)
 type cachedClient struct {
@@ -40,7 +39,7 @@ func (con *ConnectionCache) AddClientToCache(devID uint64, cl ListenerInterface)
 			log.Warning("Can not append new abonent with diviceID ", devID, " abonent exist")
 			return fmt.Errorf("Abonent exist")
 		}
-		allReaders := make([]ListenerInterface, 0, maxCONNECTION) // Для избежания случайных переалокаций
+		allReaders := make([]ListenerInterface, 0, configuration.Config.MaxPeerConnection) // Для избежания случайных переалокаций
 		con.onlineClientsCashe[devID] = cachedClient{
 			base:             cl,
 			connectedReaders: allReaders,
