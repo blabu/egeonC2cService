@@ -20,7 +20,7 @@ type LogFileType struct {
 var log LogFileType
 
 func init() {
-	log.logWrapper = logger.Init("telemetryAPI", true, false, os.Stdout)
+	log.logWrapper = logger.Init("c2cService", true, false, os.Stdout)
 }
 
 //GetLogger - вернет дефолтный логгер
