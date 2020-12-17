@@ -31,10 +31,11 @@ func randStringRunes(n int) string {
 
 //ConfConnection - конфигурация соединения
 type ConfConnection struct {
-	User      string
-	Pass      string
-	СhunkSize uint64
-	IsNew     bool // true - будет сделана попытка регистрации пользователя
+	User        string
+	Pass        string
+	СhunkSize   uint64
+	IsNew       bool // true - будет сделана попытка регистрации пользователя
+	PingTimeout time.Duration
 }
 
 //Connection - структура реализующая интерфейс IConnection
@@ -73,13 +74,16 @@ func NewC2cConnection(conn net.Conn, cnf ConfConnection) (IConnection, error) {
 		return nil, err
 	}
 	go func() {
-		dt := time.NewTimer()
-		select {
-		case <-res.stop:
-			return
-		case 
+		dt := time.NewTicker(cnf.PingTimeout)
+		defer dt.Stop()
+		for {
+			select {
+			case <-res.stop:
+				return
+			case <-dt.C:
+				res.ping()
+			}
 		}
-		res.ping()
 	}()
 	return res, err
 }
