@@ -62,7 +62,7 @@ func NewC2cConnection(conn net.Conn, cnf ConfConnection) (IConnection, error) {
 		cnf:         cnf,
 		p:           p,
 		stop:        make(chan bool),
-		receiveBuff: make([]byte, p.GetMinimumDataSize(), cnf.СhunkSize),
+		receiveBuff: make([]byte, 128, cnf.СhunkSize),
 	}
 	if cnf.IsNew {
 		err := res.register()
