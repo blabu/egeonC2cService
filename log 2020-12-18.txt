@@ -3,3 +3,2151 @@ ERROR: 2020/12/18 14:32:31.285262 main.go:103: read ./: is a directory
 INFO : 2020/12/18 14:32:31.286019 main.go:56: Start TCP server at :3555
 INFO : 2020/12/18 14:32:48.419076 main.go:121: Operation system kill server
 INFO : 2020/12/18 14:32:48.419540 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 15:59:40.929328 database.go:52: Init database finished fine
+ERROR: 2020/12/18 15:59:40.929491 main.go:103: read ./: is a directory
+INFO : 2020/12/18 15:59:40.929746 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 16:00:00.596763 main.go:90: Create new connection from 127.0.0.1:58590
+INFO : 2020/12/18 16:00:00.598873 bidirectConnector.go:74: Try read last 31 bytes
+INFO : 2020/12/18 16:00:00.599390 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:00:00.599593 clients.go:49: Undefined client with name blabu
+INFO : 2020/12/18 16:00:00.599697 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:00:00.604198 database.go:127: New ID is 1
+INFO : 2020/12/18 16:00:00.607907 privateC2cFunc.go:262: Registered new client blabu with ID 1
+INFO : 2020/12/18 16:00:00.609164 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:00:00.612918 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:00:00.613180 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:00:00.613295 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 16:00:00.613375 privateC2cFunc.go:341: Close all connection for client blabu: 1 in session 1
+INFO : 2020/12/18 16:00:00.613429 c2c.go:190: Close client blabu with id 1 in session 1
+INFO : 2020/12/18 16:00:10.549207 main.go:90: Create new connection from 127.0.0.1:58592
+INFO : 2020/12/18 16:00:10.549845 bidirectConnector.go:74: Try read last 31 bytes
+INFO : 2020/12/18 16:00:10.550117 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:00:10.550251 privateC2cFunc.go:245: Client with name blabu already exist
+WARN : 2020/12/18 16:00:10.550282 bidirectConnector.go:61: Client with name blabu already exicst in session 2
+INFO : 2020/12/18 16:00:10.550324 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:00:10.550362 bidirectMain.go:74: Close bidirectMain and client logic in session 2
+INFO : 2020/12/18 16:00:10.550378 privateC2cFunc.go:341: Close all connection for client : 0 in session 2
+ERROR: 2020/12/18 16:00:10.550392 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 16:00:10.550409 c2c.go:190: Close client  with id 0 in session 2
+INFO : 2020/12/18 16:00:38.315592 main.go:90: Create new connection from 127.0.0.1:58596
+INFO : 2020/12/18 16:00:38.315881 bidirectConnector.go:74: Try read last 64 bytes
+INFO : 2020/12/18 16:00:38.316100 privateC2cFunc.go:226: Client blabu init by name ok
+INFO : 2020/12/18 16:00:38.316174 bidirectMain.go:67: Received data from client logic fine
+WARN : 2020/12/18 16:00:38.316476 clients.go:49: Undefined client with name 
+WARN : 2020/12/18 16:00:38.316515 privateC2cFunc.go:88: Undefined client with name 
+WARN : 2020/12/18 16:00:38.316559 bidirectConnector.go:61: Undefined target client
+INFO : 2020/12/18 16:00:38.316619 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:00:38.316650 bidirectMain.go:74: Close bidirectMain and client logic in session 3
+INFO : 2020/12/18 16:00:38.316700 privateC2cFunc.go:341: Close all connection for client blabu: 1 in session 3
+INFO : 2020/12/18 16:00:38.316733 c2c.go:190: Close client blabu with id 1 in session 3
+INFO : 2020/12/18 16:00:38.316819 c2c.go:166: Read channel is closed for device 0 name blabu for session 3
+INFO : 2020/12/18 16:00:38.316881 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 16:00:38.316924 bidirectMain.go:64: EOF
+INFO : 2020/12/18 16:01:13.559792 main.go:90: Create new connection from 127.0.0.1:58598
+INFO : 2020/12/18 16:01:13.559939 bidirectConnector.go:74: Try read last 64 bytes
+INFO : 2020/12/18 16:01:13.560098 privateC2cFunc.go:226: Client blabu init by name ok
+INFO : 2020/12/18 16:01:13.560148 bidirectMain.go:67: Received data from client logic fine
+WARN : 2020/12/18 16:01:13.560627 clients.go:49: Undefined client with name 
+WARN : 2020/12/18 16:01:13.560677 privateC2cFunc.go:88: Undefined client with name 
+WARN : 2020/12/18 16:01:13.560707 bidirectConnector.go:61: Undefined target client
+INFO : 2020/12/18 16:01:13.560765 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:01:13.560819 bidirectMain.go:74: Close bidirectMain and client logic in session 4
+INFO : 2020/12/18 16:01:13.560845 privateC2cFunc.go:341: Close all connection for client blabu: 1 in session 4
+INFO : 2020/12/18 16:01:13.560870 c2c.go:190: Close client blabu with id 1 in session 4
+INFO : 2020/12/18 16:01:13.560899 c2c.go:166: Read channel is closed for device 0 name blabu for session 4
+INFO : 2020/12/18 16:01:13.560955 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 16:01:13.560984 bidirectMain.go:64: EOF
+INFO : 2020/12/18 16:01:37.220766 main.go:90: Create new connection from 127.0.0.1:58600
+INFO : 2020/12/18 16:01:37.220916 bidirectConnector.go:74: Try read last 64 bytes
+INFO : 2020/12/18 16:01:37.221039 privateC2cFunc.go:226: Client blabu init by name ok
+INFO : 2020/12/18 16:01:37.221079 bidirectMain.go:67: Received data from client logic fine
+WARN : 2020/12/18 16:01:37.222014 clients.go:49: Undefined client with name 
+WARN : 2020/12/18 16:01:37.222070 privateC2cFunc.go:88: Undefined client with name 
+WARN : 2020/12/18 16:01:37.222094 bidirectConnector.go:61: Undefined target client
+INFO : 2020/12/18 16:01:37.222142 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:01:37.222186 bidirectMain.go:74: Close bidirectMain and client logic in session 5
+INFO : 2020/12/18 16:01:37.222209 privateC2cFunc.go:341: Close all connection for client blabu: 1 in session 5
+INFO : 2020/12/18 16:01:37.222234 c2c.go:190: Close client blabu with id 1 in session 5
+INFO : 2020/12/18 16:04:30.308916 main.go:90: Create new connection from 127.0.0.1:58604
+INFO : 2020/12/18 16:04:30.309137 bidirectConnector.go:74: Try read last 64 bytes
+INFO : 2020/12/18 16:04:30.309299 privateC2cFunc.go:226: Client blabu init by name ok
+INFO : 2020/12/18 16:04:30.309368 bidirectMain.go:67: Received data from client logic fine
+WARN : 2020/12/18 16:04:30.309639 clients.go:49: Undefined client with name 
+WARN : 2020/12/18 16:04:30.309667 privateC2cFunc.go:88: Undefined client with name 
+WARN : 2020/12/18 16:04:30.309687 bidirectConnector.go:61: Undefined target client
+INFO : 2020/12/18 16:04:30.309733 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:04:30.309782 bidirectMain.go:74: Close bidirectMain and client logic in session 6
+INFO : 2020/12/18 16:04:30.309809 privateC2cFunc.go:341: Close all connection for client blabu: 1 in session 6
+INFO : 2020/12/18 16:04:30.309828 c2c.go:190: Close client blabu with id 1 in session 6
+INFO : 2020/12/18 16:04:30.309881 c2c.go:166: Read channel is closed for device 0 name blabu for session 6
+INFO : 2020/12/18 16:04:30.309919 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 16:04:30.309953 bidirectMain.go:64: EOF
+INFO : 2020/12/18 16:04:56.789186 main.go:90: Create new connection from 127.0.0.1:58606
+INFO : 2020/12/18 16:04:56.789437 bidirectConnector.go:74: Try read last 64 bytes
+INFO : 2020/12/18 16:04:56.789663 privateC2cFunc.go:226: Client blabu init by name ok
+INFO : 2020/12/18 16:04:56.789750 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:06:56.790169 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:06:56.790230 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:08:56.790557 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:08:56.790696 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:10:56.791012 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:10:56.791232 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:12:56.791329 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:12:56.791468 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:14:56.791736 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:14:56.791882 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:16:56.792132 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:16:56.792318 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:18:56.792441 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:18:56.792590 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:20:56.792879 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:20:56.793127 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:22:56.793206 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:22:56.793367 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:24:56.793591 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:24:56.793791 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:26:56.793876 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:26:56.794072 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:28:56.794334 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:28:56.794475 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:30:56.795182 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:30:56.796570 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:32:56.795270 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:32:56.795329 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:34:56.795521 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:34:56.795625 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:35:13.466992 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:35:13.467202 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:35:13.467314 bidirectMain.go:74: Close bidirectMain and client logic in session 7
+INFO : 2020/12/18 16:35:13.467395 privateC2cFunc.go:341: Close all connection for client blabu: 1 in session 7
+INFO : 2020/12/18 16:35:13.467458 c2c.go:190: Close client blabu with id 1 in session 7
+INFO : 2020/12/18 16:35:47.173505 main.go:90: Create new connection from 127.0.0.1:58676
+INFO : 2020/12/18 16:35:47.173726 bidirectConnector.go:74: Try read last 32 bytes
+INFO : 2020/12/18 16:35:47.173812 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:35:47.173907 clients.go:49: Undefined client with name blabuh
+INFO : 2020/12/18 16:35:47.173948 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:35:47.174015 database.go:90: Max ID finded 2, [1 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:35:47.176459 database.go:127: New ID is 2
+INFO : 2020/12/18 16:35:47.178817 privateC2cFunc.go:262: Registered new client blabuh with ID 2
+INFO : 2020/12/18 16:35:47.178908 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:35:47.181124 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:35:47.181225 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:35:47.181279 bidirectMain.go:74: Close bidirectMain and client logic in session 8
+INFO : 2020/12/18 16:35:47.181309 privateC2cFunc.go:341: Close all connection for client blabuh: 2 in session 8
+INFO : 2020/12/18 16:35:47.181373 c2c.go:190: Close client blabuh with id 2 in session 8
+INFO : 2020/12/18 16:35:52.733970 main.go:90: Create new connection from 127.0.0.1:58678
+INFO : 2020/12/18 16:35:52.734191 bidirectConnector.go:74: Try read last 29 bytes
+INFO : 2020/12/18 16:35:52.734383 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:35:52.734533 clients.go:49: Undefined client with name bla
+INFO : 2020/12/18 16:35:52.734610 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:35:52.734705 database.go:90: Max ID finded 3, [2 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:35:52.737216 database.go:127: New ID is 3
+INFO : 2020/12/18 16:35:52.739558 privateC2cFunc.go:262: Registered new client bla with ID 3
+INFO : 2020/12/18 16:35:52.739665 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:35:52.742426 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:35:52.742539 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:35:52.742588 bidirectMain.go:74: Close bidirectMain and client logic in session 9
+INFO : 2020/12/18 16:35:52.742642 privateC2cFunc.go:341: Close all connection for client bla: 3 in session 9
+INFO : 2020/12/18 16:35:52.742685 c2c.go:190: Close client bla with id 3 in session 9
+INFO : 2020/12/18 16:35:52.742787 c2c.go:166: Read channel is closed for device 0 name bla for session 9
+INFO : 2020/12/18 16:35:52.742826 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 16:35:52.742855 bidirectMain.go:64: EOF
+INFO : 2020/12/18 16:36:01.310765 main.go:90: Create new connection from 127.0.0.1:58680
+INFO : 2020/12/18 16:36:01.311563 bidirectConnector.go:74: Try read last 64 bytes
+INFO : 2020/12/18 16:36:01.311752 privateC2cFunc.go:226: Client blabu init by name ok
+INFO : 2020/12/18 16:36:01.311821 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:38:01.313518 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:38:01.313719 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:40:01.313971 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:40:01.314085 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:42:01.314228 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:42:01.314338 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:44:01.314487 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:44:01.314599 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:46:01.314942 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:46:01.315123 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:48:01.315415 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:48:01.315568 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:50:01.315713 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:50:01.315905 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:50:12.693956 main.go:90: Create new connection from 192.168.31.95:51004
+INFO : 2020/12/18 16:52:01.316054 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:52:01.316236 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:54:01.316405 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:54:01.316561 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:54:20.370437 main.go:90: Create new connection from 192.168.31.95:51008
+INFO : 2020/12/18 16:54:20.370766 bidirectConnector.go:74: Try read last 64 bytes
+WARN : 2020/12/18 16:54:20.370959 clients.go:49: Undefined client with name Vasya
+WARN : 2020/12/18 16:54:20.371017 privateC2cFunc.go:184: Undefined client with name Vasya
+WARN : 2020/12/18 16:54:20.371114 bidirectConnector.go:61: Undefined client with name Vasya
+INFO : 2020/12/18 16:54:20.371214 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:54:20.371283 bidirectMain.go:74: Close bidirectMain and client logic in session 11
+INFO : 2020/12/18 16:54:20.371338 privateC2cFunc.go:341: Close all connection for client : 0 in session 11
+ERROR: 2020/12/18 16:54:20.371407 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 16:54:20.371467 c2c.go:190: Close client  with id 0 in session 11
+INFO : 2020/12/18 16:54:37.573844 main.go:90: Create new connection from 192.168.31.95:51010
+INFO : 2020/12/18 16:54:37.574568 bidirectConnector.go:74: Try read last 65 bytes
+INFO : 2020/12/18 16:54:37.574818 privateC2cFunc.go:226: Client blabuh init by name ok
+INFO : 2020/12/18 16:54:37.574891 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:54:57.641295 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:54:57.641431 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:55:17.610569 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:55:17.610623 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:55:37.679909 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:55:37.680128 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:55:57.648572 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:55:57.648762 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:56:01.316689 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:56:01.316797 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:56:17.616468 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:56:17.616601 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:56:37.689336 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:56:37.689550 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:56:45.803903 main.go:90: Create new connection from 127.0.0.1:58722
+INFO : 2020/12/18 16:56:45.804249 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 16:56:45.804378 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:56:45.804472 clients.go:49: Undefined client with name b
+INFO : 2020/12/18 16:56:45.804521 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:56:45.804580 database.go:90: Max ID finded 4, [3 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:56:45.807122 database.go:127: New ID is 4
+INFO : 2020/12/18 16:56:45.809809 privateC2cFunc.go:262: Registered new client b with ID 4
+INFO : 2020/12/18 16:56:45.809996 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:56:45.811875 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:56:45.811948 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:56:45.811974 bidirectMain.go:74: Close bidirectMain and client logic in session 13
+INFO : 2020/12/18 16:56:45.811995 privateC2cFunc.go:341: Close all connection for client b: 4 in session 13
+INFO : 2020/12/18 16:56:45.812034 c2c.go:190: Close client b with id 4 in session 13
+INFO : 2020/12/18 16:56:45.812105 c2c.go:166: Read channel is closed for device 0 name b for session 13
+INFO : 2020/12/18 16:56:45.812126 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 16:56:45.812145 bidirectMain.go:64: EOF
+INFO : 2020/12/18 16:56:52.036920 main.go:90: Create new connection from 127.0.0.1:58724
+INFO : 2020/12/18 16:56:52.037293 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 16:56:52.037437 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:56:52.037603 clients.go:49: Undefined client with name a
+INFO : 2020/12/18 16:56:52.037670 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:56:52.037786 database.go:90: Max ID finded 5, [4 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:56:52.040373 database.go:127: New ID is 5
+INFO : 2020/12/18 16:56:52.042915 privateC2cFunc.go:262: Registered new client a with ID 5
+INFO : 2020/12/18 16:56:52.042976 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:56:52.043908 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:56:52.043969 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:56:52.043998 bidirectMain.go:74: Close bidirectMain and client logic in session 14
+INFO : 2020/12/18 16:56:52.044036 privateC2cFunc.go:341: Close all connection for client a: 5 in session 14
+INFO : 2020/12/18 16:56:52.044063 c2c.go:190: Close client a with id 5 in session 14
+INFO : 2020/12/18 16:56:56.412087 main.go:90: Create new connection from 127.0.0.1:58726
+INFO : 2020/12/18 16:56:56.412272 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 16:56:56.412345 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:56:56.412405 clients.go:49: Undefined client with name c
+INFO : 2020/12/18 16:56:56.412429 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:56:56.412466 database.go:90: Max ID finded 6, [5 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:56:56.414937 database.go:127: New ID is 6
+INFO : 2020/12/18 16:56:56.417351 privateC2cFunc.go:262: Registered new client c with ID 6
+INFO : 2020/12/18 16:56:56.417449 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:56:56.417801 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:56:56.417878 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:56:56.417917 bidirectMain.go:74: Close bidirectMain and client logic in session 15
+INFO : 2020/12/18 16:56:56.417947 privateC2cFunc.go:341: Close all connection for client c: 6 in session 15
+INFO : 2020/12/18 16:56:56.417972 c2c.go:190: Close client c with id 6 in session 15
+INFO : 2020/12/18 16:56:57.581335 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:56:57.581473 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:56:59.876143 main.go:90: Create new connection from 127.0.0.1:58728
+INFO : 2020/12/18 16:56:59.876432 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 16:56:59.876538 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:56:59.876654 clients.go:49: Undefined client with name d
+INFO : 2020/12/18 16:56:59.876695 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:56:59.876789 database.go:90: Max ID finded 7, [6 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:56:59.879310 database.go:127: New ID is 7
+INFO : 2020/12/18 16:56:59.896651 privateC2cFunc.go:262: Registered new client d with ID 7
+INFO : 2020/12/18 16:56:59.896729 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:56:59.896919 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:56:59.896975 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:56:59.896998 bidirectMain.go:74: Close bidirectMain and client logic in session 16
+INFO : 2020/12/18 16:56:59.897012 privateC2cFunc.go:341: Close all connection for client d: 7 in session 16
+INFO : 2020/12/18 16:56:59.897025 c2c.go:190: Close client d with id 7 in session 16
+INFO : 2020/12/18 16:57:03.324120 main.go:90: Create new connection from 127.0.0.1:58730
+INFO : 2020/12/18 16:57:03.324370 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 16:57:03.324451 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:57:03.324562 clients.go:49: Undefined client with name e
+INFO : 2020/12/18 16:57:03.324603 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:57:03.324683 database.go:90: Max ID finded 8, [7 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:57:03.327301 database.go:127: New ID is 8
+INFO : 2020/12/18 16:57:03.346128 privateC2cFunc.go:262: Registered new client e with ID 8
+INFO : 2020/12/18 16:57:03.346639 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:57:03.347225 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:57:03.347325 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:57:03.347370 bidirectMain.go:74: Close bidirectMain and client logic in session 17
+INFO : 2020/12/18 16:57:03.347401 privateC2cFunc.go:341: Close all connection for client e: 8 in session 17
+INFO : 2020/12/18 16:57:03.347434 c2c.go:190: Close client e with id 8 in session 17
+INFO : 2020/12/18 16:57:03.347521 c2c.go:166: Read channel is closed for device 0 name e for session 17
+INFO : 2020/12/18 16:57:03.347558 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 16:57:03.347582 bidirectMain.go:64: EOF
+INFO : 2020/12/18 16:57:06.227597 main.go:90: Create new connection from 127.0.0.1:58732
+INFO : 2020/12/18 16:57:06.227853 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 16:57:06.227958 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:57:06.228095 clients.go:49: Undefined client with name f
+INFO : 2020/12/18 16:57:06.228146 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:57:06.228209 database.go:90: Max ID finded 9, [8 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:57:06.230763 database.go:127: New ID is 9
+INFO : 2020/12/18 16:57:06.233346 privateC2cFunc.go:262: Registered new client f with ID 9
+INFO : 2020/12/18 16:57:06.233434 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:57:06.234102 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:57:06.234195 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:57:06.234254 bidirectMain.go:74: Close bidirectMain and client logic in session 18
+INFO : 2020/12/18 16:57:06.234332 privateC2cFunc.go:341: Close all connection for client f: 9 in session 18
+INFO : 2020/12/18 16:57:06.234399 c2c.go:190: Close client f with id 9 in session 18
+INFO : 2020/12/18 16:57:11.492225 main.go:90: Create new connection from 127.0.0.1:58734
+INFO : 2020/12/18 16:57:11.492524 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 16:57:11.492619 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:57:11.492741 clients.go:49: Undefined client with name g
+INFO : 2020/12/18 16:57:11.492791 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:57:11.492857 database.go:90: Max ID finded 10, [9 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:57:11.495222 database.go:127: New ID is 10
+INFO : 2020/12/18 16:57:11.497922 privateC2cFunc.go:262: Registered new client g with ID a
+INFO : 2020/12/18 16:57:11.498003 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:57:11.498229 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:57:11.498289 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:57:11.498315 bidirectMain.go:74: Close bidirectMain and client logic in session 19
+INFO : 2020/12/18 16:57:11.498334 privateC2cFunc.go:341: Close all connection for client g: a in session 19
+INFO : 2020/12/18 16:57:11.498371 c2c.go:190: Close client g with id 10 in session 19
+INFO : 2020/12/18 16:57:14.859884 main.go:90: Create new connection from 127.0.0.1:58736
+INFO : 2020/12/18 16:57:14.860315 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 16:57:14.860441 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 16:57:14.860576 clients.go:49: Undefined client with name h
+INFO : 2020/12/18 16:57:14.860639 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 16:57:14.860725 database.go:90: Max ID finded 11, [10 0 0 0 0 0 0 0]
+INFO : 2020/12/18 16:57:14.863446 database.go:127: New ID is 11
+INFO : 2020/12/18 16:57:14.865798 privateC2cFunc.go:262: Registered new client h with ID b
+INFO : 2020/12/18 16:57:14.865856 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:57:14.866050 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 16:57:14.866105 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:57:14.866128 bidirectMain.go:74: Close bidirectMain and client logic in session 20
+INFO : 2020/12/18 16:57:14.866156 privateC2cFunc.go:341: Close all connection for client h: b in session 20
+INFO : 2020/12/18 16:57:14.866175 c2c.go:190: Close client h with id 11 in session 20
+INFO : 2020/12/18 16:57:17.623428 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:57:17.623538 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:57:37.694215 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:57:37.694362 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:57:57.664613 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:57:57.664803 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:58:01.317059 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 16:58:01.317292 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:58:17.632461 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:58:17.632709 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:58:37.598055 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:58:37.598261 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:58:54.139906 main.go:90: Create new connection from 127.0.0.1:58738
+INFO : 2020/12/18 16:58:54.140230 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 16:58:54.140485 privateC2cFunc.go:226: Client a init by name ok
+INFO : 2020/12/18 16:58:54.140568 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:58:57.668392 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:58:57.668537 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:59:14.728462 main.go:90: Create new connection from 127.0.0.1:58740
+INFO : 2020/12/18 16:59:14.728579 bidirectConnector.go:74: Try read last 77 bytes
+WARN : 2020/12/18 16:59:14.728778 c2cCashe.go:39: Can not append new abonent with diviceID 5 abonent exist
+WARN : 2020/12/18 16:59:14.728818 privateC2cFunc.go:210: Abonent exist
+INFO : 2020/12/18 16:59:14.728847 privateC2cFunc.go:211: Credentials is equals TODO destroy old session with client a id: 5
+ERROR: 2020/12/18 16:59:14.728889 privateC2cFunc.go:213: Can not create abonent in session 22
+WARN : 2020/12/18 16:59:14.728916 bidirectConnector.go:61: Can not create abonent in session 22
+INFO : 2020/12/18 16:59:14.728958 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:59:14.728996 bidirectMain.go:74: Close bidirectMain and client logic in session 22
+INFO : 2020/12/18 16:59:14.729039 privateC2cFunc.go:341: Close all connection for client : 0 in session 22
+ERROR: 2020/12/18 16:59:14.729065 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 16:59:14.729092 c2c.go:190: Close client  with id 0 in session 22
+INFO : 2020/12/18 16:59:17.636477 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:59:17.636637 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:59:26.876445 main.go:90: Create new connection from 127.0.0.1:58744
+INFO : 2020/12/18 16:59:26.876747 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 16:59:26.876958 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 16:59:26.877054 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:59:35.502461 main.go:90: Create new connection from 127.0.0.1:58746
+INFO : 2020/12/18 16:59:35.503056 bidirectConnector.go:74: Try read last 77 bytes
+WARN : 2020/12/18 16:59:35.503365 c2cCashe.go:39: Can not append new abonent with diviceID 5 abonent exist
+WARN : 2020/12/18 16:59:35.503403 privateC2cFunc.go:210: Abonent exist
+INFO : 2020/12/18 16:59:35.503447 privateC2cFunc.go:211: Credentials is equals TODO destroy old session with client a id: 5
+ERROR: 2020/12/18 16:59:35.503478 privateC2cFunc.go:213: Can not create abonent in session 24
+WARN : 2020/12/18 16:59:35.503641 bidirectConnector.go:61: Can not create abonent in session 24
+INFO : 2020/12/18 16:59:35.503694 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:59:35.503735 bidirectMain.go:74: Close bidirectMain and client logic in session 24
+INFO : 2020/12/18 16:59:35.503780 privateC2cFunc.go:341: Close all connection for client : 0 in session 24
+ERROR: 2020/12/18 16:59:35.503822 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 16:59:35.503869 c2c.go:190: Close client  with id 0 in session 24
+INFO : 2020/12/18 16:59:37.604268 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:59:37.604413 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:59:40.172227 main.go:90: Create new connection from 127.0.0.1:58748
+INFO : 2020/12/18 16:59:40.172540 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 16:59:40.172820 privateC2cFunc.go:226: Client c init by name ok
+INFO : 2020/12/18 16:59:40.172943 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:59:55.780161 main.go:90: Create new connection from 127.0.0.1:58750
+INFO : 2020/12/18 16:59:55.780615 bidirectConnector.go:74: Try read last 77 bytes
+WARN : 2020/12/18 16:59:55.781042 c2cCashe.go:39: Can not append new abonent with diviceID 6 abonent exist
+WARN : 2020/12/18 16:59:55.781112 privateC2cFunc.go:210: Abonent exist
+INFO : 2020/12/18 16:59:55.781165 privateC2cFunc.go:211: Credentials is equals TODO destroy old session with client c id: 6
+ERROR: 2020/12/18 16:59:55.781209 privateC2cFunc.go:213: Can not create abonent in session 26
+WARN : 2020/12/18 16:59:55.781250 bidirectConnector.go:61: Can not create abonent in session 26
+INFO : 2020/12/18 16:59:55.781339 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 16:59:55.781382 bidirectMain.go:74: Close bidirectMain and client logic in session 26
+INFO : 2020/12/18 16:59:55.781420 privateC2cFunc.go:341: Close all connection for client : 0 in session 26
+ERROR: 2020/12/18 16:59:55.781456 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 16:59:55.781498 c2c.go:190: Close client  with id 0 in session 26
+INFO : 2020/12/18 16:59:57.676205 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 16:59:57.676388 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 16:59:59.868381 main.go:90: Create new connection from 127.0.0.1:58752
+INFO : 2020/12/18 16:59:59.868693 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 16:59:59.869010 privateC2cFunc.go:226: Client d init by name ok
+INFO : 2020/12/18 16:59:59.869118 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:00:01.317465 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:00:01.317636 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:00:10.300265 main.go:90: Create new connection from 127.0.0.1:58754
+INFO : 2020/12/18 17:00:10.300692 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:00:10.300969 privateC2cFunc.go:226: Client e init by name ok
+INFO : 2020/12/18 17:00:10.301090 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:00:17.643097 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:00:17.643378 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:00:21.528974 main.go:90: Create new connection from 127.0.0.1:58758
+INFO : 2020/12/18 17:00:21.529103 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:00:21.529260 privateC2cFunc.go:226: Client g init by name ok
+INFO : 2020/12/18 17:00:21.529311 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:00:37.611821 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:00:37.611937 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:00:38.380639 main.go:90: Create new connection from 127.0.0.1:58760
+INFO : 2020/12/18 17:00:38.380911 bidirectConnector.go:74: Try read last 62 bytes
+INFO : 2020/12/18 17:00:38.381177 privateC2cFunc.go:226: Client bla init by name ok
+INFO : 2020/12/18 17:00:38.381267 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:00:54.141341 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:00:54.141484 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:00:57.681824 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:00:57.681976 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:02.187357 bidirectConnector.go:67: Error when try read from conection: read tcp 192.168.31.10:3555->192.168.31.95:51010: read: connection reset by peer
+INFO : 2020/12/18 17:01:02.187529 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:01:02.187629 bidirectMain.go:74: Close bidirectMain and client logic in session 12
+INFO : 2020/12/18 17:01:02.187690 privateC2cFunc.go:341: Close all connection for client blabuh: 2 in session 12
+INFO : 2020/12/18 17:01:02.187751 c2c.go:190: Close client blabuh with id 2 in session 12
+INFO : 2020/12/18 17:01:12.855057 main.go:90: Create new connection from 192.168.31.95:51024
+INFO : 2020/12/18 17:01:12.855801 bidirectConnector.go:74: Try read last 65 bytes
+INFO : 2020/12/18 17:01:12.855934 privateC2cFunc.go:226: Client blabuh init by name ok
+INFO : 2020/12/18 17:01:12.855981 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:13.963088 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:13.963148 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:14.884945 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:14.885177 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:15.912109 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:15.912248 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:16.933484 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:16.933599 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:17.957550 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:17.957761 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:18.878624 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:18.878744 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:19.902675 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:19.902826 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:20.926269 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:20.926432 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:21.951129 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:21.951213 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:22.974570 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:22.975228 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:23.896534 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:23.896627 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:24.152339 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:01:24.152516 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:01:24.152598 bidirectMain.go:74: Close bidirectMain and client logic in session 10
+INFO : 2020/12/18 17:01:24.152738 privateC2cFunc.go:341: Close all connection for client blabu: 1 in session 10
+INFO : 2020/12/18 17:01:24.152804 c2c.go:190: Close client blabu with id 1 in session 10
+INFO : 2020/12/18 17:01:24.920457 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:24.920562 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:25.944164 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:25.944367 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:26.877931 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:01:26.878071 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:26.971431 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:26.971516 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:27.889743 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:27.889825 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:28.913754 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:28.914077 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:29.940467 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:29.940546 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:30.965857 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:30.965963 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:31.918141 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:31.918322 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:32.910263 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:32.911506 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:33.932033 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:33.932115 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:34.955647 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:34.955811 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:35.879604 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:35.879744 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:36.901148 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:36.901384 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:37.926572 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:37.926676 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:38.864018 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:38.864094 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:39.972921 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:39.973018 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:40.173932 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:01:40.174364 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:40.895415 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:40.895652 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:41.918092 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:41.918267 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:42.942308 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:42.942507 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:43.974275 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:43.974408 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:44.890618 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:44.890732 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:45.911776 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:45.912054 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:46.938731 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:46.938850 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:47.960064 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:47.960193 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:48.881611 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:48.881808 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:49.905526 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:49.905665 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:50.935805 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:50.935913 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:52.055766 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:52.055885 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:52.877761 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:52.877823 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:53.899263 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:53.899373 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:54.926215 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:54.926430 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:55.947112 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:55.947258 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:56.868772 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:56.868970 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:57.893316 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:57.893426 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:58.917649 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:58.917806 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:59.869784 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:01:59.870022 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:01:59.943745 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:01:59.943810 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:00.972968 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:00.973212 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:01.886438 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:01.886521 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:02.910819 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:02.910906 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:03.934749 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:03.934868 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:04.958444 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:04.958606 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:05.880101 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:05.880236 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:06.904096 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:06.904231 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:07.928254 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:07.928333 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:08.953267 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:08.953460 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:09.976203 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:09.976297 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:10.301760 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:02:10.301919 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:10.897612 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:10.897723 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:12.024855 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:12.024969 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:12.945599 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:12.945719 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:13.972117 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:13.972368 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:14.997092 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:14.997233 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:15.135154 main.go:90: Create new connection from 127.0.0.1:58768
+INFO : 2020/12/18 17:02:15.135842 bidirectConnector.go:74: Try read last 64 bytes
+INFO : 2020/12/18 17:02:15.135977 privateC2cFunc.go:226: Client blabu init by name ok
+INFO : 2020/12/18 17:02:15.136043 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:15.915291 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:15.915397 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:16.941415 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:16.941482 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:17.894743 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:02:17.895776 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:02:17.895919 bidirectMain.go:74: Close bidirectMain and client logic in session 23
+INFO : 2020/12/18 17:02:17.896129 privateC2cFunc.go:341: Close all connection for client b: 4 in session 23
+INFO : 2020/12/18 17:02:17.896231 c2c.go:190: Close client b with id 4 in session 23
+INFO : 2020/12/18 17:02:17.963612 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:17.963664 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:18.884329 main.go:90: Create new connection from 127.0.0.1:58770
+INFO : 2020/12/18 17:02:18.884616 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:02:18.884895 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 17:02:18.885070 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:18.885365 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:18.885489 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:19.910294 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:19.910408 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:20.678915 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:02:20.679143 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:02:20.679236 bidirectMain.go:74: Close bidirectMain and client logic in session 30
+INFO : 2020/12/18 17:02:20.679309 privateC2cFunc.go:341: Close all connection for client bla: 3 in session 30
+INFO : 2020/12/18 17:02:20.679387 c2c.go:190: Close client bla with id 3 in session 30
+INFO : 2020/12/18 17:02:20.679589 c2c.go:166: Read channel is closed for device 0 name bla for session 30
+INFO : 2020/12/18 17:02:20.679673 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 17:02:20.679745 bidirectMain.go:64: EOF
+INFO : 2020/12/18 17:02:20.937103 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:20.937156 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:21.356334 main.go:90: Create new connection from 127.0.0.1:58772
+INFO : 2020/12/18 17:02:21.356597 bidirectConnector.go:74: Try read last 62 bytes
+INFO : 2020/12/18 17:02:21.356828 privateC2cFunc.go:226: Client bla init by name ok
+INFO : 2020/12/18 17:02:21.356916 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:21.530212 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:02:21.530351 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:21.957746 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:21.957835 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:22.879231 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:22.879358 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:23.342840 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:02:23.342977 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:02:23.343203 bidirectMain.go:74: Close bidirectMain and client logic in session 28
+INFO : 2020/12/18 17:02:23.343227 privateC2cFunc.go:341: Close all connection for client e: 8 in session 28
+INFO : 2020/12/18 17:02:23.343250 c2c.go:190: Close client e with id 8 in session 28
+INFO : 2020/12/18 17:02:23.902277 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:23.902368 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:23.921203 main.go:90: Create new connection from 127.0.0.1:58774
+INFO : 2020/12/18 17:02:23.921383 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:02:23.921505 privateC2cFunc.go:226: Client e init by name ok
+INFO : 2020/12/18 17:02:23.921546 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:24.926500 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:24.926659 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:25.950527 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:25.950629 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:26.814987 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:02:26.815209 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:02:26.815331 bidirectMain.go:74: Close bidirectMain and client logic in session 29
+INFO : 2020/12/18 17:02:26.815402 privateC2cFunc.go:341: Close all connection for client g: a in session 29
+INFO : 2020/12/18 17:02:26.815507 c2c.go:190: Close client g with id 10 in session 29
+INFO : 2020/12/18 17:02:26.815703 c2c.go:166: Read channel is closed for device 0 name g for session 29
+INFO : 2020/12/18 17:02:26.815775 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 17:02:26.815839 bidirectMain.go:64: EOF
+INFO : 2020/12/18 17:02:26.974597 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:26.974700 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:27.828258 main.go:90: Create new connection from 127.0.0.1:58776
+INFO : 2020/12/18 17:02:27.828553 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:02:27.828791 privateC2cFunc.go:226: Client g init by name ok
+INFO : 2020/12/18 17:02:27.828874 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:27.896393 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:27.896467 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:29.023952 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:29.024130 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:29.944368 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:29.944549 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:30.519342 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:02:30.519503 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:02:30.519581 bidirectMain.go:74: Close bidirectMain and client logic in session 34
+INFO : 2020/12/18 17:02:30.519636 privateC2cFunc.go:341: Close all connection for client bla: 3 in session 34
+INFO : 2020/12/18 17:02:30.519694 c2c.go:190: Close client bla with id 3 in session 34
+INFO : 2020/12/18 17:02:30.519864 c2c.go:166: Read channel is closed for device 0 name bla for session 34
+INFO : 2020/12/18 17:02:30.519920 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 17:02:30.519971 bidirectMain.go:64: EOF
+INFO : 2020/12/18 17:02:31.070278 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:31.070385 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:31.153975 main.go:90: Create new connection from 127.0.0.1:58778
+INFO : 2020/12/18 17:02:31.154210 bidirectConnector.go:74: Try read last 62 bytes
+INFO : 2020/12/18 17:02:31.154413 privateC2cFunc.go:226: Client bla init by name ok
+INFO : 2020/12/18 17:02:31.154492 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:32.043058 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:32.043167 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:32.913473 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:32.913634 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:34.040153 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:34.040284 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:34.969902 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:34.970042 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:35.883398 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:35.883500 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:36.910164 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:36.910357 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:37.931247 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:37.931390 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:38.955253 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:38.955520 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:39.877852 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:39.877920 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:40.902935 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:40.903143 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:41.925590 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:41.925804 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:42.948978 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:42.949081 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:43.974245 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:43.974362 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:44.894681 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:44.894856 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:46.026952 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:46.027065 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:46.942555 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:46.942664 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:47.967214 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:47.967331 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:48.891067 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:48.891249 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:49.912251 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:49.912416 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:50.936113 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:50.936219 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:51.960033 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:51.960198 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:52.881664 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:52.881849 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:53.905825 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:53.905942 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:54.141653 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:02:54.141876 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:54.930796 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:54.930929 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:55.953994 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:55.954094 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:55.990750 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:02:55.990886 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:02:55.990934 bidirectMain.go:74: Close bidirectMain and client logic in session 32
+INFO : 2020/12/18 17:02:55.990975 privateC2cFunc.go:341: Close all connection for client blabu: 1 in session 32
+INFO : 2020/12/18 17:02:55.991003 c2c.go:190: Close client blabu with id 1 in session 32
+INFO : 2020/12/18 17:02:56.875364 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:56.875503 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:57.899248 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:57.899391 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:58.923493 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:58.923671 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:02:59.947358 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:02:59.947450 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:00.971342 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:00.971476 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:01.893299 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:01.893368 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:02.917588 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:02.919820 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:03.941267 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:03.941376 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:04.968613 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:04.968745 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:05.886906 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:05.887109 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:06.912135 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:06.912411 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:07.937233 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:07.937521 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:08.959294 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:08.959501 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:09.880200 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:09.880321 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:10.903959 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:10.904068 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:11.928168 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:11.928341 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:13.058330 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:13.058434 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:13.976318 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:13.976436 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:14.897944 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:14.898004 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:15.922294 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:15.922434 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:16.946474 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:16.946625 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:17.969780 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:17.969894 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:18.892214 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:18.892347 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:19.918479 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:19.918581 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:20.939864 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:20.939948 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:21.966481 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:21.966699 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:22.886171 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:22.886257 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:23.909070 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:23.909145 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:25.035544 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:25.035653 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:25.956905 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:25.957017 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:26.879195 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:26.879439 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:27.282670 main.go:90: Create new connection from 127.0.0.1:58780
+INFO : 2020/12/18 17:03:27.282787 bidirectConnector.go:74: Try read last 64 bytes
+INFO : 2020/12/18 17:03:27.282904 privateC2cFunc.go:226: Client blabu init by name ok
+INFO : 2020/12/18 17:03:27.282945 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:27.903738 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:27.904078 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:28.927519 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:28.927708 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:29.284300 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:29.284470 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:29.953869 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:29.953982 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:29.981855 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:03:29.981966 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:03:29.982009 bidirectMain.go:74: Close bidirectMain and client logic in session 37
+INFO : 2020/12/18 17:03:29.982048 privateC2cFunc.go:341: Close all connection for client bla: 3 in session 37
+INFO : 2020/12/18 17:03:29.982074 c2c.go:190: Close client bla with id 3 in session 37
+INFO : 2020/12/18 17:03:30.974960 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:30.975080 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:31.218256 main.go:90: Create new connection from 127.0.0.1:58782
+INFO : 2020/12/18 17:03:31.218392 bidirectConnector.go:74: Try read last 62 bytes
+INFO : 2020/12/18 17:03:31.218489 privateC2cFunc.go:226: Client bla init by name ok
+INFO : 2020/12/18 17:03:31.218523 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:31.284402 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:31.284458 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:31.896373 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:31.896492 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:32.887016 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:03:32.887234 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:03:32.887350 bidirectMain.go:74: Close bidirectMain and client logic in session 33
+INFO : 2020/12/18 17:03:32.887398 privateC2cFunc.go:341: Close all connection for client b: 4 in session 33
+INFO : 2020/12/18 17:03:32.887419 c2c.go:190: Close client b with id 4 in session 33
+INFO : 2020/12/18 17:03:32.923086 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:32.923993 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:33.219358 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:33.219440 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:33.284622 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:33.284691 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:33.657592 main.go:90: Create new connection from 127.0.0.1:58784
+INFO : 2020/12/18 17:03:33.657836 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:03:33.658078 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 17:03:33.658167 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:33.944380 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:33.944472 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:34.968699 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:34.968845 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:35.110326 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:03:35.110518 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:03:35.110585 bidirectMain.go:74: Close bidirectMain and client logic in session 36
+INFO : 2020/12/18 17:03:35.110635 privateC2cFunc.go:341: Close all connection for client g: a in session 36
+INFO : 2020/12/18 17:03:35.110690 c2c.go:190: Close client g with id 10 in session 36
+INFO : 2020/12/18 17:03:35.219545 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:35.219647 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:35.284775 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:35.284840 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:35.658727 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:35.658828 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:35.891078 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:35.891187 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:35.931291 main.go:90: Create new connection from 127.0.0.1:58786
+INFO : 2020/12/18 17:03:35.931505 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:03:35.931684 privateC2cFunc.go:226: Client g init by name ok
+INFO : 2020/12/18 17:03:35.931742 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:36.913934 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:36.914228 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:37.219804 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:37.219859 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:37.284963 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:37.285043 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:37.430292 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:03:37.430419 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:03:37.430492 bidirectMain.go:74: Close bidirectMain and client logic in session 35
+INFO : 2020/12/18 17:03:37.430618 privateC2cFunc.go:341: Close all connection for client e: 8 in session 35
+INFO : 2020/12/18 17:03:37.430680 c2c.go:190: Close client e with id 8 in session 35
+INFO : 2020/12/18 17:03:37.659070 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:37.659219 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:37.932504 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:37.932560 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:37.938503 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:37.938552 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:38.353683 main.go:90: Create new connection from 127.0.0.1:58788
+INFO : 2020/12/18 17:03:38.353890 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:03:38.354110 privateC2cFunc.go:226: Client e init by name ok
+INFO : 2020/12/18 17:03:38.354195 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:38.962102 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:38.962231 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:39.220329 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:39.220450 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:39.285473 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:39.285901 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:39.659409 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:39.659501 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:39.883643 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:39.883753 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:39.933640 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:39.933844 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:40.174931 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:03:40.175170 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:40.354819 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:40.355073 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:40.907475 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:40.907590 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:41.220542 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:41.220651 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:41.285699 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:41.286022 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:41.659750 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:41.659873 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:41.932355 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:41.932537 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:41.933650 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:41.933726 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:42.355142 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:42.355239 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:42.955750 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:42.956127 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:43.220710 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:43.220787 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:43.286120 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:43.286186 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:43.660107 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:43.660260 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:43.877135 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:43.877270 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:43.934538 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:43.934818 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:44.311012 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:03:44.311151 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:03:44.311220 bidirectMain.go:74: Close bidirectMain and client logic in session 27
+INFO : 2020/12/18 17:03:44.311279 privateC2cFunc.go:341: Close all connection for client d: 7 in session 27
+INFO : 2020/12/18 17:03:44.311343 c2c.go:190: Close client d with id 7 in session 27
+INFO : 2020/12/18 17:03:44.355415 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:44.355495 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:44.901414 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:44.901590 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:45.159765 main.go:90: Create new connection from 127.0.0.1:58790
+INFO : 2020/12/18 17:03:45.159883 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:03:45.160033 privateC2cFunc.go:226: Client d init by name ok
+INFO : 2020/12/18 17:03:45.160077 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:45.220878 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:45.220944 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:45.286520 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:45.286693 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:45.660310 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:45.660405 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:45.925397 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:45.925458 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:45.934648 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:45.934826 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:46.355598 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:46.355701 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:46.949326 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:46.949512 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:47.160549 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:03:47.160756 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:47.221059 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:47.221115 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:47.287001 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:47.287280 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:47.660459 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:47.660519 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:47.934860 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:47.934936 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:47.973180 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:47.973653 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:48.356055 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:48.356204 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:48.535420 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:03:48.535602 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:03:48.535706 bidirectMain.go:74: Close bidirectMain and client logic in session 25
+INFO : 2020/12/18 17:03:48.535762 privateC2cFunc.go:341: Close all connection for client c: 6 in session 25
+INFO : 2020/12/18 17:03:48.535813 c2c.go:190: Close client c with id 6 in session 25
+INFO : 2020/12/18 17:03:48.894651 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:48.894724 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:49.160821 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:03:49.160923 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:49.221254 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:49.221337 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:49.287051 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:49.287112 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:49.516360 main.go:90: Create new connection from 127.0.0.1:58792
+INFO : 2020/12/18 17:03:49.516696 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:03:49.516996 privateC2cFunc.go:226: Client c init by name ok
+INFO : 2020/12/18 17:03:49.517116 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:49.660827 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:49.660935 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:49.918728 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:49.918786 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:49.935049 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:49.935100 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:50.356480 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:50.356666 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:50.943007 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:50.943116 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:51.161214 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:03:51.161315 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:51.221443 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:51.221515 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:51.287241 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:51.287302 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:51.517823 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:03:51.517881 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:51.661234 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:51.661348 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:51.935335 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:51.935393 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:51.967651 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:51.967961 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:52.356814 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:52.356970 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:52.888508 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:52.888632 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:53.161416 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:03:53.161498 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:53.222094 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:53.222260 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:53.287566 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:53.287642 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:53.518209 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:03:53.518293 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:53.661497 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:53.661599 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:53.912434 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:53.912487 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:53.918308 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 17:03:53.918378 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 17:03:53.918401 bidirectMain.go:74: Close bidirectMain and client logic in session 21
+INFO : 2020/12/18 17:03:53.918418 privateC2cFunc.go:341: Close all connection for client a: 5 in session 21
+INFO : 2020/12/18 17:03:53.918437 c2c.go:190: Close client a with id 5 in session 21
+INFO : 2020/12/18 17:03:53.935523 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:53.935577 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:54.357109 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:54.357267 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:54.938154 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:54.938269 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:55.161835 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:03:55.161940 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:55.222137 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:55.222189 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:55.259823 main.go:90: Create new connection from 127.0.0.1:58794
+INFO : 2020/12/18 17:03:55.259986 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 17:03:55.260215 privateC2cFunc.go:226: Client a init by name ok
+INFO : 2020/12/18 17:03:55.260271 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:55.287691 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:55.287758 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:55.518392 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:03:55.518456 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:55.661758 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:55.661854 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:55.862868 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:55.862969 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:55.935813 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:55.935870 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:56.357538 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:56.357678 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:56.882034 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:56.882177 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:57.162033 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:03:57.162087 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:57.222339 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:57.222397 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:57.260902 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:03:57.261213 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:57.287860 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:57.287931 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:57.518658 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:03:57.518715 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:57.662189 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:57.662300 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:57.906418 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:57.906550 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:57.935980 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:57.936042 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:58.357963 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:03:58.358107 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:58.930091 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:58.930355 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:59.162445 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:03:59.162642 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:59.222525 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:03:59.222584 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:59.262029 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:03:59.262324 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:59.288033 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:03:59.288092 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:59.519006 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:03:59.519109 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:59.662499 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:03:59.662592 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:59.936197 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:03:59.936254 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:03:59.954555 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:03:59.954606 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:00.358154 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:00.358245 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:00.877092 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:00.877240 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:01.162551 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:01.162610 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:01.222709 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:01.222779 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:01.261973 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:01.262035 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:01.288155 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:01.288220 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:01.519127 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:01.519182 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:01.662660 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:01.662739 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:01.904880 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:01.904985 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:01.936386 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:01.936466 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:02.358385 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:02.358466 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:02.923572 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:02.923628 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:03.162896 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:03.163168 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:03.222978 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:03.223052 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:03.262174 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:03.262255 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:03.288328 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:03.288389 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:03.519636 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:03.520275 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:03.662942 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:03.663010 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:03.936605 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:03.936684 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:03.948125 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:03.948287 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:04.358848 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:04.359116 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:04.971590 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:04.971671 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:05.163325 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:05.163607 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:05.223236 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:05.223338 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:05.262334 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:05.262411 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:05.288490 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:05.288558 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:05.519660 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:05.519734 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:05.663275 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:05.663377 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:05.893394 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:05.893529 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:05.936770 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:05.936839 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:06.359258 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:06.359507 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:06.920905 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:06.921053 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:07.163474 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:07.163545 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:07.223966 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:07.224276 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:07.262889 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:07.263036 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:07.288660 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:07.288730 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:07.519857 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:07.519931 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:07.663430 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:07.663490 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:07.937041 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:07.937109 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:07.941481 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:07.941598 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:08.359665 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:08.359800 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:08.968088 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:08.968270 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:09.163837 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:09.164039 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:09.224077 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:09.224144 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:09.263331 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:09.263423 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:09.288831 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:09.288944 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:09.520118 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:09.520170 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:09.663676 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:09.663795 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:09.886787 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:09.886865 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:09.937506 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:09.937677 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:10.360118 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:10.360385 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:10.911003 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:10.911117 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:11.164023 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:11.164098 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:11.224307 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:11.224393 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:11.263653 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:11.263884 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:11.289033 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:11.289143 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:11.520489 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:11.520649 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:11.664112 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:11.664211 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:11.935125 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:11.935200 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:11.937655 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:11.937832 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:12.360528 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:12.360648 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:12.958999 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:12.959117 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:13.164433 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:13.164558 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:13.224524 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:13.224602 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:13.264035 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:13.264152 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:13.289190 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:13.289259 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:13.520608 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:13.520671 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:13.664395 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:13.664629 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:13.880923 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:13.881074 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:13.937871 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:13.938014 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:14.360794 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:14.360923 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:14.907339 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:14.907438 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:15.164589 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:15.164701 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:15.224752 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:15.224827 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:15.264497 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:15.264690 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:15.289350 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:15.289427 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:15.520826 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:15.520911 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:15.664799 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:15.664913 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:15.928690 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:15.928748 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:15.938182 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:15.938344 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:16.361267 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:16.361416 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:16.953335 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:16.953650 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:17.165746 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:17.165830 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:17.224921 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:17.224993 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:17.264777 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:17.265027 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:17.290676 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:17.290776 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:17.521418 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:17.521582 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:17.666046 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:17.668434 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:17.875158 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:17.875229 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:17.939895 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:17.939967 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:18.361585 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:18.361773 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:18.898499 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:18.898651 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:19.166025 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:19.166169 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:19.225348 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:19.225460 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:19.264876 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:19.264951 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:19.290790 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:19.290944 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:19.521811 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:19.522028 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:19.665915 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:19.666172 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:19.924543 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:19.924808 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:19.940346 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:19.940634 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:20.361888 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:20.362002 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:20.946349 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:20.946490 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:21.166257 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:21.166356 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:21.225614 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:21.225737 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:21.265155 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:21.265246 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:21.290936 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:21.290992 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:21.521945 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:21.521997 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:21.666206 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:21.666438 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:21.940714 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:21.940912 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:21.970406 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:21.970571 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:22.362429 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:22.362592 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:22.891876 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:22.892166 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:23.166375 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:23.166489 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:23.225724 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:23.225781 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:23.265381 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:23.265987 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:23.292075 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:23.292546 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:23.522141 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:23.522276 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:23.666782 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:23.667536 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:23.916786 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:23.918927 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:23.941161 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:23.941416 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:24.362779 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:24.362910 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:24.939758 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:24.939850 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:25.166737 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:25.166894 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:25.226065 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:25.226148 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:25.265788 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:25.265954 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:25.292161 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:25.292246 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:25.522451 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:25.522536 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:25.666916 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:25.666998 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:25.941413 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:25.941551 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:25.964072 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:25.964145 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:26.363024 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:26.363108 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:26.888324 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:26.888386 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:27.166857 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:27.166929 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:27.226419 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:27.226533 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:27.265915 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:27.265988 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:27.292602 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:27.292778 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:27.522890 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:27.523026 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:27.667302 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:27.667487 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:27.909192 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:27.909299 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:27.941595 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:27.941662 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:28.363488 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:28.363632 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:28.933518 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:28.933670 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:29.167080 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:29.167148 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:29.226731 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:29.226823 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:29.266106 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:29.266163 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:29.292707 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:29.292779 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:29.523088 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:29.523145 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:29.667499 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:29.667560 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:29.941957 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:29.942042 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:29.957425 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:29.957610 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:30.363897 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:30.364075 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:30.880900 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:30.881058 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:31.167498 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:31.167686 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:31.227253 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:31.227514 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:31.266424 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:31.266529 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:31.293002 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:31.293085 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:31.523427 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:31.523525 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:31.667943 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:31.668158 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:31.903213 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:31.903430 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:31.942207 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:31.942295 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:32.364314 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:32.364555 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:32.927160 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:32.927272 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:33.167925 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:33.168135 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:33.227533 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:33.227635 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:33.266561 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:33.266628 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:33.293144 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:33.293209 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:33.523663 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:33.523722 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:33.668316 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:33.668490 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:33.942599 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:33.942720 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:33.953722 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:33.953808 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:34.364448 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:34.364502 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:34.975667 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:34.975813 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:35.168206 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:35.168299 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:35.227922 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:35.228131 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:35.266873 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:35.266955 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:35.293688 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:35.293872 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:35.524027 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:35.524142 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:35.668739 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:35.668847 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:35.901726 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:35.901834 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:35.943056 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:35.943186 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:36.364891 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:36.365015 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:36.924358 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:36.924474 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:37.168436 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:37.168527 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:37.228101 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:37.228221 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:37.267136 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:37.267202 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:37.294117 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:37.294195 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:37.524142 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:37.524205 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:37.669121 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:37.669237 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:37.943270 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:37.943369 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:37.945250 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:37.945812 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:38.365386 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:38.365707 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:38.972297 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:38.972448 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:39.168889 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:39.169059 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:39.228244 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:39.228426 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:39.267732 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:39.267956 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:39.294204 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:39.294265 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:39.524308 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:39.524363 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:39.669859 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:39.670103 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:39.890091 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:39.890625 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:39.943455 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:39.943539 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:40.365444 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:40.365507 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:40.914736 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:40.914817 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:41.169245 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:41.169377 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:41.228612 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:41.228702 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:41.267909 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:41.268048 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:41.294408 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:41.294466 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:41.524563 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:41.524655 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:41.669835 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:41.669895 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:41.938873 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:41.939012 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:41.943703 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:41.943845 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:42.365763 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:42.365872 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:42.962381 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:42.962480 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:43.169799 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:43.170020 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:43.228915 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:43.229045 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:43.268234 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:43.268473 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:43.294571 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:43.294639 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:43.524873 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:43.524955 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:43.670201 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:43.670319 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:43.887308 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:43.887467 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:43.944082 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:43.944204 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:44.366098 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:44.366278 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:44.907931 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:44.908102 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:45.170092 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:45.170236 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:45.229255 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:45.229347 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:45.268478 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:45.268584 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:45.294768 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:45.294831 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:45.525038 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:45.525117 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:45.670598 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:45.670894 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:45.932162 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:45.932288 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:45.944204 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:45.944288 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:46.366209 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:46.366275 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:46.957186 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:46.957291 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:47.170475 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:47.170615 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:47.229471 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:47.229588 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:47.268756 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:47.268858 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:47.294948 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:47.295006 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:47.525275 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:47.525335 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:47.670856 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:47.670941 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:47.877487 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:47.877617 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:47.944490 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:47.944615 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:48.366599 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:48.366798 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:48.905558 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:48.905658 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:49.170509 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:49.170638 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:49.229748 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:49.229854 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:49.268971 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:49.269064 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:49.295137 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:49.295191 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:49.525486 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:49.525555 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:49.671296 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:49.671416 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:49.926209 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:49.926315 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:49.944601 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:49.944691 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:50.366885 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:50.366986 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:51.051832 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:51.051883 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:51.170841 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:51.170947 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:51.230056 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:51.230219 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:51.269482 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:51.269688 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:51.295341 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:51.295402 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:51.525652 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:51.525707 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:51.671918 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:51.672037 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:51.945012 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:51.945229 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:51.973457 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:51.973524 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:52.367213 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:52.367325 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:52.895247 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:52.895414 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:53.171046 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:53.171198 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:53.230311 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:53.230411 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:53.269897 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:53.270077 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:53.295518 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:53.295579 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:53.525846 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:53.525910 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:53.672397 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:53.672546 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:53.921079 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:53.921195 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:53.945610 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:53.945850 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:54.367552 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:54.367706 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:54.945633 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:54.945798 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:55.171366 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:55.171492 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:55.230607 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:55.230744 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:55.270230 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:55.270404 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:55.295734 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:55.295798 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:55.526172 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:55.526257 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:55.672878 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:55.673221 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:55.945703 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:55.945803 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:55.970339 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:55.970396 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:56.367677 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:56.367744 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:56.891624 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:56.891788 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:57.171695 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:57.171831 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:57.230870 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:57.230982 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:57.270314 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:57.270394 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:57.296342 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:57.296587 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:57.526428 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:57.526492 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:57.672945 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:57.673037 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:57.913837 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:57.913991 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:57.945917 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:57.946004 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:58.368182 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:04:58.368378 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:58.862970 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:58.863176 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:59.172161 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:04:59.172294 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:59.231053 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:04:59.231133 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:59.270802 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:04:59.271047 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:59.296461 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:04:59.296545 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:59.526644 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:04:59.526725 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:59.673228 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:04:59.673315 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:59.946116 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:04:59.946182 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:04:59.960755 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:04:59.960932 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:00.368553 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:00.368703 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:00.883032 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:00.883086 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:01.172443 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:01.172607 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:01.231229 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:01.231300 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:01.270882 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:01.270951 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:01.296584 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:01.296649 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:01.526841 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:01.526914 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:01.673640 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:01.673780 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:01.906292 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:01.906380 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:01.946342 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:01.946421 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:02.368960 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:02.369068 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:02.933557 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:02.933668 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:03.172593 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:03.172659 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:03.231518 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:03.231630 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:03.271109 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:03.271215 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:03.296732 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:03.296787 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:03.527193 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:03.527283 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:03.673911 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:03.674037 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:03.946808 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:03.946960 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:03.954623 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:03.954789 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:04.369388 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:04.369531 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:04.877833 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:04.877977 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:05.172942 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:05.173035 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:05.231684 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:05.231759 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:05.271421 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:05.271484 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:05.297013 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:05.297081 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:05.527345 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:05.527412 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:05.674763 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:05.675034 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:05.899982 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:05.900114 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:05.947049 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:05.947125 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:06.369589 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:06.369726 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:06.924113 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:06.924172 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:07.173365 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:07.173545 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:07.231936 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:07.232090 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:07.271641 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:07.271730 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:07.297618 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:07.297784 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:07.527727 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:07.527817 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:07.674790 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:07.674874 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:07.947442 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:07.947564 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:07.954241 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:07.954444 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:08.369967 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:08.370088 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:08.972078 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:08.972220 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:09.173763 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:09.174016 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:09.232225 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:09.232333 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:09.271890 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:09.271984 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:09.297810 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:09.297892 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:09.527935 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:09.527986 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:09.674981 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:09.675041 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:09.893587 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:09.893744 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:09.947752 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:09.947891 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:10.370381 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:10.370616 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:10.917913 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:10.918051 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:11.173922 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:11.173999 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:11.232393 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:11.232476 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:11.272144 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:11.272226 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:11.298036 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:11.298098 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:11.528232 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:11.528362 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:11.675433 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:11.675536 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:11.943735 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:11.943846 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:11.947824 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:11.947882 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:12.370796 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:12.370942 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:12.968105 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:12.968277 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:13.174234 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:13.174354 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:13.232720 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:13.232831 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:13.272305 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:13.272392 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:13.298226 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:13.298277 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:13.528479 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:13.528608 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:13.675726 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:13.675851 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:13.887219 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:13.887370 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:13.948241 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:13.948331 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:14.371175 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:14.371319 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:14.911289 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:14.911400 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:15.174498 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:15.174668 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:15.233014 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:15.233128 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:15.272559 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:15.272666 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:15.298379 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:15.298458 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:15.528820 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:15.528948 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:15.676108 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:15.676200 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:15.936603 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:15.936714 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:15.948360 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:15.948426 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:16.371613 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:16.371732 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:16.959450 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:16.959691 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:17.174647 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:17.174704 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:17.233333 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:17.233441 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:17.272710 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:17.272775 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:17.298548 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:17.298605 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:17.529005 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:17.529086 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:17.676413 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:17.676547 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:17.880788 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:17.880854 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:17.948802 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:17.948929 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:18.371996 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:18.372149 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:18.905915 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:18.906061 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:19.175020 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:19.175129 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:19.233647 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:19.233774 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:19.273021 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:19.273109 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:19.298825 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:19.298910 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:19.529170 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:19.529245 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:19.676791 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:19.676920 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:19.929651 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:19.929831 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:19.949802 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:19.949989 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:20.372375 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:20.372478 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:20.952817 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:20.952942 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:21.175172 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:21.175232 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:21.233972 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:21.234104 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:21.273530 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:21.273759 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:21.298987 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:21.299040 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:21.529409 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:21.529493 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:21.677085 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:21.677226 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:21.878122 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:21.878307 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:21.949982 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:21.950118 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:22.372759 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:22.372959 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:22.898419 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:22.898524 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:23.175539 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:23.175637 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:23.234354 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:23.234444 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:23.273648 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:23.273730 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:23.299156 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:23.299214 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:23.529564 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:23.529623 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:23.677432 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:23.677529 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:23.949286 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:23.949460 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:23.950436 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:23.950552 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:24.373189 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:24.373443 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:24.946735 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:24.946845 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:25.175865 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:25.176031 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:25.234618 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:25.234767 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:25.274228 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:25.274403 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:25.299324 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:25.299388 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:25.529735 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:25.529809 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:25.677761 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:25.677905 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:25.950844 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:25.950985 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:25.970453 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:25.970544 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:26.373536 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:26.373709 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:26.892308 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:26.892419 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:27.176262 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:27.176403 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:27.235026 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:27.235162 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:27.274370 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:27.274438 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:27.299505 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:27.299565 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:27.530042 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:27.530132 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:27.678029 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:27.678108 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:27.918752 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:27.918822 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:27.951010 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:27.951079 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:28.373907 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:28.374016 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:28.940717 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:28.940862 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:29.176650 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:29.176768 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:29.235329 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:29.235418 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:29.274612 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:29.274702 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:29.299683 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:29.299764 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:29.530274 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:29.530362 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:29.678399 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:29.678540 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:29.951332 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:29.951419 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:29.964323 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:29.964547 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:30.374261 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:30.374406 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:30.885814 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:30.885940 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:31.176926 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:31.177086 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:31.235628 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:31.235737 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:31.275009 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:31.275101 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:31.299898 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:31.299958 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:31.530520 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:31.530573 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:31.678809 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:31.678946 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:31.909632 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:31.909697 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:31.951648 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:31.951751 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:32.374634 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:32.374769 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:32.935009 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:32.935123 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:33.177111 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:33.177167 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:33.235976 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:33.236116 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:33.275255 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:33.275360 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:33.300098 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:33.300161 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:33.530761 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:33.530825 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:33.679025 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:33.679122 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:33.951842 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:33.951895 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:33.957932 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:33.957993 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:34.374907 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:34.375156 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:34.879675 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:34.879801 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:35.177512 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:35.177613 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:35.236285 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:35.236374 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:35.275630 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:35.275760 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:35.300258 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:35.300349 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:35.531008 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:35.531066 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:35.679449 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:35.679584 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:35.903552 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:35.903619 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:35.952148 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:35.952222 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:36.375213 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:36.375322 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:36.927619 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:36.927776 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:37.177936 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:37.178069 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:37.236575 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:37.236712 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:37.275864 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:37.275963 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:37.300427 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:37.300482 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:37.531382 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:37.531526 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:37.679865 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:37.680069 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:37.952538 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:37.952729 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:37.954273 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:37.954357 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:38.375498 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:38.375604 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:38.975804 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:38.975963 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:39.178367 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:39.178517 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:39.236837 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:39.236935 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:39.276071 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:39.276156 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:39.300592 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:39.300656 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:39.531550 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:39.531644 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:39.680165 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:39.680248 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:39.897084 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:39.897138 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:39.952905 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:39.952996 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:40.375847 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:40.376126 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:40.921083 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:40.921337 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:41.178715 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:41.178844 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:41.237075 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:41.237174 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:41.276350 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:41.276518 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:41.300800 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:41.300875 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:41.531719 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:41.531777 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:41.680512 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:41.680677 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:41.945440 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:41.945572 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:41.953169 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:41.953379 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:42.376169 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:42.376418 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:42.969583 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:42.969860 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:43.178870 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:43.178953 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:43.237561 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:43.237793 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:43.277116 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:43.277375 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:43.301174 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:43.301268 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:43.531950 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:43.532016 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:43.680755 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:43.680843 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:43.891474 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:43.891629 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:43.953475 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:43.953590 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:44.376583 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:44.376818 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:44.916117 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:44.916307 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:45.179155 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:45.179296 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:45.237690 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:45.237790 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:45.277626 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:45.277836 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:45.301434 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:45.301487 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:45.532140 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:45.532202 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:45.681017 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:45.681099 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:45.938696 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:45.938819 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:45.953726 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:45.953819 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:46.377216 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:46.379288 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:46.962671 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:46.962777 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:47.179515 privateC2cFunc.go:37: Ping command from device d, id 7
+INFO : 2020/12/18 17:05:47.179704 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:47.237904 privateC2cFunc.go:37: Ping command from device bla, id 3
+INFO : 2020/12/18 17:05:47.237968 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:47.277768 privateC2cFunc.go:37: Ping command from device a, id 5
+INFO : 2020/12/18 17:05:47.277862 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:47.301598 privateC2cFunc.go:37: Ping command from device blabu, id 1
+INFO : 2020/12/18 17:05:47.301662 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:47.532433 privateC2cFunc.go:37: Ping command from device c, id 6
+INFO : 2020/12/18 17:05:47.532524 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:47.681285 privateC2cFunc.go:37: Ping command from device b, id 4
+INFO : 2020/12/18 17:05:47.681426 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:47.885238 privateC2cFunc.go:37: Ping command from device blabuh, id 2
+INFO : 2020/12/18 17:05:47.885327 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:47.954095 privateC2cFunc.go:37: Ping command from device g, id a
+INFO : 2020/12/18 17:05:47.954191 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:48.377433 privateC2cFunc.go:37: Ping command from device e, id 8
+INFO : 2020/12/18 17:05:48.377563 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 17:05:48.496114 main.go:121: Operation system kill server
+INFO : 2020/12/18 17:05:48.496428 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
