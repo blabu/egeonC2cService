@@ -40,6 +40,7 @@ func (c *BidirectSession) readHandler(
 	defer close(stopConnectionFromClient)
 	maxPacketSize := uint64(conf.Config.MaxPacketSize) * 1024
 	bufferdReader := bufio.NewReader(*Connect)
+	var allPacketSize int
 	for {
 		select {
 		case <-stopConnectionFromNet:
@@ -52,12 +53,13 @@ func (c *BidirectSession) readHandler(
 				log.Warning(err.Error())
 				return
 			}
-			if uint64(leftBytes+len(c.netReq)) > maxPacketSize {
+			allPacketSize = leftBytes + len(c.netReq)
+			if uint64(allPacketSize) > maxPacketSize {
 				log.Errorf("Message %s is to big %d and max %d", string(c.netReq), leftBytes+len(c.netReq), maxPacketSize)
 				return
 			}
 			if leftBytes == 0 { // Если все байты получены
-				if _, err := c.logic.Write(c.netReq); err != nil {
+				if _, err := c.logic.Write(c.netReq[0:allPacketSize]); err != nil {
 					log.Warning(err.Error())
 					return // TODO Выполнять обработку ошибок
 				}
@@ -67,7 +69,7 @@ func (c *BidirectSession) readHandler(
 					log.Infof("Error when try read from conection: %v", err)
 					return
 				}
-				c.netReq = c.netReq[:0]
+				c.netReq = append(c.netReq[:0], c.netReq[allPacketSize:]...)
 				c.netReq = append(c.netReq, buff...)
 				continue
 			}
