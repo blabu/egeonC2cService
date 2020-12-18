@@ -49,7 +49,7 @@ type Connection struct {
 
 //IConnection - интерфейс работы с соединением
 type IConnection interface {
-	Read() (from string, command uint16, data []byte)
+	Read() (from string, command uint16, data []byte, err error)
 	Write(to string, command uint16, data []byte) error
 	Close() error
 }
@@ -58,11 +58,10 @@ type IConnection interface {
 func NewC2cConnection(conn net.Conn, cnf ConfConnection) (IConnection, error) {
 	p := parser.CreateEmptyParser(cnf.СhunkSize)
 	res := &Connection{
-		conn:        conn,
-		cnf:         cnf,
-		p:           p,
-		stop:        make(chan bool),
-		receiveBuff: make([]byte, p.GetMinimumDataSize(), cnf.СhunkSize),
+		conn: conn,
+		cnf:  cnf,
+		p:    p,
+		stop: make(chan bool),
 	}
 	if cnf.IsNew {
 		err := res.register()
@@ -105,32 +104,30 @@ func (c *Connection) Write(to string, command uint16, data []byte) error {
 	return err
 }
 
-func (c *Connection) Read() (from string, command uint16, data []byte) {
+func (c *Connection) Read() (from string, command uint16, data []byte, err error) {
 	reader := bufio.NewReader(c.conn)
-	n, err := reader.Read(c.receiveBuff)
+	receiveBuff, err := c.p.ReadPacketHeader(reader)
 	if err != nil {
-		return "", 0, nil
+		return "", 0, nil, err
 	}
-	c.receiveBuff = c.receiveBuff[:n]
-	restSize, err := c.p.IsFullReceiveMsg(c.receiveBuff)
+	restSize, err := c.p.IsFullReceiveMsg(receiveBuff)
 	if err != nil {
-		return "", 0, nil
+		return "", 0, nil, err
 	}
-	if restSize != 0 {
+	if restSize > 0 {
 		resp := make([]byte, restSize)
 		c.conn.SetReadDeadline(time.Now().Add(time.Duration(restSize) * 10 * time.Millisecond))
 		_, err := io.ReadFull(reader, resp)
 		if err != nil {
-			return "", 0, nil
+			return "", 0, nil, err
 		}
-		c.receiveBuff = append(c.receiveBuff, resp...)
+		receiveBuff = append(receiveBuff, resp...)
 	}
-	m, err := c.p.ParseMessage(c.receiveBuff)
+	m, err := c.p.ParseMessage(receiveBuff)
 	if err != nil {
-		return "", 0, nil
+		return "", 0, nil, err
 	}
-	c.receiveBuff = c.receiveBuff[:c.p.GetMinimumDataSize()]
-	return m.From, m.Command, m.Content
+	return m.From, m.Command, m.Content, nil
 }
 
 func (c *Connection) register() error {
@@ -139,7 +136,10 @@ func (c *Connection) register() error {
 	if err := c.Write("0", dto.RegisterCOMMAND, []byte(signature)); err != nil {
 		return err
 	}
-	_, cmd, data := c.Read()
+	_, cmd, data, err := c.Read()
+	if err != nil {
+		return err
+	}
 	if data == nil || cmd != dto.RegisterCOMMAND {
 		return errors.New("Can not register. Error while read")
 	}
@@ -155,7 +155,10 @@ func (c *Connection) init() error {
 	if err := c.Write("0", dto.InitByNameCOMMAND, []byte(salt+";"+signature)); err != nil {
 		return err
 	}
-	_, cmd, data := c.Read()
+	_, cmd, data, err := c.Read()
+	if err != nil {
+		return err
+	}
 	if data == nil || cmd != dto.InitByNameCOMMAND {
 		return errors.New("Can not init. Errors while read")
 	}
@@ -169,7 +172,10 @@ func (c *Connection) connect(name string) error {
 	if err := c.Write(name, dto.ConnectByNameCOMMAND, nil); err != nil {
 		return err
 	}
-	_, cmd, data := c.Read()
+	_, cmd, data, err := c.Read()
+	if err != nil {
+		return err
+	}
 	if data == nil || cmd != dto.ConnectByNameCOMMAND {
 		return errors.New("Can not connect. Errors while read")
 	}

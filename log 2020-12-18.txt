@@ -1,0 +1,5 @@
+INFO : 2020/12/18 14:32:31.284784 database.go:52: Init database finished fine
+ERROR: 2020/12/18 14:32:31.285262 main.go:103: read ./: is a directory
+INFO : 2020/12/18 14:32:31.286019 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 14:32:48.419076 main.go:121: Operation system kill server
+INFO : 2020/12/18 14:32:48.419540 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection

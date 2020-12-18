@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"io"
 	"strconv"
 
 	"github.com/blabu/egeonC2cService/dto"
@@ -80,12 +81,12 @@ func (c2c *C2cParser) FormMessage(msg dto.Message) ([]byte, error) {
 
 // return position for start header or/and error if not find header or parsing error
 func (c2c *C2cParser) parseHeader(data []byte) (int, error) {
-	if data == nil || len(data) < c2c.GetMinimumDataSize() {
-		return 0, errors.New("Input is empty, nothing to be parsed")
+	if data == nil {
+		return -1, errors.New("Input is empty, nothing to be parsed")
 	}
 	index := bytes.IndexByte(data, '$')
 	if index < 0 {
-		return 0, fmt.Errorf("Undefined start symb of package %s", string(data))
+		return -1, fmt.Errorf("Undefined start symb of package %s", string(data))
 	}
 	if !bytes.EqualFold(data[index:index+2], beginHeader) {
 		return index, fmt.Errorf("Package must be started from %s", beginHeader)
@@ -169,7 +170,21 @@ func (c2c *C2cParser) IsFullReceiveMsg(data []byte) (int, error) {
 	return c2c.head.contentSize + c2c.head.headerSize - len(data), nil
 }
 
-//GetMinimumDataSize - вернт минимальный валидный пакет в рамках протокола c2c
-func (c2c *C2cParser) GetMinimumDataSize() int {
-	return len(beginHeader) + headerParamSize*(len(delim)+1) + len(endHeader)
+//ReadPacketHeader - Читает заголовок пакета из входного Reader-а.
+// Ждет либо окончания потока io.Eof или любой другой ошибки, которую вернет Reader,
+// либо конца заголовка в данном случае ###
+func (c2c *C2cParser) ReadPacketHeader(r io.Reader) ([]byte, error) {
+	buf := make([]byte, len(beginHeader)+headerParamSize*(len(delim)+1)+len(endHeader))
+	header := make([]byte, 0, len(buf))
+	for {
+		if n, err := r.Read(buf); err == nil {
+			header = append(header, buf[:n]...)
+		} else {
+			return nil, err
+		}
+		if bytes.Index(header, endHeader) >= 0 {
+			break
+		}
+	}
+	return header, nil
 }

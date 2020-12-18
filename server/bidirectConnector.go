@@ -61,14 +61,14 @@ func (c *BidirectSession) readHandler(
 					log.Warning(err.Error())
 					return // TODO Выполнять обработку ошибок
 				}
-				c.netReq = c.netReq[:minHeaderSize]
 				(*Connect).SetReadDeadline(time.Now().Add(c.Duration))
-				numb, err := bufferdReader.Read(c.netReq) // Читаем!!!
+				buff, err := p.ReadPacketHeader(bufferdReader)
 				if err != nil {
 					log.Infof("Error when try read from conection: %v", err)
 					return
 				}
-				c.netReq = c.netReq[:numb]
+				c.netReq = c.netReq[:0]
+				c.netReq = append(c.netReq, buff...)
 				continue
 			}
 			log.Tracef("Try read last %d bytes", leftBytes)
