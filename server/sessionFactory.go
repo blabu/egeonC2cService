@@ -20,6 +20,7 @@ func StartNewSession(conn net.Conn, dT time.Duration) {
 			netReq:   buf,
 		}
 		s.Run(conn, p)
+		s.Tm.Stop()
 		s.logic.Close()
 	}
 	conn.Close()
