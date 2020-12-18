@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"unsafe"
 
+	"github.com/blabu/c2cLib/dto"
 	cf "github.com/blabu/egeonC2cService/configuration"
 	"github.com/blabu/egeonC2cService/data"
-	"github.com/blabu/c2cLib/dto"
 	log "github.com/blabu/egeonC2cService/logWrapper"
 
 	bolt "go.etcd.io/bbolt"
@@ -80,9 +80,9 @@ func (d *boltC2cDatabase) getMaxID(T data.ClientType) uint64 {
 		log.Error(err.Error())
 		return 0
 	}
-	maxID := uint64(T)<<(64-unsafe.Sizeof(T)) | 1
-	buf := make([]byte, 2)
-	binary.LittleEndian.PutUint16(buf, uint16(T))
+	maxID := uint64(T)<<(64-(unsafe.Sizeof(T)*8)) | 1
+	buf := make([]byte, 8)
+	binary.LittleEndian.PutUint64(buf, uint64(T))
 	if bID := buck.Get(buf); bID != nil {
 		mxID := bytesToUint64(bID)
 		if mxID >= maxID {

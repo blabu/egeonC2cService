@@ -1,5 +1,7 @@
-github.com/blabu/c2cLib v0.1.1 h1:pFOa9c2U8FaMYEx3nu8oWAk1tX8M4t3iA6qm7O1/Syc=
-github.com/blabu/c2cLib v0.1.1/go.mod h1:deD9nxnZwuJlRWq4jm1RWkWlVvX+Qjo4YSjjQ74UoeQ=
+github.com/blabu/c2cLib v0.1.4 h1:xD1J1YivU4E7Gd3ZyguNt5hQeUOuK4OPfYZtn65aKAw=
+github.com/blabu/c2cLib v0.1.4/go.mod h1:deD9nxnZwuJlRWq4jm1RWkWlVvX+Qjo4YSjjQ74UoeQ=
+github.com/blabu/c2cLib v0.1.5 h1:QknW5BNhI7kV7v9cJOq0iCrHJvD5Mqdbh+GqPDnmM9I=
+github.com/blabu/c2cLib v0.1.5/go.mod h1:deD9nxnZwuJlRWq4jm1RWkWlVvX+Qjo4YSjjQ74UoeQ=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/google/logger v1.1.0 h1:saB74Etb4EAJNH3z74CVbCKk75hld/8T0CsXKetWCwM=

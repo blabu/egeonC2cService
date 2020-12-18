@@ -3,3 +3,474 @@ ERROR: 2020/12/18 17:29:48.649057 main.go:103: read ./: is a directory
 INFO : 2020/12/18 17:29:48.649589 main.go:56: Start TCP server at :3555
 INFO : 2020/12/18 17:29:50.432178 main.go:121: Operation system kill server
 INFO : 2020/12/18 17:29:50.432664 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 20:13:47.139947 database.go:52: Init database finished fine
+ERROR: 2020/12/18 20:13:47.140076 main.go:103: read ./: is a directory
+INFO : 2020/12/18 20:13:47.140232 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 20:14:06.379541 main.go:90: Create new connection from 127.0.0.1:34468
+INFO : 2020/12/18 20:14:06.379752 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 20:14:06.379838 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 20:14:06.379891 privateC2cFunc.go:245: Client with name a already exist
+WARN : 2020/12/18 20:14:06.379932 bidirectConnector.go:61: Client with name a already exicst in session 1
+INFO : 2020/12/18 20:14:06.379962 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 20:14:06.379988 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 20:14:06.380022 privateC2cFunc.go:341: Close all connection for client : 0 in session 1
+ERROR: 2020/12/18 20:14:06.380049 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 20:14:06.380083 c2c.go:190: Close client  with id 0 in session 1
+INFO : 2020/12/18 20:14:22.379966 main.go:90: Create new connection from 127.0.0.1:34472
+INFO : 2020/12/18 20:14:22.380323 bidirectConnector.go:74: Try read last 29 bytes
+INFO : 2020/12/18 20:14:22.380434 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 20:14:22.380597 clients.go:49: Undefined client with name asd
+INFO : 2020/12/18 20:14:22.380658 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 20:14:22.380741 database.go:90: Max ID finded 12, [11 0 0 0 0 0 0 0]
+INFO : 2020/12/18 20:14:22.383439 database.go:127: New ID is 12
+INFO : 2020/12/18 20:14:22.385872 privateC2cFunc.go:262: Registered new client asd with ID c
+INFO : 2020/12/18 20:14:22.385988 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 20:14:22.386471 bidirectConnector.go:74: Try read last 62 bytes
+WARN : 2020/12/18 20:14:22.386547 c2cCashe.go:39: Can not append new abonent with diviceID 12 abonent exist
+WARN : 2020/12/18 20:14:22.386574 privateC2cFunc.go:210: Abonent exist
+INFO : 2020/12/18 20:14:22.386608 privateC2cFunc.go:211: Credentials is equals TODO destroy old session with client asd id: c
+ERROR: 2020/12/18 20:14:22.386633 privateC2cFunc.go:213: Can not create abonent in session 2
+WARN : 2020/12/18 20:14:22.386657 bidirectConnector.go:61: Can not create abonent in session 2
+INFO : 2020/12/18 20:14:22.386707 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 20:14:22.386735 bidirectMain.go:74: Close bidirectMain and client logic in session 2
+INFO : 2020/12/18 20:14:22.386767 privateC2cFunc.go:341: Close all connection for client : 0 in session 2
+ERROR: 2020/12/18 20:14:22.386790 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 20:14:22.386814 c2c.go:190: Close client  with id 0 in session 2
+INFO : 2020/12/18 20:21:19.405545 main.go:121: Operation system kill server
+INFO : 2020/12/18 20:21:19.405819 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 20:21:22.216996 utils.go:17: Can not find bucket nameByID
+INFO : 2020/12/18 20:21:22.217034 utils.go:18: Try create client bucket nameByID
+INFO : 2020/12/18 20:21:22.217055 utils.go:24: Bucket nameByID created
+INFO : 2020/12/18 20:21:22.217075 utils.go:17: Can not find bucket clients
+INFO : 2020/12/18 20:21:22.217085 utils.go:18: Try create client bucket clients
+INFO : 2020/12/18 20:21:22.217099 utils.go:24: Bucket clients created
+INFO : 2020/12/18 20:21:22.217110 utils.go:17: Can not find bucket maxClientID
+INFO : 2020/12/18 20:21:22.217129 utils.go:18: Try create client bucket maxClientID
+INFO : 2020/12/18 20:21:22.217149 utils.go:24: Bucket maxClientID created
+INFO : 2020/12/18 20:21:22.235396 database.go:52: Init database finished fine
+ERROR: 2020/12/18 20:21:22.235867 main.go:103: read ./: is a directory
+INFO : 2020/12/18 20:21:22.236440 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 20:21:39.979687 main.go:90: Create new connection from 127.0.0.1:34490
+INFO : 2020/12/18 20:21:39.980130 bidirectConnector.go:74: Try read last 29 bytes
+INFO : 2020/12/18 20:21:39.980253 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 20:21:39.980304 clients.go:49: Undefined client with name asd
+INFO : 2020/12/18 20:21:39.980337 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 20:21:39.982826 database.go:127: New ID is 1
+INFO : 2020/12/18 20:21:39.985339 privateC2cFunc.go:262: Registered new client asd with ID 1
+INFO : 2020/12/18 20:21:39.985410 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 20:21:39.985618 bidirectConnector.go:74: Try read last 62 bytes
+WARN : 2020/12/18 20:21:39.985671 c2cCashe.go:39: Can not append new abonent with diviceID 1 abonent exist
+WARN : 2020/12/18 20:21:39.985697 privateC2cFunc.go:210: Abonent exist
+INFO : 2020/12/18 20:21:39.985723 privateC2cFunc.go:211: Credentials is equals TODO destroy old session with client asd id: 1
+ERROR: 2020/12/18 20:21:39.985747 privateC2cFunc.go:213: Can not create abonent in session 1
+WARN : 2020/12/18 20:21:39.985771 bidirectConnector.go:61: Can not create abonent in session 1
+INFO : 2020/12/18 20:21:39.985799 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 20:21:39.985835 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 20:21:39.985859 privateC2cFunc.go:341: Close all connection for client : 0 in session 1
+ERROR: 2020/12/18 20:21:39.985882 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 20:21:39.985909 c2c.go:190: Close client  with id 0 in session 1
+INFO : 2020/12/18 20:21:39.985970 c2c.go:166: Read channel is closed for device 0 name  for session 1
+INFO : 2020/12/18 20:21:39.986002 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 20:21:39.986025 bidirectMain.go:64: EOF
+INFO : 2020/12/18 20:22:14.869464 main.go:121: Operation system kill server
+INFO : 2020/12/18 20:22:14.869585 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 20:22:18.654173 database.go:52: Init database finished fine
+ERROR: 2020/12/18 20:22:18.654256 main.go:103: read ./: is a directory
+INFO : 2020/12/18 20:22:18.654377 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 20:22:24.300814 main.go:90: Create new connection from 127.0.0.1:34492
+INFO : 2020/12/18 20:22:24.301387 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 20:22:24.302692 database.go:122: Generate new client for type 4095
+WARN : 2020/12/18 20:22:24.304203 clients.go:49: Undefined client with name a
+INFO : 2020/12/18 20:22:24.304275 database.go:67: Try find maxID device for 4095
+INFO : 2020/12/18 20:22:24.307018 database.go:127: New ID is 13835058055282163713
+INFO : 2020/12/18 20:22:24.309609 privateC2cFunc.go:262: Registered new client a with ID c000000000000001
+INFO : 2020/12/18 20:22:24.309692 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 20:22:24.309912 bidirectConnector.go:74: Try read last 77 bytes
+WARN : 2020/12/18 20:22:24.309966 c2cCashe.go:39: Can not append new abonent with diviceID 13835058055282163713 abonent exist
+WARN : 2020/12/18 20:22:24.309988 privateC2cFunc.go:210: Abonent exist
+INFO : 2020/12/18 20:22:24.310008 privateC2cFunc.go:211: Credentials is equals TODO destroy old session with client a id: c000000000000001
+ERROR: 2020/12/18 20:22:24.310029 privateC2cFunc.go:213: Can not create abonent in session 1
+WARN : 2020/12/18 20:22:24.310047 bidirectConnector.go:61: Can not create abonent in session 1
+INFO : 2020/12/18 20:22:24.310084 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 20:22:24.310104 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 20:22:24.310121 privateC2cFunc.go:341: Close all connection for client : 0 in session 1
+ERROR: 2020/12/18 20:22:24.310137 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 20:22:24.310156 c2c.go:190: Close client  with id 0 in session 1
+INFO : 2020/12/18 20:56:53.493987 main.go:121: Operation system kill server
+INFO : 2020/12/18 20:56:53.494173 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 20:56:53.494239 main.go:117: Finish tcp service
+INFO : 2020/12/18 21:02:32.647820 database.go:52: Init database finished fine
+ERROR: 2020/12/18 21:02:32.647960 main.go:103: read ./: is a directory
+INFO : 2020/12/18 21:02:32.648128 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 21:02:42.589596 main.go:90: Create new connection from 127.0.0.1:35268
+INFO : 2020/12/18 21:02:42.589949 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 21:02:42.590102 database.go:122: Generate new client for type 4095
+WARN : 2020/12/18 21:02:42.590174 privateC2cFunc.go:245: Client with name a already exist
+WARN : 2020/12/18 21:02:42.590229 bidirectConnector.go:61: Client with name a already exicst in session 1
+INFO : 2020/12/18 21:02:42.590282 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:02:42.590330 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 21:02:42.590423 privateC2cFunc.go:341: Close all connection for client : 0 in session 1
+ERROR: 2020/12/18 21:02:42.590507 c2cCashe.go:69: Client with id 0 not find in cache for delete it
+INFO : 2020/12/18 21:02:42.590589 c2c.go:190: Close client  with id 0 in session 1
+INFO : 2020/12/18 21:03:04.389815 main.go:90: Create new connection from 127.0.0.1:35270
+INFO : 2020/12/18 21:03:04.390097 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 21:03:04.390166 database.go:122: Generate new client for type 4095
+WARN : 2020/12/18 21:03:04.390272 clients.go:49: Undefined client with name b
+INFO : 2020/12/18 21:03:04.390307 database.go:67: Try find maxID device for 4095
+INFO : 2020/12/18 21:03:04.390349 database.go:90: Max ID finded 13835058055282163714, [1 0 0 0 0 0 0 192]
+INFO : 2020/12/18 21:03:04.392786 database.go:127: New ID is 13835058055282163714
+INFO : 2020/12/18 21:03:04.395206 privateC2cFunc.go:262: Registered new client b with ID c000000000000002
+INFO : 2020/12/18 21:03:04.395279 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:03:04.400063 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:03:04.400151 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:03:04.400196 bidirectMain.go:74: Close bidirectMain and client logic in session 2
+INFO : 2020/12/18 21:03:04.400229 privateC2cFunc.go:341: Close all connection for client b: c000000000000002 in session 2
+INFO : 2020/12/18 21:03:04.400266 c2c.go:190: Close client b with id 13835058055282163714 in session 2
+INFO : 2020/12/18 21:03:04.400521 c2c.go:166: Read channel is closed for device 0 name b for session 2
+INFO : 2020/12/18 21:03:04.400567 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 21:03:04.400597 bidirectMain.go:64: EOF
+INFO : 2020/12/18 21:14:30.286517 main.go:90: Create new connection from 127.0.0.1:35336
+INFO : 2020/12/18 21:14:30.287035 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:14:30.287482 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:14:30.287590 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:14:30.348443 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:14:30.348570 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:14:30.348633 bidirectMain.go:74: Close bidirectMain and client logic in session 3
+INFO : 2020/12/18 21:14:30.348662 privateC2cFunc.go:341: Close all connection for client b: c000000000000002 in session 3
+INFO : 2020/12/18 21:14:30.348687 c2c.go:190: Close client b with id 13835058055282163714 in session 3
+INFO : 2020/12/18 21:15:09.703326 main.go:121: Operation system kill server
+INFO : 2020/12/18 21:15:09.703513 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 21:15:24.975728 database.go:52: Init database finished fine
+ERROR: 2020/12/18 21:15:24.975908 main.go:103: read ./: is a directory
+INFO : 2020/12/18 21:15:24.976118 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 21:15:30.349479 main.go:90: Create new connection from 127.0.0.1:35338
+INFO : 2020/12/18 21:15:30.349989 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:15:30.350525 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:15:30.350665 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:15:30.411881 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:15:30.412229 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:15:30.412323 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 21:15:30.412432 privateC2cFunc.go:341: Close all connection for client b: c000000000000002 in session 1
+INFO : 2020/12/18 21:15:30.412476 c2c.go:190: Close client b with id 13835058055282163714 in session 1
+INFO : 2020/12/18 21:15:32.366552 main.go:121: Operation system kill server
+INFO : 2020/12/18 21:15:32.366706 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 21:15:46.352568 utils.go:17: Can not find bucket nameByID
+INFO : 2020/12/18 21:15:46.352615 utils.go:18: Try create client bucket nameByID
+INFO : 2020/12/18 21:15:46.352640 utils.go:24: Bucket nameByID created
+INFO : 2020/12/18 21:15:46.352658 utils.go:17: Can not find bucket clients
+INFO : 2020/12/18 21:15:46.352673 utils.go:18: Try create client bucket clients
+INFO : 2020/12/18 21:15:46.352692 utils.go:24: Bucket clients created
+INFO : 2020/12/18 21:15:46.352708 utils.go:17: Can not find bucket maxClientID
+INFO : 2020/12/18 21:15:46.352721 utils.go:18: Try create client bucket maxClientID
+INFO : 2020/12/18 21:15:46.352739 utils.go:24: Bucket maxClientID created
+INFO : 2020/12/18 21:15:46.370830 database.go:52: Init database finished fine
+ERROR: 2020/12/18 21:15:46.371539 main.go:103: read ./: is a directory
+INFO : 2020/12/18 21:15:46.372411 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 21:15:48.287453 main.go:121: Operation system kill server
+INFO : 2020/12/18 21:15:54.263783 database.go:52: Init database finished fine
+ERROR: 2020/12/18 21:15:54.263931 main.go:103: read ./: is a directory
+INFO : 2020/12/18 21:15:54.264143 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 21:15:59.461244 main.go:90: Create new connection from 127.0.0.1:35340
+INFO : 2020/12/18 21:15:59.461570 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 21:15:59.461699 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 21:15:59.461775 clients.go:49: Undefined client with name b
+INFO : 2020/12/18 21:15:59.461837 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 21:15:59.464317 database.go:127: New ID is 1
+INFO : 2020/12/18 21:15:59.466878 privateC2cFunc.go:262: Registered new client b with ID 1
+INFO : 2020/12/18 21:15:59.466961 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:15:59.467173 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:15:59.468349 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:15:59.468423 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 21:15:59.468737 privateC2cFunc.go:341: Close all connection for client b: 1 in session 1
+INFO : 2020/12/18 21:15:59.468836 c2c.go:190: Close client b with id 1 in session 1
+INFO : 2020/12/18 21:17:54.694723 main.go:121: Operation system kill server
+INFO : 2020/12/18 21:17:54.695412 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 21:18:02.185508 utils.go:17: Can not find bucket nameByID
+INFO : 2020/12/18 21:18:02.185548 utils.go:18: Try create client bucket nameByID
+INFO : 2020/12/18 21:18:02.185569 utils.go:24: Bucket nameByID created
+INFO : 2020/12/18 21:18:02.185581 utils.go:17: Can not find bucket clients
+INFO : 2020/12/18 21:18:02.185591 utils.go:18: Try create client bucket clients
+INFO : 2020/12/18 21:18:02.185606 utils.go:24: Bucket clients created
+INFO : 2020/12/18 21:18:02.185617 utils.go:17: Can not find bucket maxClientID
+INFO : 2020/12/18 21:18:02.185627 utils.go:18: Try create client bucket maxClientID
+INFO : 2020/12/18 21:18:02.185640 utils.go:24: Bucket maxClientID created
+INFO : 2020/12/18 21:18:02.202529 database.go:52: Init database finished fine
+ERROR: 2020/12/18 21:18:02.202659 main.go:103: read ./: is a directory
+INFO : 2020/12/18 21:18:02.202828 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 21:18:06.061797 main.go:90: Create new connection from 127.0.0.1:35346
+INFO : 2020/12/18 21:18:06.062011 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 21:18:06.062114 database.go:122: Generate new client for type 4096
+WARN : 2020/12/18 21:18:06.062161 clients.go:49: Undefined client with name b
+INFO : 2020/12/18 21:18:06.062198 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 21:18:06.064703 database.go:127: New ID is 1
+INFO : 2020/12/18 21:18:06.067233 privateC2cFunc.go:262: Registered new client b with ID 1
+INFO : 2020/12/18 21:18:06.067302 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:18:06.067509 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:18:06.067560 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:18:06.067590 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 21:18:06.067617 privateC2cFunc.go:341: Close all connection for client b: 1 in session 1
+INFO : 2020/12/18 21:18:06.067662 c2c.go:190: Close client b with id 1 in session 1
+INFO : 2020/12/18 21:22:16.879612 main.go:121: Operation system kill server
+INFO : 2020/12/18 21:22:29.027391 utils.go:17: Can not find bucket nameByID
+INFO : 2020/12/18 21:22:29.027505 utils.go:18: Try create client bucket nameByID
+INFO : 2020/12/18 21:22:29.027567 utils.go:24: Bucket nameByID created
+INFO : 2020/12/18 21:22:29.027600 utils.go:17: Can not find bucket clients
+INFO : 2020/12/18 21:22:29.027626 utils.go:18: Try create client bucket clients
+INFO : 2020/12/18 21:22:29.027654 utils.go:24: Bucket clients created
+INFO : 2020/12/18 21:22:29.027681 utils.go:17: Can not find bucket maxClientID
+INFO : 2020/12/18 21:22:29.027704 utils.go:18: Try create client bucket maxClientID
+INFO : 2020/12/18 21:22:29.027739 utils.go:24: Bucket maxClientID created
+INFO : 2020/12/18 21:22:29.045765 database.go:52: Init database finished fine
+ERROR: 2020/12/18 21:22:29.045918 main.go:103: read ./: is a directory
+INFO : 2020/12/18 21:22:29.046085 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 21:22:33.028711 main.go:90: Create new connection from 127.0.0.1:35356
+INFO : 2020/12/18 21:22:33.029086 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 21:22:33.029184 database.go:123: Generate new client for type 4096
+WARN : 2020/12/18 21:22:33.029225 clients.go:49: Undefined client with name b
+INFO : 2020/12/18 21:22:33.029265 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 21:22:33.029299 database.go:84: standart Max ID for 4096 shifted 62 is 1
+INFO : 2020/12/18 21:22:33.031822 database.go:128: New ID is 1
+INFO : 2020/12/18 21:22:33.035329 privateC2cFunc.go:262: Registered new client b with ID 1
+INFO : 2020/12/18 21:22:33.035398 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:22:33.046388 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:22:33.046473 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:22:33.046526 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 21:22:33.046559 privateC2cFunc.go:341: Close all connection for client b: 1 in session 1
+INFO : 2020/12/18 21:22:33.046594 c2c.go:190: Close client b with id 1 in session 1
+INFO : 2020/12/18 21:22:33.046686 c2c.go:166: Read channel is closed for device 0 name b for session 1
+INFO : 2020/12/18 21:22:33.046726 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 21:22:33.046757 bidirectMain.go:64: EOF
+INFO : 2020/12/18 21:24:02.543642 main.go:121: Operation system kill server
+INFO : 2020/12/18 21:24:02.543923 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 21:24:02.544093 main.go:117: Finish tcp service
+INFO : 2020/12/18 21:24:11.078895 utils.go:17: Can not find bucket nameByID
+INFO : 2020/12/18 21:24:11.078967 utils.go:18: Try create client bucket nameByID
+INFO : 2020/12/18 21:24:11.079024 utils.go:24: Bucket nameByID created
+INFO : 2020/12/18 21:24:11.079047 utils.go:17: Can not find bucket clients
+INFO : 2020/12/18 21:24:11.079065 utils.go:18: Try create client bucket clients
+INFO : 2020/12/18 21:24:11.079089 utils.go:24: Bucket clients created
+INFO : 2020/12/18 21:24:11.079108 utils.go:17: Can not find bucket maxClientID
+INFO : 2020/12/18 21:24:11.079132 utils.go:18: Try create client bucket maxClientID
+INFO : 2020/12/18 21:24:11.079160 utils.go:24: Bucket maxClientID created
+INFO : 2020/12/18 21:24:11.097229 database.go:52: Init database finished fine
+ERROR: 2020/12/18 21:24:11.097404 main.go:103: read ./: is a directory
+INFO : 2020/12/18 21:24:11.097579 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 21:24:14.062601 main.go:90: Create new connection from 127.0.0.1:35358
+INFO : 2020/12/18 21:24:14.063090 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 21:24:14.063248 database.go:123: Generate new client for type 4096
+WARN : 2020/12/18 21:24:14.063324 clients.go:49: Undefined client with name b
+INFO : 2020/12/18 21:24:14.063368 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 21:24:14.063420 database.go:84: standart Max ID for 4096 shifted 62 is 1
+INFO : 2020/12/18 21:24:14.065900 database.go:128: New ID is 1
+INFO : 2020/12/18 21:24:14.068326 privateC2cFunc.go:262: Registered new client b with ID 1
+INFO : 2020/12/18 21:24:14.068411 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:24:14.068603 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:24:14.068660 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:24:14.068691 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 21:24:14.068713 privateC2cFunc.go:341: Close all connection for client b: 1 in session 1
+INFO : 2020/12/18 21:24:14.068744 c2c.go:190: Close client b with id 1 in session 1
+INFO : 2020/12/18 21:24:29.878845 main.go:121: Operation system kill server
+INFO : 2020/12/18 21:24:29.879097 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 21:24:38.577726 utils.go:17: Can not find bucket nameByID
+INFO : 2020/12/18 21:24:38.577774 utils.go:18: Try create client bucket nameByID
+INFO : 2020/12/18 21:24:38.577802 utils.go:24: Bucket nameByID created
+INFO : 2020/12/18 21:24:38.577821 utils.go:17: Can not find bucket clients
+INFO : 2020/12/18 21:24:38.577837 utils.go:18: Try create client bucket clients
+INFO : 2020/12/18 21:24:38.577857 utils.go:24: Bucket clients created
+INFO : 2020/12/18 21:24:38.577873 utils.go:17: Can not find bucket maxClientID
+INFO : 2020/12/18 21:24:38.577888 utils.go:18: Try create client bucket maxClientID
+INFO : 2020/12/18 21:24:38.577905 utils.go:24: Bucket maxClientID created
+INFO : 2020/12/18 21:24:38.596040 database.go:52: Init database finished fine
+ERROR: 2020/12/18 21:24:38.596159 main.go:103: read ./: is a directory
+INFO : 2020/12/18 21:24:38.596360 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 21:24:41.704276 main.go:90: Create new connection from 127.0.0.1:35362
+INFO : 2020/12/18 21:24:41.704797 bidirectConnector.go:74: Try read last 44 bytes
+INFO : 2020/12/18 21:24:41.705022 database.go:123: Generate new client for type 4096
+WARN : 2020/12/18 21:24:41.705153 clients.go:49: Undefined client with name b
+INFO : 2020/12/18 21:24:41.705270 database.go:67: Try find maxID device for 4096
+INFO : 2020/12/18 21:24:41.705371 database.go:84: standart Max ID for 4096 shifted 48 is 1152921504606846977
+INFO : 2020/12/18 21:24:41.708528 database.go:128: New ID is 1152921504606846977
+INFO : 2020/12/18 21:24:41.710947 privateC2cFunc.go:262: Registered new client b with ID 1000000000000001
+INFO : 2020/12/18 21:24:41.711034 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:24:41.712284 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:24:41.712482 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:24:41.712531 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 21:24:41.712587 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 1
+INFO : 2020/12/18 21:24:41.712626 c2c.go:190: Close client b with id 1152921504606846977 in session 1
+INFO : 2020/12/18 21:25:14.400048 main.go:90: Create new connection from 127.0.0.1:35364
+INFO : 2020/12/18 21:25:14.400262 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:25:14.400409 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:25:14.400443 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:25:14.460797 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:25:14.460890 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:25:14.460937 bidirectMain.go:74: Close bidirectMain and client logic in session 2
+INFO : 2020/12/18 21:25:14.460965 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 2
+INFO : 2020/12/18 21:25:14.460987 c2c.go:190: Close client b with id 1152921504606846977 in session 2
+INFO : 2020/12/18 21:28:33.398485 main.go:90: Create new connection from 127.0.0.1:35368
+INFO : 2020/12/18 21:28:33.398805 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:28:33.399008 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:28:33.399099 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:28:33.460476 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:28:33.460877 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:28:33.461291 bidirectMain.go:74: Close bidirectMain and client logic in session 3
+INFO : 2020/12/18 21:28:33.461503 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 3
+INFO : 2020/12/18 21:28:33.461685 c2c.go:190: Close client b with id 1152921504606846977 in session 3
+INFO : 2020/12/18 21:28:33.462004 c2c.go:166: Read channel is closed for device 0 name b for session 3
+INFO : 2020/12/18 21:28:33.462105 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 21:28:33.462176 bidirectMain.go:64: EOF
+INFO : 2020/12/18 21:28:58.909824 main.go:90: Create new connection from 127.0.0.1:35370
+INFO : 2020/12/18 21:28:58.910021 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:28:58.910207 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:28:58.910283 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:29:00.913234 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:29:00.913285 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:29:02.913494 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:29:02.913604 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:29:04.912260 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:29:04.912321 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:29:06.913505 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:29:06.913570 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:29:08.913815 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:29:08.913882 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:29:10.914084 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:29:10.914149 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:29:10.990732 bidirectConnector.go:67: Error when try read from conection: read tcp 127.0.0.1:3555->127.0.0.1:35370: read: connection reset by peer
+INFO : 2020/12/18 21:29:10.990802 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:29:10.990834 bidirectMain.go:74: Close bidirectMain and client logic in session 4
+INFO : 2020/12/18 21:29:10.990859 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 4
+INFO : 2020/12/18 21:29:10.990882 c2c.go:190: Close client b with id 1152921504606846977 in session 4
+INFO : 2020/12/18 21:30:30.142286 main.go:90: Create new connection from 127.0.0.1:35382
+INFO : 2020/12/18 21:30:30.142657 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:30:30.142882 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:30:30.142948 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:30:30.204053 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:30:30.204424 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:30:30.204694 bidirectMain.go:74: Close bidirectMain and client logic in session 5
+INFO : 2020/12/18 21:30:30.204779 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 5
+INFO : 2020/12/18 21:30:30.204820 c2c.go:190: Close client b with id 1152921504606846977 in session 5
+INFO : 2020/12/18 21:31:30.205519 main.go:90: Create new connection from 127.0.0.1:35386
+INFO : 2020/12/18 21:31:30.205794 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:31:30.206069 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:31:30.206183 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:31:30.266669 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:31:30.266760 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:31:30.266792 bidirectMain.go:74: Close bidirectMain and client logic in session 6
+INFO : 2020/12/18 21:31:30.266815 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 6
+INFO : 2020/12/18 21:31:30.266847 c2c.go:190: Close client b with id 1152921504606846977 in session 6
+INFO : 2020/12/18 21:31:30.266934 c2c.go:166: Read channel is closed for device 0 name b for session 6
+INFO : 2020/12/18 21:31:30.266958 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 21:31:30.266979 bidirectMain.go:64: EOF
+INFO : 2020/12/18 21:32:33.759115 main.go:90: Create new connection from 127.0.0.1:35388
+INFO : 2020/12/18 21:32:33.759639 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:32:33.759955 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:32:33.760409 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:32:33.820844 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:32:33.820934 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:32:33.821013 bidirectMain.go:74: Close bidirectMain and client logic in session 7
+INFO : 2020/12/18 21:32:33.821076 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 7
+INFO : 2020/12/18 21:32:33.821130 c2c.go:190: Close client b with id 1152921504606846977 in session 7
+INFO : 2020/12/18 21:34:50.309038 main.go:90: Create new connection from 127.0.0.1:35394
+INFO : 2020/12/18 21:34:50.309342 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:34:50.309766 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:34:50.309955 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:34:52.310804 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:34:52.310949 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:34:54.311178 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:34:54.311297 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:34:56.311553 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:34:56.311727 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:34:58.311787 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:34:58.311859 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:34:58.936491 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:34:58.936788 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:34:58.936920 bidirectMain.go:74: Close bidirectMain and client logic in session 8
+INFO : 2020/12/18 21:34:58.937045 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 8
+INFO : 2020/12/18 21:34:58.937123 c2c.go:190: Close client b with id 1152921504606846977 in session 8
+INFO : 2020/12/18 21:35:55.576207 main.go:90: Create new connection from 127.0.0.1:35398
+INFO : 2020/12/18 21:35:55.577039 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:35:55.577200 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:35:55.577257 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:35:55.638657 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:35:55.639083 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:35:55.639321 bidirectMain.go:74: Close bidirectMain and client logic in session 9
+INFO : 2020/12/18 21:35:55.639562 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 9
+INFO : 2020/12/18 21:35:55.639721 c2c.go:190: Close client b with id 1152921504606846977 in session 9
+INFO : 2020/12/18 21:36:55.639435 main.go:90: Create new connection from 127.0.0.1:35400
+INFO : 2020/12/18 21:36:55.639715 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:36:55.640081 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:36:55.640220 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:36:55.700917 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:36:55.701027 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:36:55.701095 bidirectMain.go:74: Close bidirectMain and client logic in session 10
+INFO : 2020/12/18 21:36:55.701126 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 10
+INFO : 2020/12/18 21:36:55.701161 c2c.go:190: Close client b with id 1152921504606846977 in session 10
+INFO : 2020/12/18 21:36:55.701209 c2c.go:166: Read channel is closed for device 1000000000000001 name b for session 10
+INFO : 2020/12/18 21:36:55.701295 bidirectConnector.go:101: Close connection by read operation
+INFO : 2020/12/18 21:36:55.701335 bidirectMain.go:64: EOF
+INFO : 2020/12/18 21:42:51.543078 main.go:121: Operation system kill server
+INFO : 2020/12/18 21:42:51.543199 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
+INFO : 2020/12/18 21:42:57.674244 database.go:52: Init database finished fine
+ERROR: 2020/12/18 21:42:57.674477 main.go:103: read ./: is a directory
+INFO : 2020/12/18 21:42:57.674735 main.go:56: Start TCP server at :3555
+INFO : 2020/12/18 21:43:06.376387 main.go:90: Create new connection from 127.0.0.1:35556
+INFO : 2020/12/18 21:43:06.376599 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:43:06.376837 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:43:06.376929 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:08.377823 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:08.377975 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:10.377787 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:10.377916 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:12.377833 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:12.378019 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:14.377819 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:14.378049 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:16.377745 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:16.377879 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:18.377809 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:18.378061 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:20.377577 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:20.377682 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:22.377672 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:22.377915 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:24.377785 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:24.377929 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:26.377536 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:26.377593 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:28.377699 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:28.377959 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:30.377687 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:30.377891 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:32.377630 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:32.377860 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:34.377559 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:34.377666 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:36.377736 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:36.377876 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:38.377786 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:38.377924 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:40.377553 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:40.377630 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:41.434523 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:43:41.435367 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:43:41.435485 bidirectMain.go:74: Close bidirectMain and client logic in session 1
+INFO : 2020/12/18 21:43:41.435908 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 1
+INFO : 2020/12/18 21:43:41.435965 c2c.go:190: Close client b with id 1152921504606846977 in session 1
+INFO : 2020/12/18 21:43:44.215301 main.go:90: Create new connection from 127.0.0.1:35558
+INFO : 2020/12/18 21:43:44.217335 bidirectConnector.go:74: Try read last 77 bytes
+INFO : 2020/12/18 21:43:44.217605 privateC2cFunc.go:226: Client b init by name ok
+INFO : 2020/12/18 21:43:44.217675 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:46.218843 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:46.219012 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:48.218751 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:48.218849 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:50.218722 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:50.218843 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:52.218725 privateC2cFunc.go:37: Ping command from device b, id 1000000000000001
+INFO : 2020/12/18 21:43:52.218883 bidirectMain.go:67: Received data from client logic fine
+INFO : 2020/12/18 21:43:52.649438 bidirectConnector.go:67: Error when try read from conection: EOF
+INFO : 2020/12/18 21:43:52.649751 bidirectConnector.go:117: Close connector finish network read operation
+INFO : 2020/12/18 21:43:52.649880 bidirectMain.go:74: Close bidirectMain and client logic in session 2
+INFO : 2020/12/18 21:43:52.649998 privateC2cFunc.go:341: Close all connection for client b: 1000000000000001 in session 2
+INFO : 2020/12/18 21:43:52.650073 c2c.go:190: Close client b with id 1152921504606846977 in session 2
+INFO : 2020/12/18 22:07:41.689099 main.go:121: Operation system kill server
+INFO : 2020/12/18 22:07:41.689539 main.go:85: Can not accept connection, accept tcp [::]:3555: use of closed network connection
