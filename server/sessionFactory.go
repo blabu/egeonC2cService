@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/blabu/egeonC2cService/configuration"
-	"github.com/blabu/egeonC2cService/parser"
+	"github.com/blabu/c2cLib/parser"
 )
 
 // StartNewSession - инициализирует все и стартует сессию

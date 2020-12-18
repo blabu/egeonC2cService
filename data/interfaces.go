@@ -1,6 +1,6 @@
 package data
 
-import "github.com/blabu/egeonC2cService/dto"
+import "github.com/blabu/c2cLib/dto"
 
 //IClient - БАЗОВЫЙ интерфейс для клиент-клиент взаимодействия (Сделан для тестов)
 type IClient interface {

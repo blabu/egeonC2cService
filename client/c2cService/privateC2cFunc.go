@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/blabu/egeonC2cService/dto"
+	"github.com/blabu/c2cLib/dto"
 	log "github.com/blabu/egeonC2cService/logWrapper"
 )
 

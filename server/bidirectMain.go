@@ -12,8 +12,8 @@ import (
 
 	"github.com/blabu/egeonC2cService/client"
 	"github.com/blabu/egeonC2cService/clientFactory"
-	"github.com/blabu/egeonC2cService/dto"
-	"github.com/blabu/egeonC2cService/parser"
+	"github.com/blabu/c2cLib/dto"
+	"github.com/blabu/c2cLib/parser"
 )
 
 // bidirectMain - двунаправленная реализация MainLogicIO для независимого чтения и записи информации
@@ -33,7 +33,7 @@ func CreateReadWriteMainLogic(p parser.Parser, readTimeout time.Duration) MainLo
 	return &bidirectMain{
 		sessionID: sesID,
 		p:         p,
-		c:         clientFactory.CreateClientLogic(p, sesID),
+		c:         clientFactory.CreateClientLogic(sesID),
 	}
 }
 

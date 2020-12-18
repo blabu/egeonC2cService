@@ -6,7 +6,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/blabu/egeonC2cService/dto"
+	"github.com/blabu/c2cLib/dto"
 )
 
 type panicCover struct {

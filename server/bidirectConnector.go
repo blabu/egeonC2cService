@@ -4,7 +4,7 @@ import (
 	"context"
 	"io"
 
-	"github.com/blabu/egeonC2cService/parser"
+	"github.com/blabu/c2cLib/parser"
 
 	conf "github.com/blabu/egeonC2cService/configuration"
 	log "github.com/blabu/egeonC2cService/logWrapper"

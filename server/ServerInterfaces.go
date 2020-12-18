@@ -5,7 +5,7 @@ import (
 	"io"
 	"net"
 
-	"github.com/blabu/egeonC2cService/dto"
+	"github.com/blabu/c2cLib/dto"
 )
 
 var lastSessionID uint32

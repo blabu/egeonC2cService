@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/blabu/egeonC2cService/dto"
+	"github.com/blabu/c2cLib/dto"
 
 	bolt "go.etcd.io/bbolt"
 )

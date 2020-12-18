@@ -10,7 +10,7 @@ import (
 	"context"
 	"io"
 
-	"github.com/blabu/egeonC2cService/dto"
+	"github.com/blabu/c2cLib/dto"
 )
 
 //ListenerInterface - интерфейс, который позволяет реализовать систему подписки
